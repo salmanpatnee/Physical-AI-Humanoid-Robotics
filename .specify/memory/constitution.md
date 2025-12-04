@@ -1,15 +1,17 @@
 <!-- Sync Impact Report -->
 <!--
-Version change: None -> 1.0.0
-Modified principles: None (initial creation)
-Added sections: Purpose & Philosophy, Entities in the SpecKit Ecosystem, Spec-Driven Life Cycle, Quality Standards, Naming, Ordering, and Folder Structure Rules, Governance of AI Behavior, Reusable Intelligence Requirements, Compliance & Validation, Amendments
+Version change: 1.0.0 -> 1.0.1
+Modified principles: Added constraint to "AI MUST NOT" section regarding test generation
+Added sections: None
 Removed sections: None
+Modified sections: Article VI, Section 6.1 - AI MUST NOT
 Templates requiring updates:
-- .specify/templates/plan-template.md: ✅ updated
-- .specify/templates/spec-template.md: ✅ updated
-- .specify/templates/tasks-template.md: ✅ updated
-- .specify/templates/commands/*.md: ✅ updated
+- .specify/templates/plan-template.md: No changes required
+- .specify/templates/spec-template.md: No changes required
+- .specify/templates/tasks-template.md: No changes required
+- .specify/templates/commands/*.md: No changes required
 Follow-up TODOs: None
+Rationale: Clarify that AI should not proactively write tests unless explicitly requested by human or specified in task requirements
 -->
 # SpecKit Constitution for AI/Spec-Driven Book Creation
 
@@ -134,6 +136,7 @@ The Project shall maintain the following core directory structure:
 -   Reorder content, files, or folder structures outside the explicit directives of the Book Structure Spec or Naming, Ordering, and Folder Structure Rules (Article V).
 -   Fabricate any content, data, or code not directly derived from the Source Material (PDF) or a defined generative process (e.g., summaries, quizzes, examples, which are *derived* from the source, not invented).
 -   Make architecturally significant decisions without explicit human approval.
+-   Write or generate tests (unit, integration, E2E, or any other testing code) unless explicitly requested by the human operator or specified in the task requirements. Tests should only be created when the human explicitly asks for them or when the specification/tasks explicitly require them.
 
 #### AI MAY:
 -   Propose alternative approaches for human consideration.
@@ -181,4 +184,4 @@ This Constitution may only be amended under the following strict conditions:
 
 This Constitution supersedes all other project practices, guidelines, or informal agreements. All AI agent actions, human reviews, and development activities must verify compliance with these articles. Any deviation requires explicit, documented human override.
 
-**Version**: 1.0.0 | **Ratified**: 2025-12-04 | **Last Amended**: 2025-12-04
+**Version**: 1.0.1 | **Ratified**: 2025-12-04 | **Last Amended**: 2025-12-04
