@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Chapter Metadata",
+  "description": "Schema for the frontmatter of a chapter in the Physical AI & Humanoid Robotics Textbook.",
+  "type": "object",
+  "properties": {
+    "title": {
+      "description": "The main title of the chapter, displayed in the sidebar and at the top of the page.",
+      "type": "string"
+    },
+    "sidebar_position": {
+      "description": "The numerical position of the chapter in the sidebar.",
+      "type": "number"
+    },
+    "chapter_type": {
+      "description": "The pedagogical type of the chapter.",
+      "type": "string",
+      "enum": ["tutorial", "concept", "lab", "reference"]
+    },
+    "learning_goals": {
+      "description": "A list of key learning goals for the chapter.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "prerequisites": {
+      "description": "A list of prerequisite chapters or concepts.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "key_takeaways": {
+      "description": "A list of key takeaways or summary points for the chapter.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "title",
+    "sidebar_position",
+    "chapter_type",
+    "learning_goals",
+    "key_takeaways"
+  ]
+}
