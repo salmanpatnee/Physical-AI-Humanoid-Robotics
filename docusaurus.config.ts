@@ -68,6 +68,10 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    './src/plugins/chapter-validation',
+  ],
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',

@@ -1,0 +1,32 @@
+.prerequisites {
+  background-color: var(--ifm-color-info-contrast-background);
+  border-left: 4px solid var(--ifm-color-info);
+  border-radius: 4px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.title {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: var(--ifm-color-info);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.content {
+  color: var(--ifm-font-color-base);
+}
+
+.content ul {
+  margin-bottom: 0;
+  padding-left: 1.5rem;
+}
+
+.content li {
+  margin-bottom: 0.5rem;
+}
+
+.content li:last-child {
+  margin-bottom: 0;
+}

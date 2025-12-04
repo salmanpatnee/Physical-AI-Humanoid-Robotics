@@ -1,0 +1,82 @@
+---
+title: "Chapter Template Example"
+sidebar_position: 99
+chapter_type: "tutorial"
+learning_goals:
+  - "Understand how to use the chapter template system"
+  - "Learn to incorporate structural components into chapters"
+  - "Create interactive exercises with progressive hints"
+prerequisites:
+  - "Basic understanding of MDX"
+  - "Familiarity with React components"
+key_takeaways:
+  - "The template system ensures consistency across chapters"
+  - "Components like LearningGoals, Prerequisites, and KeyTakeaways improve readability"
+  - "ExerciseBlock provides interactive learning experiences"
+---
+
+# Chapter Template Example
+
+This is a complete example demonstrating all the features of the reusable chapter template system for the Physical AI & Humanoid Robotics Textbook.
+
+## Introduction
+
+This example chapter showcases how to use all the custom components provided by the chapter template system. These components help maintain consistency across all chapters and enhance the learning experience.
+
+<LearningGoals>
+- Understand how to use the chapter template system
+- Learn to incorporate structural components into chapters
+- Create interactive exercises with progressive hints
+</LearningGoals>
+
+<Prerequisites>
+- Basic understanding of MDX
+- Familiarity with React components
+</Prerequisites>
+
+## Main Content
+
+Here you would include your main chapter content. This can include text, code blocks, images, and any other standard Markdown/MDX elements.
+
+### Code Example
+
+```python
+def greet(name):
+    return f"Hello, {name}!"
+
+print(greet("World"))
+```
+
+### Interactive Exercise
+
+Now let's try an interactive exercise using the ExerciseBlock component:
+
+<ExerciseBlock
+  question="What is the primary advantage of using a reusable chapter template system?"
+  hints={[
+    { title: "Hint 1", content: "Think about what happens when multiple authors contribute to a book." },
+    { title: "Hint 2", content: "Consider the benefits of standardization across different chapters." },
+    { title: "Hint 3", content: "It helps maintain a uniform structure and style throughout the entire book." }
+  ]}
+  solution={
+    <div>
+      <p><strong>Answer:</strong> The primary advantage is <strong>consistency</strong>.</p>
+      <p>A reusable chapter template system ensures that all chapters follow the same structure and style, making it easier for readers to navigate and learn. It also helps authors focus on content rather than formatting, and ensures that all chapters include essential elements like learning goals and key takeaways.</p>
+    </div>
+  }
+/>
+
+## Summary
+
+This section wraps up the chapter content and leads into the key takeaways.
+
+<KeyTakeaways>
+- The template system ensures consistency across chapters
+- Components like LearningGoals, Prerequisites, and KeyTakeaways improve readability
+- ExerciseBlock provides interactive learning experiences
+- All components are styled consistently and are accessible
+</KeyTakeaways>
+
+## Next Steps
+
+After completing this chapter, you should be able to create your own chapters using the template system. Try creating a new chapter and experimenting with all the available components!

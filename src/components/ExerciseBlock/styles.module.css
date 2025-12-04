@@ -1,0 +1,110 @@
+.exerciseBlock {
+  background-color: var(--ifm-color-warning-contrast-background);
+  border: 2px solid var(--ifm-color-warning);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.question {
+  margin-bottom: 1.5rem;
+}
+
+.questionTitle {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--ifm-color-warning-dark);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.questionText {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--ifm-font-color-base);
+}
+
+.hintsSection {
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: var(--ifm-color-primary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.hint {
+  background-color: var(--ifm-background-surface-color);
+  border-left: 3px solid var(--ifm-color-primary-lightest);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+}
+
+.hint:last-child {
+  margin-bottom: 0;
+}
+
+.hintTitle {
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.hintTitle::-webkit-details-marker {
+  color: var(--ifm-color-primary);
+}
+
+.hintContent {
+  margin-top: 0.75rem;
+  padding-left: 1rem;
+  color: var(--ifm-font-color-base);
+}
+
+.solutionSection {
+  margin-top: 1.5rem;
+}
+
+.solution {
+  background-color: var(--ifm-background-surface-color);
+  border-left: 3px solid var(--ifm-color-success);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+}
+
+.solutionTitle {
+  font-weight: 700;
+  color: var(--ifm-color-success);
+  font-size: 1.1rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.solutionTitle::-webkit-details-marker {
+  color: var(--ifm-color-success);
+}
+
+.solutionContent {
+  margin-top: 0.75rem;
+  padding-left: 1rem;
+  color: var(--ifm-font-color-base);
+}
+
+/* Hover effects for better UX */
+.hint:hover,
+.solution:hover {
+  background-color: var(--ifm-hover-overlay);
+}
+
+/* Open state styling */
+.hint[open],
+.solution[open] {
+  background-color: var(--ifm-background-surface-color);
+}

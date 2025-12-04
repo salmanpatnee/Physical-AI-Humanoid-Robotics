@@ -12,13 +12,13 @@
 
 **Purpose**: Create the directory structure for the new components and plugins.
 
-- [ ] T001 [P] Create directory `src/plugins/chapter-validation/` for the validation plugin.
-- [ ] T002 [P] Create directory `src/components/LearningGoals/` for the LearningGoals component.
-- [ ] T003 [P] Create directory `src/components/Prerequisites/` for the Prerequisites component.
-- [ ] T004 [P] Create directory `src/components/KeyTakeaways/` for the KeyTakeaways component.
-- [ ] T005 [P] Create directory `src/components/ExerciseBlock/` for the ExerciseBlock component.
-- [ ] T006 [P] Create directory `tests/unit/plugins/` for plugin unit tests.
-- [ ] T007 [P] Create directory `tests/unit/components/` for component unit tests.
+- [X] T001 [P] Create directory `src/plugins/chapter-validation/` for the validation plugin.
+- [X] T002 [P] Create directory `src/components/LearningGoals/` for the LearningGoals component.
+- [X] T003 [P] Create directory `src/components/Prerequisites/` for the Prerequisites component.
+- [X] T004 [P] Create directory `src/components/KeyTakeaways/` for the KeyTakeaways component.
+- [X] T005 [P] Create directory `src/components/ExerciseBlock/` for the ExerciseBlock component.
+- [X] T006 [P] Create directory `tests/unit/plugins/` for plugin unit tests.
+- [X] T007 [P] Create directory `tests/unit/components/` for component unit tests.
 
 ---
 
@@ -28,14 +28,14 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T008 Install AJV dependency: `npm install ajv`.
-- [ ] T009 Create the basic structure for the Docusaurus plugin in `src/plugins/chapter-validation/index.js`.
-- [ ] T010 Implement the plugin's `contentLoaded` lifecycle hook to read document frontmatter in `src/plugins/chapter-validation/index.js`.
-- [ ] T011 [P] Load the schema from `specs/003-chapter-template-system/contracts/ChapterMetadata.schema.json` into the plugin.
-- [ ] T012 Implement the validation logic using AJV against the frontmatter for each document in `src/plugins/chapter-validation/index.js`.
-- [ ] T013 Ensure the Docusaurus build fails with a clear error message if a chapter's frontmatter is invalid.
-- [ ] T014 [P] Write a unit test in `tests/unit/plugins/chapter-validation.test.js` to verify the validation logic with valid and invalid metadata.
-- [ ] T015 Register the new plugin in `docusaurus.config.ts`.
+- [X] T008 Install AJV dependency: `npm install ajv`.
+- [X] T009 Create the basic structure for the Docusaurus plugin in `src/plugins/chapter-validation/index.js`.
+- [X] T010 Implement the plugin's `contentLoaded` lifecycle hook to read document frontmatter in `src/plugins/chapter-validation/index.js`.
+- [X] T011 [P] Load the schema from `specs/003-chapter-template-system/contracts/ChapterMetadata.schema.json` into the plugin.
+- [X] T012 Implement the validation logic using AJV against the frontmatter for each document in `src/plugins/chapter-validation/index.js`.
+- [X] T013 Ensure the Docusaurus build fails with a clear error message if a chapter's frontmatter is invalid.
+- [X] T014 [P] Write a unit test in `tests/unit/plugins/chapter-validation.test.js` to verify the validation logic with valid and invalid metadata.
+- [X] T015 Register the new plugin in `docusaurus.config.ts`.
 
 **Checkpoint**: Foundation ready. The build process now validates all chapter frontmatter.
 
@@ -49,13 +49,13 @@
 
 ### Implementation for User Story 1
 
-- [ ] T016 [P] [US1] Create the React component for `<LearningGoals>` in `src/components/LearningGoals/index.tsx`.
-- [ ] T017 [P] [US1] Add basic styling for the LearningGoals component in `src/components/LearningGoals/styles.module.css`.
-- [ ] T018 [P] [US1] Create the React component for `<Prerequisites>` in `src/components/Prerequisites/index.tsx`.
-- [ ] T019 [P] [US1] Add basic styling for the Prerequisites component in `src/components/Prerequisites/styles.module.css`.
-- [ ] T020 [P] [US1] Create the React component for `<KeyTakeaways>` in `src/components/KeyTakeaways/index.tsx`.
-- [ ] T021 [P] [US1] Add basic styling for the KeyTakeaways component in `src/components/KeyTakeaways/styles.module.css`.
-- [ ] T022 Register the new components in `src/theme/MDXComponents.ts` to make them globally available in MDX files.
+- [X] T016 [P] [US1] Create the React component for `<LearningGoals>` in `src/components/LearningGoals/index.tsx`.
+- [X] T017 [P] [US1] Add basic styling for the LearningGoals component in `src/components/LearningGoals/styles.module.css`.
+- [X] T018 [P] [US1] Create the React component for `<Prerequisites>` in `src/components/Prerequisites/index.tsx`.
+- [X] T019 [P] [US1] Add basic styling for the Prerequisites component in `src/components/Prerequisites/styles.module.css`.
+- [X] T020 [P] [US1] Create the React component for `<KeyTakeaways>` in `src/components/KeyTakeaways/index.tsx`.
+- [X] T021 [P] [US1] Add basic styling for the KeyTakeaways component in `src/components/KeyTakeaways/styles.module.css`.
+- [X] T022 Register the new components in `src/theme/MDXComponents.ts` to make them globally available in MDX files.
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently.
 
@@ -69,14 +69,14 @@
 
 ### Tests for User Story 2
 
-- [ ] T023 [P] [US2] Write unit tests for the `<ExerciseBlock>` in `tests/unit/components/ExerciseBlock.test.tsx` to verify hint-reveal logic.
+- [X] T023 [P] [US2] Write unit tests for the `<ExerciseBlock>` in `tests/unit/components/ExerciseBlock.test.tsx` to verify hint-reveal logic.
 
 ### Implementation for User Story 2
 
-- [ ] T024 [US2] Create the `<ExerciseBlock>` React component in `src/components/ExerciseBlock/index.tsx`.
-- [ ] T025 [US2] Implement the component state to manage revealed hints using the `<details>` and `<summary>` HTML elements for accessibility.
-- [ ] T026 [US2] Add styling for the ExerciseBlock component in `src/components/ExerciseBlock/styles.module.css`.
-- [ ] T027 [US2] Update `src/theme/MDXComponents.ts` to include the `ExerciseBlock` component.
+- [X] T024 [US2] Create the `<ExerciseBlock>` React component in `src/components/ExerciseBlock/index.tsx`.
+- [X] T025 [US2] Implement the component state to manage revealed hints using the `<details>` and `<summary>` HTML elements for accessibility.
+- [X] T026 [US2] Add styling for the ExerciseBlock component in `src/components/ExerciseBlock/styles.module.css`.
+- [X] T027 [US2] Update `src/theme/MDXComponents.ts` to include the `ExerciseBlock` component.
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work.
 
@@ -86,10 +86,10 @@
 
 **Purpose**: Finalize the feature with a complete example and end-to-end testing.
 
-- [ ] T028 Create a full example chapter `docs/99-chapter-template-example/index.mdx` that uses all new components (`LearningGoals`, `Prerequisites`, `KeyTakeaways`, `ExerciseBlock`).
-- [ ] T029 Write a Playwright E2E test to navigate to the example chapter and verify the `<ExerciseBlock>`'s interactive hint-reveal functionality.
-- [ ] T030 Review and refine styles for all new components to ensure they are visually consistent and polished.
-- [ ] T031 Validate the feature by following the steps in `specs/003-chapter-template-system/quickstart.md`.
+- [X] T028 Create a full example chapter `docs/99-chapter-template-example/index.mdx` that uses all new components (`LearningGoals`, `Prerequisites`, `KeyTakeaways`, `ExerciseBlock`).
+- [X] T029 Write a Playwright E2E test to navigate to the example chapter and verify the `<ExerciseBlock>`'s interactive hint-reveal functionality.
+- [X] T030 Review and refine styles for all new components to ensure they are visually consistent and polished.
+- [X] T031 Validate the feature by following the steps in `specs/003-chapter-template-system/quickstart.md`.
 
 ---
 
