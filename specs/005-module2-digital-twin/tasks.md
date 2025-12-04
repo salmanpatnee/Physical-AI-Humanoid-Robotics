@@ -27,10 +27,10 @@ description: "Task list for feature implementation: Module 2 - The Digital Twin 
 
 **Purpose**: Create the necessary directory and file structure for the new module content.
 
-- [ ] T001 Create the directory for Module 2 content at `docs/module2-the-digital-twin/`
-- [ ] T002 Create the category metadata file `docs/module2-the-digital-twin/_category_.json` to configure the sidebar.
-- [ ] T003 Create the directory for module-specific images at `static/img/module2/`.
-- [ ] T004 Create the directory for simulation examples at `examples/module2/`.
+- [X] T001 Create the directory for Module 2 content at `docs/module2-the-digital-twin/`
+- [X] T002 Create the category metadata file `docs/module2-the-digital-twin/_category_.json` to configure the sidebar.
+- [X] T003 Create the directory for module-specific images at `static/img/module2/`.
+- [X] T004 Create the directory for simulation examples at `examples/module2/`.
 
 ---
 
@@ -42,14 +42,14 @@ description: "Task list for feature implementation: Module 2 - The Digital Twin 
 
 ### Implementation for User Stories 1 & 2
 
-- [ ] T005 [US1] [P] Create the introductory chapter MDX file `docs/module2-the-digital-twin/01-focus-physics-simulation-and-world-building.mdx`.
-- [ ] T006 [US1] Populate `01-focus-physics-simulation-and-world-building.mdx` with frontmatter and learning objectives for understanding Digital Twins and physics simulation.
-- [ ] T007 [US1] Write the introductory content for `01-focus-physics-simulation-and-world-building.mdx` explaining what a Digital Twin is (FR-001).
-- [ ] T008 [US2] Write the "Gazebo Overview" and "World Building" sections in `01-focus-physics-simulation-and-world-building.mdx` (FR-002).
-- [ ] T009 [US2] [P] Create the second chapter MDX file `docs/module2-the-digital-twin/02-simulating-collisions-gravity-and-sensors-in-gazebo.mdx`.
-- [ ] T010 [US2] Populate `02-simulating-collisions-gravity-and-sensors-in-gazebo.mdx` with frontmatter and learning objectives for Gazebo simulation.
-- [ ] T011 [US2] Write the "Collision Modeling" and "Gravity" sections in `02-simulating-collisions-gravity-and-sensors-in-gazebo.mdx` (FR-002).
-- [ ] T012 [US2] Create an `<ExerciseBlock>` in `02-simulating-collisions-gravity-and-sensors-in-gazebo.mdx` for building a simple Gazebo world (FR-007).
+- [X] T005 [US1] [P] Create the introductory chapter MDX file `docs/module2-the-digital-twin/01-focus-physics-simulation-and-world-building.mdx`.
+- [X] T006 [US1] Populate `01-focus-physics-simulation-and-world-building.mdx` with frontmatter and learning objectives for understanding Digital Twins and physics simulation.
+- [X] T007 [US1] Write the introductory content for `01-focus-physics-simulation-and-world-building.mdx` explaining what a Digital Twin is (FR-001).
+- [X] T008 [US2] Write the "Gazebo Overview" and "World Building" sections in `01-focus-physics-simulation-and-world-building.mdx` (FR-002).
+- [X] T009 [US2] [P] Create the second chapter MDX file `docs/module2-the-digital-twin/02-simulating-collisions-gravity-and-sensors-in-gazebo.mdx`.
+- [X] T010 [US2] Populate `02-simulating-collisions-gravity-and-sensors-in-gazebo.mdx` with frontmatter and learning objectives for Gazebo simulation.
+- [X] T011 [US2] Write the "Collision Modeling" and "Gravity" sections in `02-simulating-collisions-gravity-and-sensors-in-gazebo.mdx` (FR-002).
+- [X] T012 [US2] Create an `<ExerciseBlock>` in `02-simulating-collisions-gravity-and-sensors-in-gazebo.mdx` for building a simple Gazebo world (FR-007).
 
 **Checkpoint**: At this point, the foundational conceptual content and basic Gazebo simulation instructions are in place. The first two chapters are created.
 
@@ -63,15 +63,15 @@ description: "Task list for feature implementation: Module 2 - The Digital Twin 
 
 ### Implementation for User Stories 3 & 4
 
-- [ ] T013 [US3] Write the "Introduction to Sensors" and "Gazebo Sensors" sections in `02-simulating-collisions-gravity-and-sensors-in-gazebo.mdx` (FR-003).
-- [ ] T014 [US3] [P] Create the fourth chapter MDX file `docs/module2-the-digital-twin/04-sensor-simulation-lidar-depth-cameras-and-imus.mdx`.
-- [ ] T015 [US3] Populate `04-sensor-simulation-lidar-depth-cameras-and-imus.mdx` with frontmatter and learning objectives for advanced sensor simulation.
-- [ ] T016 [US3] Write the content for simulating LiDAR, Depth Cameras, and IMUs in `04-sensor-simulation-lidar-depth-cameras-and-imus.mdx` (FR-003).
-- [ ] T017 [US3] Create an `<ExerciseBlock>` in `04-sensor-simulation-lidar-depth-cameras-and-imus.mdx` for adding a simulated sensor and visualizing its output (FR-007).
-- [ ] T018 [US4] [P] Create the third chapter MDX file `docs/module2-the-digital-twin/03-high-fidelity-rendering-and-interaction-scenes-in-unity.mdx`.
-- [ ] T019 [US4] Populate `03-high-fidelity-rendering-and-interaction-scenes-in-unity.mdx` with frontmatter and learning objectives for Unity rendering.
-- [ ] T020 [US4] Write the content for using Unity for high-fidelity rendering and interaction in `03-high-fidelity-rendering-and-interaction-scenes-in-unity.mdx` (FR-004).
-- [ ] T021 [US4] Create an `<ExerciseBlock>` in `03-high-fidelity-rendering-and-interaction-scenes-in-unity.mdx` for importing a robot into Unity (FR-007).
+- [X] T013 [US3] Write the "Introduction to Sensors" and "Gazebo Sensors" sections in `02-simulating-collisions-gravity-and-sensors-in-gazebo.mdx` (FR-003).
+- [X] T014 [US3] [P] Create the fourth chapter MDX file `docs/module2-the-digital-twin/04-sensor-simulation-lidar-depth-cameras-and-imus.mdx`.
+- [X] T015 [US3] Populate `04-sensor-simulation-lidar-depth-cameras-and-imus.mdx` with frontmatter and learning objectives for advanced sensor simulation.
+- [X] T016 [US3] Write the content for simulating LiDAR, Depth Cameras, and IMUs in `04-sensor-simulation-lidar-depth-cameras-and-imus.mdx` (FR-003).
+- [X] T017 [US3] Create an `<ExerciseBlock>` in `04-sensor-simulation-lidar-depth-cameras-and-imus.mdx` for adding a simulated sensor and visualizing its output (FR-007).
+- [X] T018 [US4] [P] Create the third chapter MDX file `docs/module2-the-digital-twin/03-high-fidelity-rendering-and-interaction-scenes-in-unity.mdx`.
+- [X] T019 [US4] Populate `03-high-fidelity-rendering-and-interaction-scenes-in-unity.mdx` with frontmatter and learning objectives for Unity rendering.
+- [X] T020 [US4] Write the content for using Unity for high-fidelity rendering and interaction in `03-high-fidelity-rendering-and-interaction-scenes-in-unity.mdx` (FR-004).
+- [X] T021 [US4] Create an `<ExerciseBlock>` in `03-high-fidelity-rendering-and-interaction-scenes-in-unity.mdx` for importing a robot into Unity (FR-007).
 
 
 **Checkpoint**: All specified chapter content is now planned. The core educational material is drafted.
@@ -82,14 +82,14 @@ description: "Task list for feature implementation: Module 2 - The Digital Twin 
 
 **Purpose**: Add assets, validate content, and ensure all requirements are met.
 
-- [ ] T022 [P] Create placeholder images for Gazebo simulation and Unity rendering and place them in `static/img/module2/`.
-- [ ] T023 [P] Create basic example Gazebo world files and robot URDFs and place them in `examples/module2/` (FR-008).
-- [ ] T024 [P] Create a basic example Unity scene and place it in `examples/module2/` (FR-008).
-- [ ] T025 Ensure all MDX files use the required components (`<LearningObjectives>`, `<KeyTakeaways>`, `<Prerequisites>`) (FR-005).
-- [ ] T026 Validate the frontmatter of all new MDX files against the project's JSON schema (FR-006).
-- [ ] T027 Review and refine all exercise blocks to ensure they are clear and guide the student effectively (FR-007).
-- [ ] T028 Update `sidebars.ts` to include the new module if it's not handled automatically by the `_category_.json` file.
-- [ ] T029 Write a `README.md` for the `examples/module2/` directory explaining how to run the simulations.
+- [X] T022 [P] Create placeholder images for Gazebo simulation and Unity rendering and place them in `static/img/module2/`.
+- [X] T023 [P] Create basic example Gazebo world files and robot URDFs and place them in `examples/module2/` (FR-008).
+- [X] T024 [P] Create a basic example Unity scene and place it in `examples/module2/` (FR-008).
+- [X] T025 Ensure all MDX files use the required components (`<LearningObjectives>`, `<KeyTakeaways>`, `<Prerequisites>`) (FR-005).
+- [X] T026 Validate the frontmatter of all new MDX files against the project's JSON schema (FR-006).
+- [X] T027 Review and refine all exercise blocks to ensure they are clear and guide the student effectively (FR-007).
+- [X] T028 Update `sidebars.ts` to include the new module if it's not handled automatically by the `_category_.json` file.
+- [X] T029 Write a `README.md` for the `examples/module2/` directory explaining how to run the simulations.
 
 ---
 

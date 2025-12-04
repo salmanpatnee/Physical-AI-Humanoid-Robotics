@@ -1,0 +1,47 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#2c3e50"/>
+
+  <!-- Ground plane -->
+  <rect x="0" y="400" width="800" height="200" fill="#34495e"/>
+
+  <!-- Grid lines -->
+  <g stroke="#566573" stroke-width="1" opacity="0.3">
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="0" y1="450" x2="800" y2="450"/>
+    <line x1="0" y1="500" x2="800" y2="500"/>
+    <line x1="0" y1="550" x2="800" y2="550"/>
+    <line x1="100" y1="400" x2="100" y2="600"/>
+    <line x1="200" y1="400" x2="200" y2="600"/>
+    <line x1="300" y1="400" x2="300" y2="600"/>
+    <line x1="400" y1="400" x2="400" y2="600"/>
+    <line x1="500" y1="400" x2="500" y2="600"/>
+    <line x1="600" y1="400" x2="600" y2="600"/>
+    <line x1="700" y1="400" x2="700" y2="600"/>
+  </g>
+
+  <!-- Robot body -->
+  <rect x="350" y="300" width="100" height="80" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+
+  <!-- Robot head -->
+  <circle cx="400" cy="280" r="30" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+
+  <!-- Robot wheels -->
+  <circle cx="370" cy="390" r="20" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2"/>
+  <circle cx="430" cy="390" r="20" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2"/>
+
+  <!-- LiDAR sensor on top -->
+  <rect x="385" y="260" width="30" height="15" fill="#e74c3c" stroke="#c0392b" stroke-width="1"/>
+
+  <!-- Obstacle box -->
+  <rect x="550" y="340" width="60" height="60" fill="#e67e22" stroke="#d35400" stroke-width="2"/>
+
+  <!-- Title -->
+  <text x="400" y="50" font-family="Arial, sans-serif" font-size="32" fill="#ecf0f1" text-anchor="middle" font-weight="bold">Gazebo Simulation</text>
+  <text x="400" y="85" font-family="Arial, sans-serif" font-size="18" fill="#bdc3c7" text-anchor="middle">Physics-Based Robot Simulation</text>
+
+  <!-- Labels -->
+  <text x="400" y="250" font-family="Arial, sans-serif" font-size="12" fill="#ecf0f1" text-anchor="middle">LiDAR</text>
+  <text x="400" y="450" font-family="Arial, sans-serif" font-size="14" fill="#ecf0f1" text-anchor="middle">Mobile Robot</text>
+  <text x="580" y="425" font-family="Arial, sans-serif" font-size="14" fill="#ecf0f1" text-anchor="middle">Obstacle</text>
+</svg>

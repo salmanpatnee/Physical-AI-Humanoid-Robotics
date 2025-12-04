@@ -1,0 +1,73 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient background for photorealistic feel -->
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E0F6FF;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="floorGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B7355;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6B5745;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="lightGlow">
+      <stop offset="0%" style="stop-color:#FFF8DC;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#FFF8DC;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Sky background -->
+  <rect width="800" height="400" fill="url(#skyGradient)"/>
+
+  <!-- Floor with perspective -->
+  <polygon points="0,400 800,400 700,600 100,600" fill="url(#floorGradient)"/>
+
+  <!-- Light glow effect -->
+  <circle cx="200" cy="150" r="100" fill="url(#lightGlow)"/>
+
+  <!-- Humanoid robot (simplified) -->
+  <g id="humanoid">
+    <!-- Legs -->
+    <rect x="360" y="450" width="20" height="80" fill="#2C3E50" rx="5"/>
+    <rect x="420" y="450" width="20" height="80" fill="#2C3E50" rx="5"/>
+
+    <!-- Feet -->
+    <ellipse cx="370" cy="540" rx="15" ry="8" fill="#34495E"/>
+    <ellipse cx="430" cy="540" rx="15" ry="8" fill="#34495E"/>
+
+    <!-- Torso -->
+    <rect x="350" y="380" width="100" height="80" fill="#3498DB" rx="8"/>
+
+    <!-- Arms -->
+    <rect x="320" y="390" width="15" height="60" fill="#2C3E50" rx="5"/>
+    <rect x="465" y="390" width="15" height="60" fill="#2C3E50" rx="5"/>
+
+    <!-- Head -->
+    <circle cx="400" cy="360" r="25" fill="#ECF0F1"/>
+    <circle cx="392" cy="355" r="3" fill="#2C3E50"/>
+    <circle cx="408" cy="355" r="3" fill="#2C3E50"/>
+  </g>
+
+  <!-- Table with object -->
+  <rect x="500" y="480" width="120" height="10" fill="#8B4513"/>
+  <rect x="510" y="490" width="8" height="50" fill="#654321"/>
+  <rect x="602" y="490" width="8" height="50" fill="#654321"/>
+
+  <!-- Object on table (cup) -->
+  <rect x="550" y="460" width="30" height="20" fill="#E74C3C" rx="2"/>
+  <ellipse cx="565" cy="460" rx="15" ry="5" fill="#C0392B"/>
+
+  <!-- Indoor lighting elements -->
+  <circle cx="200" cy="150" r="15" fill="#FFF8DC" opacity="0.9"/>
+
+  <!-- Title -->
+  <text x="400" y="50" font-family="Arial, sans-serif" font-size="32" fill="#2C3E50" text-anchor="middle" font-weight="bold">Unity Rendering</text>
+  <text x="400" y="85" font-family="Arial, sans-serif" font-size="18" fill="#34495E" text-anchor="middle">Photorealistic Human-Robot Interaction</text>
+
+  <!-- Labels -->
+  <text x="400" y="565" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50" text-anchor="middle">Humanoid Robot</text>
+  <text x="565" y="450" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50" text-anchor="middle">Object</text>
+
+  <!-- HDRP indicator -->
+  <rect x="10" y="550" width="100" height="30" fill="#16A085" rx="5"/>
+  <text x="60" y="571" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle" font-weight="bold">HDRP</text>
+</svg>
