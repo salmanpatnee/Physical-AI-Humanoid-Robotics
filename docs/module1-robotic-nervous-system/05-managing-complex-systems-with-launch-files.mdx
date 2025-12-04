@@ -1,0 +1,600 @@
+---
+title: "5. Managing Complex Systems with Launch Files"
+sidebar_position: 5
+chapter_type: "tutorial"
+learning_goals:
+  - "Understand the purpose and benefits of ROS 2 launch files"
+  - "Learn to write Python-based launch files"
+  - "Configure multiple nodes with parameters and remapping"
+  - "Manage humanoid robot system startup and configuration"
+prerequisites:
+  - "ROS 2 nodes, topics, and services (Chapters 2-3)"
+  - "Basic Python programming"
+key_takeaways:
+  - "Launch files start multiple nodes with complex configurations"
+  - "Python launch files provide full programming flexibility"
+  - "Parameters, remapping, and namespaces organize multi-robot systems"
+  - "Launch files are essential for managing humanoid robot complexity"
+---
+
+# Managing Complex Systems with Launch Files
+
+## The Challenge of Complex Robot Systems
+
+A humanoid robot isn't a single programit's an ecosystem of dozens of processes (nodes) working together:
+
+- Camera drivers (left eye, right eye)
+- Object detectors
+- Balance controllers
+- Motor drivers (20+ joints)
+- Navigation planners
+- Voice recognition
+- LLM integrationHumanoid robot systems typically involve 20-50+ nodes running simultaneously. Starting each manually (`ros2 run package node`) would be:
+- **Tedious**: 50 commands to type
+- **Error-prone**: Easy to forget nodes or misconfigure
+- **Irreproducible**: Hard to share exact configurations
+- **Inflexible**: Can't easily switch between sim and hardware
+
+**Launch files** solve this by automating the startup and configuration of complex ROS 2 systems.
+
+<LearningGoals>
+- Understand the purpose and benefits of ROS 2 launch files
+- Learn to write Python-based launch files
+- Configure multiple nodes with parameters and remapping"
+  - Manage humanoid robot system startup and configuration
+</LearningGoals>
+
+<Prerequisites>
+- ROS 2 nodes, topics, and services (Chapters 2-3)
+- Basic Python programming
+</Prerequisites>
+
+## What are Launch Files?
+
+A **launch file** is a script that:
+1. **Starts multiple nodes** with a single command
+2. **Sets parameters** for each node
+3. **Configures topic remapping** (e.g., `/left_camera/image` ’ `/camera/left/image`)
+4. **Manages node lifecycle** (startup order, dependencies)
+5. **Includes other launch files** (modular composition)
+
+ROS 2 supports two formats:
+- **XML launch files**: Simple, declarative (legacy from ROS 1)
+- **Python launch files**: Full programming power (recommended)
+
+## Your First Python Launch File
+
+```python
+# minimal_launch.py
+from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='demo_nodes_py',
+            executable='talker',
+            name='my_talker',
+            output='screen'
+        ),
+        Node(
+            package='demo_nodes_py',
+            executable='listener',
+            name='my_listener',
+            output='screen'
+        ),
+    ])
+```
+
+**Run it:**
+
+```bash
+ros2 launch my_package minimal_launch.py
+```
+
+This single command starts both the talker and listener nodes.
+
+## Humanoid Robot Launch File
+
+Let's build a launch file for a humanoid balance system:
+
+```python
+# humanoid_balance.launch.py
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument, ExecuteProcess
+from launch.substitutions import LaunchConfiguration
+from launch.conditions import IfCondition
+
+def generate_launch_description():
+    # Declare launch arguments
+    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
+    enable_visualization = LaunchConfiguration('enable_viz', default='true')
+
+    return LaunchDescription([
+        # Declare arguments
+        DeclareLaunchArgument(
+            'use_sim_time',
+            default_value='false',
+            description='Use simulation (Gazebo) clock if true'
+        ),
+
+        DeclareLaunchArgument(
+            'enable_viz',
+            default_value='true',
+            description='Launch RViz visualization'
+        ),
+
+        # Robot state publisher (publishes URDF transforms)
+        Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            name='robot_state_publisher',
+            output='screen',
+            parameters=[{
+                'robot_description': open('/path/to/humanoid.urdf').read(),
+                'use_sim_time': use_sim_time
+            }]
+        ),
+
+        # IMU driver node
+        Node(
+            package='imu_driver',
+            executable='imu_publisher',
+            name='imu_driver',
+            output='screen',
+            parameters=[{
+                'frame_id': 'imu_link',
+                'publish_rate': 100.0  # Hz
+            }],
+            remappings=[
+                ('/imu/data_raw', '/imu/data')
+            ]
+        ),
+
+        # Balance controller
+        Node(
+            package='humanoid_control',
+            executable='balance_controller',
+            name='balance_controller',
+            output='screen',
+            parameters=[{
+                'control_frequency': 100.0,
+                'pid_gains': {'p': 2.0, 'i': 0.1, 'd': 0.5}
+            }]
+        ),
+
+        # Motor controller for all joints
+        Node(
+            package='motor_control',
+            executable='joint_controller',
+            name='motor_controller',
+            output='screen',
+            parameters=[{
+                'num_joints': 12,
+                'max_torque': 100.0
+            }]
+        ),
+
+        # RViz visualization (conditional)
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz',
+            condition=IfCondition(enable_visualization),
+            arguments=['-d', '/path/to/humanoid_config.rviz']
+        ),
+    ])
+```
+
+**Usage:**
+
+```bash
+# Launch with defaults
+ros2 launch humanoid_control humanoid_balance.launch.py
+
+# Launch without visualization
+ros2 launch humanoid_control humanoid_balance.launch.py enable_viz:=false
+
+# Launch in simulation mode
+ros2 launch humanoid_control humanoid_balance.launch.py use_sim_time:=true
+```
+
+## Advanced Launch File Features
+
+### 1. Parameter Files
+
+Instead of hardcoding parameters in the launch file, use YAML config files:
+
+```yaml
+# humanoid_config.yaml
+/balance_controller:
+  ros__parameters:
+    control_frequency: 100.0
+    pid_gains:
+      p: 2.0
+      i: 0.1
+      d: 0.5
+    max_tilt_angle: 0.3  # radians
+
+/imu_driver:
+  ros__parameters:
+    frame_id: "imu_link"
+    publish_rate: 100.0
+```
+
+```python
+# In launch file
+from ament_index_python.packages import get_package_share_directory
+import os
+
+config_file = os.path.join(
+    get_package_share_directory('humanoid_control'),
+    'config',
+    'humanoid_config.yaml'
+)
+
+Node(
+    package='humanoid_control',
+    executable='balance_controller',
+    parameters=[config_file]
+)
+```
+
+### 2. Including Other Launch Files
+
+Build modular systems by composing launch files:
+
+```python
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
+# Include sensors launch file
+sensors_launch = IncludeLaunchDescription(
+    PythonLaunchDescriptionSource([
+        get_package_share_directory('humanoid_sensors'),
+        '/launch/sensors.launch.py'
+    ]),
+    launch_arguments={
+        'enable_cameras': 'true',
+        'enable_lidar': 'false'
+    }.items()
+)
+```
+
+### 3. Namespaces for Multi-Robot Systems
+
+Deploy multiple robots by using namespaces:
+
+```python
+def generate_launch_description():
+    return LaunchDescription([
+        # Robot 1
+        Node(
+            package='humanoid_control',
+            executable='balance_controller',
+            namespace='robot1',
+            name='balance_controller'
+        ),
+
+        # Robot 2
+        Node(
+            package='humanoid_control',
+            executable='balance_controller',
+            namespace='robot2',
+            name='balance_controller'
+        ),
+    ])
+```
+
+Now topics are namespaced:
+- `/robot1/imu/data`
+- `/robot2/imu/data`
+
+### 4. Launch Events and Handlers
+
+Execute actions based on events:
+
+```python
+from launch.event_handlers import OnProcessExit
+from launch.actions import EmitEvent, RegisterEventHandler
+from launch_ros.events.lifecycle import ChangeState
+
+# Start node B only after node A exits successfully
+node_a = Node(package='pkg_a', executable='node_a')
+node_b = Node(package='pkg_b', executable='node_b')
+
+on_exit_handler = RegisterEventHandler(
+    OnProcessExit(
+        target_action=node_a,
+        on_exit=[node_b]
+    )
+)
+```
+
+## Complete Humanoid Robot System
+
+Here's a realistic launch file for a complete humanoid:
+
+```python
+# humanoid_full.launch.py
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.actions import (
+    DeclareLaunchArgument,
+    IncludeLaunchDescription,
+    TimerAction
+)
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
+
+def generate_launch_description():
+    # Configuration
+    robot_name = LaunchConfiguration('robot_name')
+    use_sim = LaunchConfiguration('use_sim')
+
+    # Package directories
+    humanoid_description = FindPackageShare('humanoid_description')
+    humanoid_control = FindPackageShare('humanoid_control')
+    humanoid_perception = FindPackageShare('humanoid_perception')
+
+    # Config files
+    urdf_file = PathJoinSubstitution([humanoid_description, 'urdf', 'humanoid.urdf'])
+    rviz_config = PathJoinSubstitution([humanoid_description, 'rviz', 'view.rviz'])
+
+    return LaunchDescription([
+        # Arguments
+        DeclareLaunchArgument('robot_name', default_value='humanoid'),
+        DeclareLaunchArgument('use_sim', default_value='true'),
+
+        # 1. Robot Description
+        Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            namespace=robot_name,
+            parameters=[{'robot_description': open(urdf_file.perform(None)).read()}]
+        ),
+
+        # 2. Sensor Drivers
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([
+                PathJoinSubstitution([humanoid_description, 'launch', 'sensors.launch.py'])
+            ])
+        ),
+
+        # 3. Perception Stack (vision, object detection)
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([
+                PathJoinSubstitution([humanoid_perception, 'launch', 'perception.launch.py'])
+            ])
+        ),
+
+        # 4. Control Stack (delayed start to wait for sensors)
+        TimerAction(
+            period=2.0,  # Wait 2 seconds
+            actions=[
+                IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource([
+                        PathJoinSubstitution([humanoid_control, 'launch', 'control.launch.py'])
+                    ])
+                )
+            ]
+        ),
+
+        # 5. Navigation (if not in sim)
+        # Conditionally start navigation stack...
+
+        # 6. Visualization
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            arguments=['-d', rviz_config]
+        ),
+    ])
+```
+
+## Launch File Best Practices
+
+### 1. Use Descriptive Names
+
+```python
+# Bad
+Node(package='pkg', executable='node1')
+
+# Good
+Node(
+    package='humanoid_sensors',
+    executable='stereo_camera_driver',
+    name='left_eye_camera'
+)
+```
+
+### 2. Make Configurations Reusable
+
+```python
+# Define common parameters once
+common_camera_params = {
+    'frame_rate': 30,
+    'resolution': '1920x1080',
+    'auto_exposure': True
+}
+
+# Reuse for multiple cameras
+left_camera = Node(
+    package='camera_driver',
+    executable='camera_node',
+    name='left_camera',
+    parameters=[common_camera_params, {'device_id': '/dev/video0'}]
+)
+
+right_camera = Node(
+    package='camera_driver',
+    executable='camera_node',
+    name='right_camera',
+    parameters=[common_camera_params, {'device_id': '/dev/video1'}]
+)
+```
+
+### 3. Document Launch Arguments
+
+```python
+DeclareLaunchArgument(
+    'robot_name',
+    default_value='humanoid_01',
+    description='Unique identifier for this robot instance. '
+                'Used for namespacing topics and services. '
+                'Example: humanoid_01, humanoid_02'
+)
+```
+
+### 4. Handle Failures Gracefully
+
+```python
+from launch.actions import LogInfo
+
+LogInfo(msg='Starting humanoid robot system...'),
+
+Node(
+    package='critical_node',
+    executable='critical_exe',
+    on_exit=[
+        LogInfo(msg='Critical node exited! Check logs for errors.'),
+        # Could also trigger shutdown or restart
+    ]
+)
+```
+
+## Testing Launch Files
+
+```bash
+# Test syntax without launching
+ros2 launch --show-args my_package my_launch.py
+
+# Launch with debugging output
+ros2 launch my_package my_launch.py --debug
+
+# Check what nodes would be launched
+ros2 launch my_package my_launch.py --print-description
+```
+
+<KeyTakeaways>
+- Launch files automate starting multiple nodes with complex configurations
+- Python launch files provide full programming flexibility
+- Parameters, remapping, and namespaces organize multi-robot systems
+- Modular launch files (via includes) enable reusable robot subsystems
+- Launch files are essential for managing humanoid robot complexity (20-50+ nodes)
+- Use descriptive names, reusable configurations, and proper documentation
+</KeyTakeaways>
+
+## Practical Exercise
+
+<ExerciseBlock
+  question="Design a launch file for a humanoid robot that needs to: (1) publish its URDF, (2) start stereo cameras (left and right), (3) run an object detector, (4) start a balance controller, and (5) optionally launch RViz. The launch file should accept a 'use_sim' argument that changes camera topics when in simulation."
+  hints={[
+    { title: "Hint 1", content: "Use DeclareLaunchArgument to create the 'use_sim' boolean parameter." },
+    { title: "Hint 2", content: "Use topic remapping to change camera topics based on whether you're in simulation or using real hardware." },
+    { title: "Hint 3", content: "Use IfCondition to conditionally launch RViz based on a launch argument." }
+  ]}
+  solution={
+    <div>
+      <p><strong>Solution:</strong></p>
+      <pre>{`
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+from launch.conditions import IfCondition, UnlessCondition
+
+def generate_launch_description():
+    use_sim = LaunchConfiguration('use_sim')
+    enable_rviz = LaunchConfiguration('enable_rviz')
+
+    return LaunchDescription([
+        # Arguments
+        DeclareLaunchArgument(
+            'use_sim',
+            default_value='false',
+            description='Use simulation camera topics if true'
+        ),
+        DeclareLaunchArgument(
+            'enable_rviz',
+            default_value='true',
+            description='Launch RViz visualization'
+        ),
+
+        # Robot description
+        Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            parameters=[{
+                'robot_description': open('/path/to/humanoid.urdf').read()
+            }]
+        ),
+
+        # Left camera (hardware)
+        Node(
+            package='camera_driver',
+            executable='stereo_camera',
+            name='left_camera',
+            condition=UnlessCondition(use_sim),
+            parameters=[{'device_id': '/dev/video0'}],
+            remappings=[('/camera/image', '/left_camera/image')]
+        ),
+
+        # Left camera (sim)
+        Node(
+            package='gazebo_ros',
+            executable='camera_sim',
+            name='left_camera_sim',
+            condition=IfCondition(use_sim),
+            remappings=[('/sim/left/image', '/left_camera/image')]
+        ),
+
+        # Right camera (similar pattern)
+        # ... (omitted for brevity)
+
+        # Object detector (subscribes to camera topics)
+        Node(
+            package='vision',
+            executable='object_detector',
+            parameters=[{
+                'left_camera_topic': '/left_camera/image',
+                'right_camera_topic': '/right_camera/image'
+            }]
+        ),
+
+        # Balance controller
+        Node(
+            package='control',
+            executable='balance_controller',
+            parameters=[{'control_rate': 100.0}]
+        ),
+
+        # RViz (conditional)
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            condition=IfCondition(enable_rviz),
+            arguments=['-d', '/path/to/config.rviz']
+        ),
+    ])
+      `}</pre>
+    </div>
+  }
+/>
+
+## Module 1 Summary
+
+Congratulations! You've completed Module 1: The Robotic Nervous System. You now understand:
+
+1. **Middleware fundamentals** and why ROS 2 is essential for humanoid robotics
+2. **ROS 2 communication patterns**: topics, services, and actions
+3. **Python integration** with rclpy for AI-robot bridging
+4. **URDF modeling** for robot structure and kinematics
+5. **Launch files** for managing complex robot systems
+
+In Module 2, you'll learn about simulation environments (Gazebo and Unity) where you'll deploy these concepts to create digital twins of humanoid robots.
+
+## Next Steps
+
+Continue to Module 2: The Digital Twin, where you'll simulate your humanoid robot in physics-based environments.

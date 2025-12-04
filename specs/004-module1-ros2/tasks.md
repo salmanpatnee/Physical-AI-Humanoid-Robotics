@@ -12,13 +12,13 @@
 
 **Purpose**: Create the directory structure and empty files for Module 1.
 
-- [ ] T001 Create the directory `docs/module1-robotic-nervous-system/`.
-- [ ] T002 [P] Create the file `docs/module1-robotic-nervous-system/_category_.json`.
-- [ ] T003 [P] Create the empty file `docs/module1-robotic-nervous-system/01-focus-middleware-for-robot-control.mdx`.
-- [ ] T004 [P] Create the empty file `docs/module1-robotic-nervous-system/02-ros2-nodes-topics-services.mdx`.
-- [ ] T005 [P] Create the empty file `docs/module1-robotic-nervous-system/03-bridging-python-agents-with-rclpy.mdx`.
-- [ ] T006 [P] Create the empty file `docs/module1-robotic-nervous-system/04-understanding-urdf.mdx`.
-- [ ] T007 [P] Create the empty file `docs/module1-robotic-nervous-system/05-managing-complex-systems-with-launch-files.mdx`.
+- [X] T001 Create the directory `docs/module1-robotic-nervous-system/`.
+- [X] T002 [P] Create the file `docs/module1-robotic-nervous-system/_category_.json`.
+- [X] T003 [P] Create the empty file `docs/module1-robotic-nervous-system/01-focus-middleware-for-robot-control.mdx`.
+- [X] T004 [P] Create the empty file `docs/module1-robotic-nervous-system/02-ros2-nodes-topics-services.mdx`.
+- [X] T005 [P] Create the empty file `docs/module1-robotic-nervous-system/03-bridging-python-agents-with-rclpy.mdx`.
+- [X] T006 [P] Create the empty file `docs/module1-robotic-nervous-system/04-understanding-urdf.mdx`.
+- [X] T007 [P] Create the empty file `docs/module1-robotic-nervous-system/05-managing-complex-systems-with-launch-files.mdx`.
 
 ---
 
@@ -26,7 +26,7 @@
 
 **Purpose**: Configure the module's appearance in the sidebar.
 
-- [ ] T008 Populate `docs/module1-robotic-nervous-system/_category_.json` with the label "Module 1: The Robotic Nervous System" and a sidebar position.
+- [X] T008 Populate `docs/module1-robotic-nervous-system/_category_.json` with the label "Module 1: The Robotic Nervous System" and a sidebar position.
 
 ---
 
@@ -38,9 +38,9 @@
 
 ### Implementation for User Stories 1 & 2
 
-- [ ] T009 [P] [US1] Write the content for the chapter in `docs/module1-robotic-nervous-system/01-focus-middleware-for-robot-control.mdx`, including frontmatter.
-- [ ] T010 [P] [US1] Write the content for the chapter in `docs/module1-robotic-nervous-system/02-ros2-nodes-topics-services.mdx`, including conceptual explanations, diagrams, code examples, and exercises using MDX components.
-- [ ] T011 [P] [US2] Write the content for the chapter in `docs/module1-robotic-nervous-system/03-bridging-python-agents-with-rclpy.mdx`, focusing on `rclpy`, runnable examples, and exercises.
+- [X] T009 [P] [US1] Write the content for the chapter in `docs/module1-robotic-nervous-system/01-focus-middleware-for-robot-control.mdx`, including frontmatter.
+- [X] T010 [P] [US1] Write the content for the chapter in `docs/module1-robotic-nervous-system/02-ros2-nodes-topics-services.mdx`, including conceptual explanations, diagrams, code examples, and exercises using MDX components.
+- [X] T011 [P] [US2] Write the content for the chapter in `docs/module1-robotic-nervous-system/03-bridging-python-agents-with-rclpy.mdx`, focusing on `rclpy`, runnable examples, and exercises.
 
 **Checkpoint**: The core conceptual chapters of Module 1 are complete and reviewable.
 
@@ -54,8 +54,8 @@
 
 ### Implementation for User Stories 3 & 4
 
-- [ ] T012 [P] [US3] Write the content for the chapter `docs/module1-robotic-nervous-system/04-understanding-urdf.mdx`, including explanations of the format, diagrams, and visualization concepts.
-- [ ] T013 [P] [US4] Write the content for the chapter `docs/module1-robotic-nervous-system/05-managing-complex-systems-with-launch-files.mdx`, with examples of Python-based launch files.
+- [X] T012 [P] [US3] Write the content for the chapter `docs/module1-robotic-nervous-system/04-understanding-urdf.mdx`, including explanations of the format, diagrams, and visualization concepts.
+- [X] T013 [P] [US4] Write the content for the chapter `docs/module1-robotic-nervous-system/05-managing-complex-systems-with-launch-files.mdx`, with examples of Python-based launch files.
 
 **Checkpoint**: All five chapters of Module 1 have their initial content drafts complete.
 
@@ -65,11 +65,11 @@
 
 **Purpose**: Review and refine all content in Module 1 for consistency, clarity, and correctness.
 
-- [ ] T014 Review all five chapters for consistent use of terminology and MDX components.
-- [ ] T015 Verify all frontmatter in all five chapters is correct and passes the schema validation during the Docusaurus build (`npm run build`).
-- [ ] T016 [P] Proofread all chapters for grammatical errors and clarity.
-- [ ] T017 [P] Test all runnable code examples to ensure they work as described.
-- [ ] T018 Validate the final content by following the steps in `specs/004-module1-ros2/quickstart.md`.
+- [X] T014 Review all five chapters for consistent use of terminology and MDX components.
+- [X] T015 Verify all frontmatter in all five chapters is correct and passes the schema validation during the Docusaurus build (`npm run build`).
+- [X] T016 [P] Proofread all chapters for grammatical errors and clarity.
+- [X] T017 [P] Test all runnable code examples to ensure they work as described.
+- [X] T018 Validate the final content by following the steps in `specs/004-module1-ros2/quickstart.md`.
 
 ---
 
