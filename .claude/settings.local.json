@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell.exe:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -File:*)",
+      "Bash(test:*)",
+      "Bash(npm run start:*)",
+      "Bash(npm run build:*)",
+      "Bash(bash .specify/scripts/bash/create-phr.sh:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
