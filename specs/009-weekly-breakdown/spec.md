@@ -40,7 +40,6 @@ As a reader, I want to see a visual timeline or table showing how the 4 modules 
 
 ### Edge Cases
 
-- What if a student wants to accelerate and complete multiple weeks in one week? Should the schedule indicate dependencies?
 - How will the schedule handle holidays or breaks in an academic setting?
 - Should there be links from weekly topics back to specific chapter pages?
 - What if the 13-week schedule doesn't align perfectly with the 4 modules (17 chapters total)?
@@ -52,6 +51,7 @@ As a reader, I want to see a visual timeline or table showing how the 4 modules 
 - The schedule page will be a standalone MDX page accessible from the main navigation or introduction.
 - Module 4 includes the Capstone project as a multi-week effort (implied in PDF).
 - The weekly schedule should reference existing chapter content without duplicating it.
+- The schedule represents a continuous 13-week academic period, with the understanding that real-world academic calendars may require adjustments.
 
 ## Clarifications
 
@@ -61,6 +61,10 @@ As a reader, I want to see a visual timeline or table showing how the 4 modules 
 - Q: Should each week include estimated hours/workload, or just topic descriptions? → A: Include estimated hours per week (from PDF: "10 hours/week × 12 weeks" suggests ~10 hours/week standard).
 - Q: Should the schedule distinguish between lecture content vs. hands-on lab time? → A: Yes, indicate "Topics" (reading) vs. "Activities" (hands-on) for each week.
 - Q: Where should this page appear in the sidebar - before modules, after introduction, or as a separate section? → A: Place after Introduction, before Module 1, as "Course Structure" or "Weekly Schedule".
+- Q: How should the Capstone project's development be represented in the schedule? → A: Weeks 11-13 indicate progressive Capstone development (e.g., 'Planning', 'Development', 'Finalization').
+- Q: Should the schedule include prerequisite checks (e.g., "Before Week 8, ensure you have completed Module 1-2")? → A: Yes, add a 'Prerequisites' line for key transitional weeks.
+- Q: How should the schedule address students who wish to accelerate their progress? → A: The schedule should be presented as a recommended pace, with flexibility for self-paced learning.
+- Q: Should a dedicated "catch-up" or "buffer" week be explicitly included in the 13-week schedule? → A: No, adhere strictly to the 13-week content structure specified in the PDF.
 
 ## Requirements *(mandatory)*
 
@@ -73,8 +77,8 @@ As a reader, I want to see a visual timeline or table showing how the 4 modules 
   - **Weeks 3-5**: ROS 2 Fundamentals (Module 1)
   - **Weeks 6-7**: Robot Simulation with Gazebo (Module 2)
   - **Weeks 8-10**: NVIDIA Isaac Platform (Module 3)
-  - **Weeks 11-12**: Humanoid Robot Development (Module 3 advanced + Module 4 intro)
-  - **Week 13**: Conversational Robotics & Capstone (Module 4)
+  - **Weeks 11-12**: Humanoid Robot Development (Module 3 advanced + Module 4 intro) & Capstone Planning/Development
+  - **Week 13**: Conversational Robotics & Capstone Finalization (Module 4)
 - **FR-004**: Each week entry MUST include:
   - Week number and title
   - Primary module(s) covered
@@ -84,6 +88,7 @@ As a reader, I want to see a visual timeline or table showing how the 4 modules 
 - **FR-005**: The page MUST include a visual timeline (table or Mermaid diagram) showing module-to-week mapping.
 - **FR-006**: Chapter references MUST be clickable links to the actual chapter pages.
 - **FR-007**: The page MUST be added to the sidebar configuration in `sidebars.ts` with appropriate position (after Introduction, before Module 1).
+- **FR-008**: The schedule MUST include prerequisite checks for key transitional weeks (e.g., at the start of new modules).
 
 ### Key Entities *(include if feature involves data)*
 
@@ -114,9 +119,6 @@ As a reader, I want to see a visual timeline or table showing how the 4 modules 
 
 ## Open Questions
 
-- **OQ-001**: Should the schedule include prerequisite checks (e.g., "Before Week 8, ensure you have completed Module 1-2")? → Suggested: Yes, add prerequisites for major transitions.
-- **OQ-002**: Should there be a "catch-up week" or buffer week built into the 13-week schedule? → Suggested: No, keep aligned with PDF's 13-week structure.
-- **OQ-003**: Should the Capstone project span multiple weeks explicitly, or is it just part of Week 13? → Suggested: Weeks 11-13 should indicate progressive Capstone development.
 
 ## Dependencies
 
@@ -127,7 +129,7 @@ As a reader, I want to see a visual timeline or table showing how the 4 modules 
 ## Risks
 
 - **Risk 1**: The 13-week schedule might not perfectly align with the 17 total chapters (4+4+4+5 = 17 chapters vs. 13 weeks). Mitigation: Some weeks will cover multiple chapters, others will focus on projects/integration.
-- **Risk 2**: Students might find the rigid weekly structure inflexible for self-paced learning. Mitigation: Clearly label the schedule as "recommended" and note that self-paced learners can adjust.
+- **Risk 2**: Students might find the rigid weekly structure inflexible for self-paced learning. Mitigation: Clearly label the schedule as "recommended" and emphasize flexibility for self-paced learners, with dependencies implied by prerequisite checks.
 - **Risk 3**: Links to chapters might break if chapter URLs change. Mitigation: Use relative paths and test links during build validation.
 
 ## Technical Approach (Optional)
