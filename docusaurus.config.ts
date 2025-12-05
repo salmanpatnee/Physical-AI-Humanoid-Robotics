@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'Teaching Physical AI & Humanoid Robotics Course',
+  title: 'Physical AI & Humanoid Robotics',
   tagline: 'Physical AI, ROS2, Isaac Sim, VLA — coursebook',
   favicon: 'img/favicon.ico',
 
@@ -79,9 +79,9 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: 'Physical AI & Humanoid Robotics',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'Physical AI & Humanoid Robotics Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -91,37 +91,35 @@ const config: Config = {
           position: 'left',
           label: 'Course',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
-        {
-          href: 'https://github.com/salmanpatnee/Physical-AI-Humanoid-Robotics',
-          label: 'GitHub',
-          position: 'right',
-        },
       ],
     },
     footer: {
       style: 'dark',
       links: [
         {
-          title: 'Learn',
+          title: 'Modules',
           items: [
             {
-              label: 'Get Started',
-              to: '/docs/intro',
+              label: 'Module 1: The Robotic Nervous System (ROS 2)',
+              to: '/docs/module1-robotic-nervous-system',
             },
             {
-              label: 'Course Content',
-              to: '/docs/intro',
+              label: 'Module 2: The Digital Twin (Gazebo & Unity)',
+              to: '/docs/module2-the-digital-twin',
+            },
+            {
+              label: 'Module 3: The AI Robot Brain (NVIDIA Isaac)',
+              to: '/docs/module3-ai-robot-brain',
+            },
+            {
+              label: 'Module 4: Vision-Language-Action (VLA)',
+              to: '/docs/module4-vision-language-action',
             },
           ],
         },
         {
           title: 'Resources',
           items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
             {
               label: 'GitHub',
               href: 'https://github.com/salmanpatnee/Physical-AI-Humanoid-Robotics',
