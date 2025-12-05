@@ -5,7 +5,9 @@
 
 ## Summary
 
-This plan outlines the generation of a new "Weekly Course Schedule" page for the Docusaurus-based course book. The primary goal is to create a single, comprehensive MDX page that presents a 13-week course schedule, mapping each week to specific modules, topics, and activities as defined in the feature specification. The page will serve as a central roadmap for students and instructors.
+> **Authoritative Source**: The content for this page is exclusively derived from the "Weekly Breakdown" on page 3 of the `doc/Hackathon I.pdf` document. This plan ensures that the implementation adheres strictly to that source.
+
+This plan outlines the generation of a new "Weekly Course Schedule" page for the Docusaurus-based course book. The primary goal is to extract the weekly breakdown from the source document (`doc/Hackathon I.pdf`) and create a single, comprehensive MDX page that presents a 13-week course schedule. This page will map each week to specific modules, topics, and activities, serving as a central roadmap for students and instructors.
 
 The technical approach involves creating a static MDX page at `docs/weekly-schedule.mdx`, using Markdown tables for the weekly breakdown and a Mermaid.js diagram for the visual timeline. This page will be integrated into the existing Docusaurus sidebar.
 
@@ -18,7 +20,7 @@ The technical approach involves creating a static MDX page at `docs/weekly-sched
 **Target Platform**: Web (GitHub Pages)
 **Project Type**: Documentation (Single web project)
 **Performance Goals**: Standard static site performance (fast page loads).
-**Constraints**: Must build successfully within the existing Docusaurus project. Content must be derived from the authoritative PDF source as transcribed in the spec.
+**Constraints**: Must build successfully within the existing Docusaurus project. Content must be derived from the authoritative source at `doc/Hackathon I.pdf` as transcribed in the spec.
 **Scale/Scope**: A single new documentation page with a 13-week breakdown and a visual timeline.
 
 ## Constitution Check

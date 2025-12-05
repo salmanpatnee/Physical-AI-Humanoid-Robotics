@@ -3,7 +3,7 @@
 **Feature Branch**: `009-weekly-schedule-page`
 **Created**: 2025-12-05
 **Status**: Draft
-**Input**: Hackathon PDF requirement: "Weekly Breakdown - Weeks 1-13 with specific topics and timeline mapping to the 4 modules"
+**Input**: Hackathon PDF requirement from `doc/Hackathon I.pdf`. The "Weekly Breakdown" on page 3 is the authoritative source.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -67,6 +67,8 @@ As a reader, I want to see a visual timeline or table showing how the 4 modules 
 - Q: Should a dedicated "catch-up" or "buffer" week be explicitly included in the 13-week schedule? → A: No, adhere strictly to the 13-week content structure specified in the PDF.
 
 ## Requirements *(mandatory)*
+
+> **Note:** All requirements listed below are derived directly from the "Weekly Breakdown" section on page 3 of the `doc/Hackathon I.pdf` document. This PDF is the single source of truth for the course structure.
 
 ### Functional Requirements
 
