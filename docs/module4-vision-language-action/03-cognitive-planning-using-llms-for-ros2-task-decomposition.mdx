@@ -1,0 +1,392 @@
+---
+title: "3. Cognitive Planning using LLMs for ROS 2 Task Decomposition"
+sidebar_position: 3
+chapter_type: "tutorial"
+learning_goals:
+  - "Use Large Language Models for task decomposition and planning"
+  - "Convert natural language commands into ROS 2 action sequences"
+  - "Implement LLM-based cognitive planning in robot systems"
+  - "Handle ambiguity and error recovery in language-driven planning"
+prerequisites:
+  - "Understanding of LLM APIs (OpenAI, Anthropic, or local models)"
+  - "ROS 2 actions and services knowledge"
+  - "Python async programming basics"
+key_takeaways:
+  - "LLMs provide common-sense reasoning for robot task planning"
+  - "Structured prompts guide LLMs to generate valid robot action sequences"
+  - "Few-shot examples improve LLM planning accuracy"
+  - "Safety constraints must validate LLM outputs before execution"
+---
+
+# Cognitive Planning using LLMs for ROS 2 Task Decomposition
+
+## Introduction: Teaching Robots to Reason
+
+In Chapter 2, we enabled voice input with Whisper. But simple keyword matching cannot handle complex commands like:
+
+**"Go to the kitchen, find the coffee maker, and bring me a mug."**
+
+This requires:
+- Understanding spatial relationships ("kitchen", "coffee maker")
+- Decomposing into sub-tasks (navigate, search, detect, grasp, return)
+- Ordering actions logically
+
+**Large Language Models (LLMs)** excel at exactly this type of reasoning. This chapter shows how to use LLMs as the "cognitive planner" for robots.
+
+<LearningGoals>
+- Use Large Language Models for task decomposition and planning
+- Convert natural language commands into ROS 2 action sequences
+- Implement LLM-based cognitive planning in robot systems
+- Handle ambiguity and error recovery in language-driven planning
+</LearningGoals>
+
+<Prerequisites>
+- Understanding of LLM APIs (OpenAI, Anthropic, or local models)
+- ROS 2 actions and services knowledge
+- Python async programming basics
+</Prerequisites>
+
+## Why LLMs for Robot Planning?
+
+Traditional robot planning requires explicit programming:
+
+```python
+# Traditional: Hard-coded task
+def clean_table():
+    navigate_to("table")
+    objects = detect_objects()
+    for obj in objects:
+        if obj.type == "trash":
+            grasp(obj)
+            navigate_to("trash_bin")
+            release()
+```
+
+**Problems:**
+- Must anticipate every scenario
+- Cannot adapt to new situations
+- Requires programmer intervention for changes
+
+**LLM Approach:**
+
+```python
+# LLM: Flexible reasoning
+command = "Clean the table"
+plan = llm.generate_plan(command, context=robot_capabilities)
+
+# LLM generates:
+# [
+#   "navigate_to(table)",
+#   "detect_objects_on(table)",
+#   "for each object: classify(trash_or_keep)",
+#   "if trash: grasp_and_dispose()",
+#   "if keep: place_in(storage)"
+# ]
+```
+
+## LLM Planning Architecture
+
+```
+┌──────────────────────────────────────────────────────┐
+│  Natural Language Command                            │
+│  "Go to the kitchen and bring me a glass of water"  │
+└─────────────────────┬────────────────────────────────┘
+                      │
+                      ▼
+┌──────────────────────────────────────────────────────┐
+│  LLM Planner (GPT-4 / Claude / Llama)                │
+│  Input: Command + Robot Capabilities + Scene Context │
+│  Output: Structured Action Sequence                  │
+└─────────────────────┬────────────────────────────────┘
+                      │
+                      ▼
+┌──────────────────────────────────────────────────────┐
+│  Action Validator                                    │
+│  - Check safety (no collisions, fall risks)         │
+│  - Verify feasibility (reachable goals)              │
+│  - Validate syntax (correct ROS 2 action names)      │
+└─────────────────────┬────────────────────────────────┘
+                      │
+                      ▼
+┌──────────────────────────────────────────────────────┐
+│  ROS 2 Action Executor                               │
+│  Execute each action sequentially via ROS 2          │
+└──────────────────────────────────────────────────────┘
+```
+
+## Building an LLM Task Planner
+
+### Step 1: Define Robot Capabilities
+
+```python
+ROBOT_CAPABILITIES = """
+Available Actions:
+1. navigate_to(location: str) - Move to named location
+   Locations: kitchen, living_room, bedroom, bathroom
+
+2. detect_objects(area: str) - Find objects in area
+   Returns: List of detected objects with positions
+
+3. grasp_object(object_id: str) - Pick up object
+   Requires: Object within arm reach
+
+4. place_object(location: str) - Put down held object
+
+5. open_door(door_id: str) - Open a door
+
+6. say(message: str) - Speak text via TTS
+
+Constraints:
+- Can only grasp one object at a time
+- Navigation requires obstacle-free path
+- Arm reach: 0.8 meters
+"""
+```
+
+### Step 2: Create LLM Planning Prompt
+
+```python
+def create_planning_prompt(command, scene_context):
+    prompt = f"""You are a robot task planner. Convert the user command into a sequence of robot actions.
+
+Robot Capabilities:
+{ROBOT_CAPABILITIES}
+
+Current Scene:
+{scene_context}
+
+User Command: "{command}"
+
+Generate a JSON plan with this structure:
+{{
+  "reasoning": "Brief explanation of plan",
+  "actions": [
+    {{"action": "navigate_to", "params": {{"location": "kitchen"}}}},
+    {{"action": "detect_objects", "params": {{"area": "counter"}}}},
+    ...
+  ]
+}}
+
+Ensure actions are:
+1. Physically possible
+2. In logical order
+3. Safe (no collisions, falls)
+"""
+    return prompt
+```
+
+### Step 3: LLM Planner Node
+
+```python
+#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+import openai
+import json
+
+class LLMPlanner(Node):
+    def __init__(self):
+        super().__init__('llm_planner')
+
+        # Subscribe to voice commands
+        self.subscription = self.create_subscription(
+            String, 'voice_commands', self.plan_task, 10)
+
+        # Publish plans
+        self.plan_pub = self.create_publisher(String, 'robot_plan', 10)
+
+        # Initialize OpenAI (or use local model)
+        openai.api_key = "your-api-key"
+
+    def plan_task(self, msg):
+        command = msg.data
+
+        self.get_logger().info(f"Planning for: {command}")
+
+        # Get current scene (from perception system)
+        scene_context = self.get_scene_context()
+
+        # Generate plan using LLM
+        prompt = create_planning_prompt(command, scene_context)
+
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a robot task planner."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.2  # Low temperature for consistent planning
+        )
+
+        plan_text = response.choices[0].message.content
+
+        try:
+            plan = json.loads(plan_text)
+            self.get_logger().info(f"Plan: {plan['reasoning']}")
+
+            # Validate plan
+            if self.validate_plan(plan):
+                # Publish for execution
+                plan_msg = String()
+                plan_msg.data = json.dumps(plan)
+                self.plan_pub.publish(plan_msg)
+            else:
+                self.get_logger().error("Plan validation failed")
+        except json.JSONDecodeError:
+            self.get_logger().error("LLM returned invalid JSON")
+
+    def get_scene_context(self):
+        # In practice, query perception system
+        return """
+        Detected objects:
+        - Cup (red) at kitchen counter
+        - Plate at kitchen table
+        - Water pitcher at kitchen counter
+        """
+
+    def validate_plan(self, plan):
+        """Check if plan is safe and feasible"""
+        for action in plan['actions']:
+            action_name = action['action']
+
+            # Check if action exists
+            valid_actions = ['navigate_to', 'detect_objects', 'grasp_object',
+                           'place_object', 'open_door', 'say']
+
+            if action_name not in valid_actions:
+                self.get_logger().warn(f"Unknown action: {action_name}")
+                return False
+
+            # Additional safety checks...
+
+        return True
+
+def main():
+    rclpy.init()
+    node = LLMPlanner()
+    rclpy.spin(node)
+```
+
+## Few-Shot Prompting for Better Plans
+
+Provide examples to guide the LLM:
+
+```python
+FEW_SHOT_EXAMPLES = """
+Example 1:
+Command: "Get me a drink from the fridge"
+Plan:
+{
+  "reasoning": "Navigate to kitchen, open fridge, locate drink, retrieve it",
+  "actions": [
+    {"action": "navigate_to", "params": {"location": "kitchen"}},
+    {"action": "open_door", "params": {"door_id": "fridge"}},
+    {"action": "detect_objects", "params": {"area": "fridge_interior"}},
+    {"action": "grasp_object", "params": {"object_id": "drink_can"}},
+    {"action": "navigate_to", "params": {"location": "user_location"}},
+    {"action": "place_object", "params": {"location": "hand_to_user"}}
+  ]
+}
+
+Example 2:
+Command: "Set the table for dinner"
+Plan:
+{
+  "reasoning": "Retrieve plates, utensils, glasses and arrange on table",
+  "actions": [
+    {"action": "navigate_to", "params": {"location": "kitchen"}},
+    {"action": "detect_objects", "params": {"area": "cabinet"}},
+    {"action": "grasp_object", "params": {"object_id": "plate"}},
+    {"action": "navigate_to", "params": {"location": "dining_table"}},
+    {"action": "place_object", "params": {"location": "table_position_1"}},
+    // Repeat for additional items...
+  ]
+}
+"""
+```
+
+## Local LLM Option (No API Costs)
+
+For on-device planning, use local models:
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+# Load Llama 2 or similar
+model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-chat-hf")
+tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-chat-hf")
+
+def generate_plan_local(prompt):
+    inputs = tokenizer(prompt, return_tensors="pt")
+    outputs = model.generate(**inputs, max_length=500)
+    plan_text = tokenizer.decode(outputs[0])
+    return plan_text
+```
+
+**Tradeoff**: Local models are faster and private, but less capable than GPT-4.
+
+<KeyTakeaways>
+- LLMs provide common-sense reasoning for robot task planning
+- Structured prompts guide LLMs to generate valid robot action sequences
+- Few-shot examples improve LLM planning accuracy
+- Safety constraints must validate LLM outputs before execution
+</KeyTakeaways>
+
+## Practical Exercise
+
+<ExerciseBlock
+  question="Design a safety validator that checks LLM-generated plans for unsafe actions. It should reject plans that: (1) attempt to navigate through walls, (2) try to grasp objects out of reach, (3) create infinite loops. Implement the validator function."
+  hints={[
+    { title: "Hint 1", content: "Maintain a map of valid navigation paths and check if locations in navigate_to actions are reachable." },
+    { title: "Hint 2", content: "Track the robot's current position and verify grasp actions are within arm reach distance." },
+    { title: "Hint 3", content: "Detect loops by checking if the same action sequence repeats or if actions contradict (grasp without release)." }
+  ]}
+  solution={
+    <div>
+      <p><strong>Solution:</strong></p>
+      <pre>{`
+class PlanValidator:
+    def __init__(self):
+        self.valid_locations = ['kitchen', 'living_room', 'bedroom']
+        self.arm_reach = 0.8  # meters
+        self.current_location = 'living_room'
+        self.holding_object = False
+
+    def validate(self, plan):
+        action_history = []
+
+        for i, action in enumerate(plan['actions']):
+            # Check 1: Valid navigation
+            if action['action'] == 'navigate_to':
+                loc = action['params']['location']
+                if loc not in self.valid_locations:
+                    return False, f"Invalid location: {loc}"
+
+            # Check 2: Can only grasp if not holding
+            if action['action'] == 'grasp_object':
+                if self.holding_object:
+                    return False, "Already holding object"
+                self.holding_object = True
+
+            if action['action'] == 'place_object':
+                if not self.holding_object:
+                    return False, "Not holding object to place"
+                self.holding_object = False
+
+            # Check 3: Detect loops
+            action_sig = f"{action['action']}_{action['params']}"
+            if action_history.count(action_sig) > 2:
+                return False, f"Loop detected: {action['action']}"
+
+            action_history.append(action_sig)
+
+        return True, "Plan is safe"
+      `}</pre>
+    </div>
+  }
+/>
+
+## Next Steps
+
+In Chapter 4, we'll integrate everything—Whisper for voice input, LLM for planning, Isaac ROS for perception, and Nav2 for navigation—into a complete autonomous humanoid system.
