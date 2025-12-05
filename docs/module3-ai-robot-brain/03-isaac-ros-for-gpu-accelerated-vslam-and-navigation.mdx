@@ -1,0 +1,753 @@
+---
+title: "3. Isaac ROS for GPU-Accelerated VSLAM and Navigation"
+sidebar_position: 3
+chapter_type: "tutorial"
+learning_goals:
+  - "Understand Visual SLAM (VSLAM) and its role in robot localization"
+  - "Deploy GPU-accelerated Isaac ROS packages on NVIDIA Jetson hardware"
+  - "Build real-time 3D maps using stereo vision and depth cameras"
+  - "Integrate VSLAM with ROS 2 navigation stacks for autonomous operation"
+prerequisites:
+  - "NVIDIA Jetson Orin Nano (8GB) or higher"
+  - "Intel RealSense D435i camera or stereo camera"
+  - "Completion of Module 1 (ROS 2) and Module 2 (Simulation)"
+  - "Linux command line proficiency"
+key_takeaways:
+  - "VSLAM enables robots to answer 'Where am I?' by building maps from visual data"
+  - "Isaac ROS provides 10-100x speedup over CPU implementations through GPU acceleration"
+  - "Visual-Inertial Odometry (VIO) combines camera and IMU data for robust localization"
+  - "Isaac ROS GEMs are optimized CUDA libraries that power hardware-accelerated perception"
+---
+
+# Isaac ROS for GPU-Accelerated VSLAM and Navigation
+
+## From Simulation to Reality: The Edge Deployment Challenge
+
+In the previous chapters, you've learned how to:
+- Understand advanced perception concepts (Chapter 1)
+- Generate synthetic training data in Isaac Sim (Chapter 2)
+
+Now comes the critical transition: **deploying AI perception to edge hardware**. While your workstation with an RTX 4080 GPU can run complex perception models effortlessly, a humanoid robot must carry its own computational "brain"—a device that fits in a backpack, runs on battery power, and doesn't overheat.
+
+This is where **NVIDIA Jetson** edge devices and **Isaac ROS** come in.
+
+<LearningGoals>
+- Understand Visual SLAM (VSLAM) and its role in robot localization
+- Deploy GPU-accelerated Isaac ROS packages on NVIDIA Jetson hardware"
+- Build real-time 3D maps using stereo vision and depth cameras
+- Integrate VSLAM with ROS 2 navigation stacks for autonomous operation
+</LearningGoals>
+
+<Prerequisites>
+- NVIDIA Jetson Orin Nano (8GB) or higher
+- Intel RealSense D435i camera or stereo camera
+- Completion of Module 1 (ROS 2) and Module 2 (Simulation)
+- Linux command line proficiency
+</Prerequisites>
+
+## What is VSLAM?
+
+**VSLAM (Visual Simultaneous Localization and Mapping)** solves one of robotics' fundamental problems: How can a robot navigate an unknown environment when it doesn't have a map, and doesn't know its own position?
+
+### The Chicken-and-Egg Problem
+
+Traditional localization requires a map:
+- **Input**: Known map + sensor data
+- **Output**: Robot's position on the map
+
+Traditional mapping requires known positions:
+- **Input**: Known positions + sensor data
+- **Output**: Map of the environment
+
+**VSLAM solves both simultaneously**:
+- **Input**: Only sensor data (camera images, IMU)
+- **Output**: Map + robot's position on that map
+
+### How VSLAM Works: The High-Level Pipeline
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     Camera Images (30 FPS)                       │
+│  [Frame 0]  [Frame 1]  [Frame 2]  ...  [Frame N]               │
+└────────────────────────┬────────────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              Step 1: Feature Detection                          │
+│  Find distinctive points in each image (corners, edges, blobs)  │
+│  Example: FAST, ORB, SIFT feature detectors                     │
+└────────────────────────┬────────────────────────────────────────┘
+                         │ Features: [(x1,y1), (x2,y2), ...]
+                         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              Step 2: Feature Matching                           │
+│  Match features across frames to track their motion             │
+│  "This corner in Frame 0 is the same corner in Frame 1"        │
+└────────────────────────┬────────────────────────────────────────┘
+                         │ Matches: Frame0_Point_A = Frame1_Point_B
+                         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              Step 3: Motion Estimation                          │
+│  Calculate how the camera moved between frames                  │
+│  Output: Translation (Δx, Δy, Δz) + Rotation (Δroll, pitch, yaw)│
+└────────────────────────┬────────────────────────────────────────┘
+                         │ Odometry: "Moved 0.1m forward, rotated 5°"
+                         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              Step 4: 3D Reconstruction                          │
+│  Use matched features to triangulate 3D point positions         │
+│  Build a sparse 3D map of the environment                       │
+└────────────────────────┬────────────────────────────────────────┘
+                         │ 3D Points: [(X1,Y1,Z1), (X2,Y2,Z2), ...]
+                         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              Step 5: Loop Closure Detection                     │
+│  Recognize when robot returns to a previously visited place     │
+│  Correct accumulated drift by aligning current + past views     │
+└────────────────────────┬────────────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              Output: Map + Pose                                 │
+│  - 3D map (point cloud or occupancy grid)                       │
+│  - Robot pose (position + orientation) in that map              │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Why "Visual"?
+
+VSLAM relies primarily on **camera images** (visual data), as opposed to:
+- **Laser SLAM**: Uses LIDAR (expensive, high power consumption)
+- **Inertial SLAM**: Uses IMU only (drifts quickly)
+- **Visual-Inertial SLAM**: Combines cameras + IMU (most robust)
+
+Cameras provide rich information at low cost, making them ideal for humanoid robots.
+
+## The GPU Acceleration Advantage
+
+Traditional VSLAM implementations (like ORB-SLAM2) run on CPU and achieve:
+- **10-15 FPS** processing rate
+- **200-500ms latency**
+- **High CPU usage** (80-100% of cores)
+
+For a walking humanoid robot, this latency is problematic. By the time VSLAM computes the robot's position, the robot has already moved significantly.
+
+**Isaac ROS VSLAM** achieves:
+- **30+ FPS** processing rate (real-time)
+- **30-50ms latency**
+- **Low CPU usage** (5-10%), freeing CPU for other tasks
+
+This 10x speedup enables responsive navigation and obstacle avoidance.
+
+## Isaac ROS Architecture
+
+Isaac ROS is a collection of **ROS 2 packages** (called GEMs) optimized for NVIDIA hardware. Each package provides GPU-accelerated versions of common robotics algorithms.
+
+### Isaac ROS GEMs
+
+| GEM Name | Purpose | CPU Equivalent |
+|----------|---------|----------------|
+| `isaac_ros_visual_slam` | VSLAM | ORB-SLAM2, RTAB-Map |
+| `isaac_ros_stereo_image_proc` | Depth from stereo | stereo_image_proc |
+| `isaac_ros_dnn_inference` | Deep learning inference | TensorFlow/PyTorch |
+| `isaac_ros_object_detection` | Object detection | detectron2 |
+| `isaac_ros_image_segmentation` | Semantic segmentation | Mask R-CNN |
+| `isaac_ros_pose_estimation` | 6DOF pose tracking | PoseCNN |
+
+These GEMs use **CUDA** and **TensorRT** under the hood for GPU acceleration.
+
+### Hardware Requirements
+
+Isaac ROS requires NVIDIA hardware:
+
+**Jetson Family** (Edge devices):
+- Jetson Orin Nano (8GB): Entry-level, 40 TOPS
+- Jetson Orin NX (16GB): Mid-range, 100 TOPS
+- Jetson AGX Orin (64GB): High-end, 275 TOPS
+
+**Workstation GPUs**:
+- RTX 3060 and higher
+- Data center GPUs (A100, H100)
+
+For this chapter, we'll use **Jetson Orin Nano** as the reference platform.
+
+## Setting Up Isaac ROS on Jetson Orin Nano
+
+### Step 1: Flash JetPack 6.0
+
+JetPack is NVIDIA's SDK for Jetson, including:
+- Ubuntu 22.04 (Linux OS)
+- CUDA, cuDNN (GPU libraries)
+- TensorRT (inference optimization)
+- ROS 2 Humble (robot framework)
+
+**Instructions**:
+```bash
+# On your workstation (not Jetson), download NVIDIA SDK Manager
+# https://developer.nvidia.com/sdk-manager
+
+# Connect Jetson to workstation via USB-C (recovery mode)
+# Follow prompts to flash JetPack 6.0 (includes Ubuntu 22.04)
+
+# After flashing, boot Jetson and verify:
+jetson_release
+# Should show: JetPack 6.0, CUDA 12.2, TensorRT 8.6
+```
+
+### Step 2: Install ROS 2 Humble
+
+```bash
+# On Jetson, install ROS 2 Humble
+sudo apt update
+sudo apt install -y ros-humble-desktop
+
+# Source ROS 2
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+
+# Verify installation
+ros2 --version
+# Should show: ros2 doctor version 0.10.0 (or similar)
+```
+
+### Step 3: Install Isaac ROS
+
+Isaac ROS uses Docker for dependency management:
+
+```bash
+# Install Docker
+sudo apt-get install -y docker.io
+sudo usermod -aG docker $USER
+# Log out and back in for group changes
+
+# Clone Isaac ROS repository
+cd ~/workspaces
+git clone https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git
+
+# Build Isaac ROS Docker container (includes all dependencies)
+cd isaac_ros_common
+./scripts/run_dev.sh
+
+# This pulls a Docker image (~8GB) with:
+# - ROS 2 Humble
+# - CUDA 12.2
+# - Isaac ROS GEMs pre-installed
+```
+
+### Step 4: Verify GPU Access
+
+```bash
+# Inside Docker container:
+nvidia-smi
+# Should show Jetson GPU with memory usage
+
+# Test CUDA:
+/usr/local/cuda/samples/1_Utilities/deviceQuery/deviceQuery
+# Should show CUDA Device info
+```
+
+## Running Isaac ROS VSLAM
+
+### Hardware Setup
+
+Connect the **Intel RealSense D435i** camera to Jetson via USB 3.0.
+
+**Why D435i?**
+- **RGB camera**: For visual features
+- **Stereo depth cameras**: For 3D structure
+- **IMU**: For visual-inertial odometry
+- **Wide field of view**: 87° × 58°
+
+```bash
+# Install RealSense SDK
+sudo apt install -y ros-humble-realsense2-camera
+
+# Verify camera connection
+rs-enumerate-devices
+# Should list: Intel RealSense D435I
+```
+
+### Launch RealSense Node
+
+```bash
+# Terminal 1: Start RealSense camera
+ros2 launch realsense2_camera rs_launch.py \
+    enable_depth:=true \
+    enable_infra1:=true \
+    enable_infra2:=true \
+    enable_gyro:=true \
+    enable_accel:=true
+
+# This publishes:
+# /camera/color/image_raw (RGB)
+# /camera/infra1/image_rect_raw (Left stereo)
+# /camera/infra2/image_rect_raw (Right stereo)
+# /camera/depth/image_rect_raw (Depth map)
+# /camera/imu (IMU data)
+```
+
+### Launch Isaac ROS VSLAM
+
+```bash
+# Terminal 2: Start Visual SLAM
+ros2 launch isaac_ros_visual_slam isaac_ros_visual_slam.launch.py
+
+# This subscribes to camera topics and publishes:
+# /visual_slam/tracking/odometry (Robot position)
+# /visual_slam/tracking/slam_path (Path traveled)
+# /visual_slam/vis/map_points (3D map as point cloud)
+# /visual_slam/status (SLAM status: TRACKING, LOST, etc.)
+```
+
+### Visualize in RViz
+
+```bash
+# Terminal 3: Open RViz (3D visualization)
+ros2 run rviz2 rviz2
+
+# In RViz:
+# 1. Set Fixed Frame to "map"
+# 2. Add → PointCloud2 → Topic: /visual_slam/vis/map_points
+# 3. Add → Path → Topic: /visual_slam/tracking/slam_path
+# 4. Add → TF (to see camera pose)
+
+# Now move the camera around your room
+# You'll see the 3D map building in real-time!
+```
+
+**What you should observe**:
+- **Point cloud** grows as camera sees new areas
+- **Path** shows the camera's trajectory
+- **Latency** should be < 50ms (smooth visualization)
+
+### Understanding the Output
+
+**Odometry message** (`/visual_slam/tracking/odometry`):
+```yaml
+# Example odometry message
+header:
+  stamp: {sec: 1234567, nanosec: 123456789}
+  frame_id: "map"
+child_frame_id: "camera_link"
+pose:
+  pose:
+    position: {x: 1.234, y: -0.567, z: 0.123}  # Meters
+    orientation: {x: 0.0, y: 0.0, z: 0.707, w: 0.707}  # Quaternion (90° yaw)
+twist:
+  twist:
+    linear: {x: 0.5, y: 0.0, z: 0.0}  # m/s
+    angular: {x: 0.0, y: 0.0, z: 0.1}  # rad/s
+```
+
+This tells us:
+- Camera is at position (1.234m, -0.567m, 0.123m) in the map
+- Camera is rotated 90° (facing left)
+- Camera is moving forward at 0.5 m/s and rotating slowly
+
+## Visual-Inertial Odometry (VIO)
+
+Pure visual SLAM can fail in challenging scenarios:
+- **Fast motion**: Features blur, matching fails
+- **Low texture**: Blank walls have no features to track
+- **Lighting changes**: Bright sunlight → dark shadow
+
+**Visual-Inertial Odometry (VIO)** combines:
+- **Camera**: Accurate but can fail temporarily
+- **IMU**: Always available but drifts over time
+
+The IMU "fills in" when the camera struggles, and the camera corrects IMU drift.
+
+### Configuring VIO in Isaac ROS
+
+```yaml
+# File: vslam_params.yaml
+/visual_slam:
+  ros__parameters:
+    # Enable IMU fusion
+    enable_imu_fusion: true
+
+    # IMU parameters
+    gyro_noise_density: 0.000244  # rad/s/√Hz
+    gyro_random_walk: 0.000019    # rad/s²/√Hz
+    accel_noise_density: 0.001    # m/s²/√Hz
+    accel_random_walk: 0.0002     # m/s³/√Hz
+
+    # Calibration between camera and IMU
+    imu_to_camera_translation: [0.0, 0.0, 0.0]
+    imu_to_camera_rotation: [1.0, 0.0, 0.0, 0.0]  # Quaternion
+
+    # Map parameters
+    map_frame: "map"
+    odom_frame: "odom"
+    base_frame: "camera_link"
+```
+
+Launch with parameters:
+```bash
+ros2 launch isaac_ros_visual_slam isaac_ros_visual_slam.launch.py \
+    params_file:=vslam_params.yaml
+```
+
+## Practical Example: Building a Room Map
+
+Let's create a ROS 2 node that uses VSLAM to map a room.
+
+```python
+#!/usr/bin/env python3
+# File: map_builder.py
+
+import rclpy
+from rclpy.node import Node
+from nav_msgs.msg import Odometry, Path
+from sensor_msgs.msg import PointCloud2
+import numpy as np
+
+class MapBuilder(Node):
+    def __init__(self):
+        super().__init__('map_builder')
+
+        # Subscribe to VSLAM outputs
+        self.odom_sub = self.create_subscription(
+            Odometry,
+            '/visual_slam/tracking/odometry',
+            self.odom_callback,
+            10
+        )
+
+        self.map_sub = self.create_subscription(
+            PointCloud2,
+            '/visual_slam/vis/map_points',
+            self.map_callback,
+            10
+        )
+
+        self.path_sub = self.create_subscription(
+            Path,
+            '/visual_slam/tracking/slam_path',
+            self.path_callback,
+            10
+        )
+
+        self.current_pose = None
+        self.total_distance = 0.0
+        self.num_map_points = 0
+
+        # Status timer
+        self.create_timer(1.0, self.print_status)
+
+    def odom_callback(self, msg):
+        """Track robot position"""
+        if self.current_pose is not None:
+            # Calculate distance traveled
+            dx = msg.pose.pose.position.x - self.current_pose[0]
+            dy = msg.pose.pose.position.y - self.current_pose[1]
+            dz = msg.pose.pose.position.z - self.current_pose[2]
+            distance = np.sqrt(dx**2 + dy**2 + dz**2)
+            self.total_distance += distance
+
+        self.current_pose = (
+            msg.pose.pose.position.x,
+            msg.pose.pose.position.y,
+            msg.pose.pose.position.z
+        )
+
+    def map_callback(self, msg):
+        """Track map size"""
+        # PointCloud2 contains width * height points
+        self.num_map_points = msg.width * msg.height
+
+    def path_callback(self, msg):
+        """Process path updates"""
+        pass  # Path is mainly for visualization
+
+    def print_status(self):
+        """Print mapping status"""
+        if self.current_pose is None:
+            self.get_logger().info("Waiting for VSLAM to initialize...")
+            return
+
+        self.get_logger().info(
+            f"Position: ({self.current_pose[0]:.2f}, {self.current_pose[1]:.2f}, {self.current_pose[2]:.2f}) | "
+            f"Distance traveled: {self.total_distance:.2f}m | "
+            f"Map points: {self.num_map_points}"
+        )
+
+def main():
+    rclpy.init()
+    node = MapBuilder()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+```
+
+**Usage**:
+```bash
+# Terminal 1: Launch RealSense
+ros2 launch realsense2_camera rs_launch.py enable_depth:=true enable_gyro:=true enable_accel:=true
+
+# Terminal 2: Launch VSLAM
+ros2 launch isaac_ros_visual_slam isaac_ros_visual_slam.launch.py
+
+# Terminal 3: Run map builder
+python3 map_builder.py
+
+# Terminal 4: Visualize in RViz
+ros2 run rviz2 rviz2
+
+# Now walk around the room with the camera
+# Watch the map grow in RViz and stats in Terminal 3
+```
+
+<KeyTakeaways>
+- VSLAM enables robots to answer 'Where am I?' by building maps from visual data
+- Isaac ROS provides 10-100x speedup over CPU implementations through GPU acceleration
+- Visual-Inertial Odometry (VIO) combines camera and IMU data for robust localization
+- Isaac ROS GEMs are optimized CUDA libraries that power hardware-accelerated perception
+</KeyTakeaways>
+
+## Practical Exercise: Deploying VSLAM to a Mobile Robot
+
+<ExerciseBlock
+  question="You have a differential-drive mobile robot (like TurtleBot) equipped with a RealSense D435i camera and running on Jetson Orin Nano. Write a ROS 2 launch file that: (1) Starts the RealSense camera node, (2) Launches Isaac ROS VSLAM with IMU fusion enabled, (3) Starts a velocity controller that slows down the robot when VSLAM tracking is lost. Include the safety logic for the velocity controller."
+  hints={[
+    {
+      title: "Hint 1: Launch File Structure",
+      content: "Use Python launch files (launch.py) to compose multiple nodes. You'll need LaunchDescription, Node, and IncludeLaunchDescription from the launch package."
+    },
+    {
+      title: "Hint 2: VSLAM Status Monitoring",
+      content: "Isaac ROS VSLAM publishes status on /visual_slam/status topic. Subscribe to this in your velocity controller to detect TRACKING vs LOST states."
+    },
+    {
+      title: "Hint 3: Safe Velocity Control",
+      content: "When VSLAM is LOST, the robot doesn't know its position. The safe behavior is to: (1) Reduce velocity to 10% of commanded speed, (2) Stop rotation to avoid disorientation, (3) Resume normal speed when tracking recovers."
+    }
+  ]}
+  solution={
+    <div>
+      <p><strong>Solution: VSLAM-Aware Mobile Robot Launch</strong></p>
+      <p><strong>Part 1: Launch File (slam_robot.launch.py)</strong></p>
+      <pre>{`
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from ament_index_python.packages import get_package_share_directory
+import os
+
+def generate_launch_description():
+    # Get package directories
+    realsense_dir = get_package_share_directory('realsense2_camera')
+    vslam_dir = get_package_share_directory('isaac_ros_visual_slam')
+
+    # 1. RealSense camera launch
+    realsense_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            os.path.join(realsense_dir, 'launch', 'rs_launch.py')
+        ]),
+        launch_arguments={
+            'enable_depth': 'true',
+            'enable_infra1': 'true',
+            'enable_infra2': 'true',
+            'enable_gyro': 'true',
+            'enable_accel': 'true',
+            'unite_imu_method': '1',  # Combine gyro + accel
+            'depth_module.profile': '640x480x30',
+        }.items()
+    )
+
+    # 2. Isaac ROS VSLAM with IMU fusion
+    vslam_node = Node(
+        package='isaac_ros_visual_slam',
+        executable='isaac_ros_visual_slam',
+        name='visual_slam',
+        parameters=[{
+            'enable_imu_fusion': True,
+            'gyro_noise_density': 0.000244,
+            'gyro_random_walk': 0.000019,
+            'accel_noise_density': 0.001,
+            'accel_random_walk': 0.0002,
+            'map_frame': 'map',
+            'odom_frame': 'odom',
+            'base_frame': 'base_link',
+        }],
+        remappings=[
+            ('visual_slam/image_0', '/camera/infra1/image_rect_raw'),
+            ('visual_slam/image_1', '/camera/infra2/image_rect_raw'),
+            ('visual_slam/imu', '/camera/imu'),
+        ]
+    )
+
+    # 3. Safe velocity controller
+    velocity_controller = Node(
+        package='slam_robot',  # Your custom package
+        executable='safe_velocity_controller.py',
+        name='safe_velocity_controller',
+        parameters=[{
+            'safe_mode_linear_scale': 0.1,  # 10% speed when lost
+            'safe_mode_angular_scale': 0.0,  # No rotation when lost
+        }]
+    )
+
+    return LaunchDescription([
+        realsense_launch,
+        vslam_node,
+        velocity_controller,
+    ])
+      `}</pre>
+      <p><strong>Part 2: Safe Velocity Controller (safe_velocity_controller.py)</strong></p>
+      <pre>{`
+#!/usr/bin/env python3
+
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+from isaac_ros_visual_slam_interfaces.msg import VisualSlamStatus
+
+class SafeVelocityController(Node):
+    def __init__(self):
+        super().__init__('safe_velocity_controller')
+
+        # Parameters
+        self.declare_parameter('safe_mode_linear_scale', 0.1)
+        self.declare_parameter('safe_mode_angular_scale', 0.0)
+
+        self.safe_linear = self.get_parameter('safe_mode_linear_scale').value
+        self.safe_angular = self.get_parameter('safe_mode_angular_scale').value
+
+        # State
+        self.slam_status = "UNKNOWN"  # TRACKING, LOST, UNKNOWN
+        self.last_cmd_vel = Twist()
+
+        # Subscribers
+        self.status_sub = self.create_subscription(
+            VisualSlamStatus,
+            '/visual_slam/status',
+            self.status_callback,
+            10
+        )
+
+        self.cmd_vel_sub = self.create_subscription(
+            Twist,
+            '/cmd_vel_raw',  # Raw commands from navigation
+            self.cmd_vel_callback,
+            10
+        )
+
+        # Publisher (safe velocity)
+        self.cmd_vel_pub = self.create_publisher(
+            Twist,
+            '/cmd_vel',  # To robot motors
+            10
+        )
+
+        # Watchdog timer (if no status received, assume LOST)
+        self.status_timeout = 1.0  # seconds
+        self.last_status_time = self.get_clock().now()
+        self.create_timer(0.1, self.watchdog_check)
+
+    def status_callback(self, msg):
+        """Update SLAM status"""
+        self.last_status_time = self.get_clock().now()
+
+        # Map numeric status to string
+        status_map = {
+            0: "UNKNOWN",
+            1: "TRACKING",
+            2: "LOST",
+        }
+        self.slam_status = status_map.get(msg.vo_state, "UNKNOWN")
+
+        if self.slam_status == "LOST":
+            self.get_logger().warn("⚠️  VSLAM LOST - Entering safe mode")
+        elif self.slam_status == "TRACKING":
+            self.get_logger().info("✓ VSLAM tracking", throttle_duration_sec=5.0)
+
+    def cmd_vel_callback(self, msg):
+        """Process velocity commands with safety logic"""
+        self.last_cmd_vel = msg
+
+        # Create output command
+        safe_cmd = Twist()
+
+        if self.slam_status == "TRACKING":
+            # Normal operation - pass through
+            safe_cmd = msg
+        else:
+            # LOST or UNKNOWN - apply safety scaling
+            safe_cmd.linear.x = msg.linear.x * self.safe_linear
+            safe_cmd.linear.y = msg.linear.y * self.safe_linear
+            safe_cmd.linear.z = msg.linear.z * self.safe_linear
+            safe_cmd.angular.x = msg.angular.x * self.safe_angular
+            safe_cmd.angular.y = msg.angular.y * self.safe_angular
+            safe_cmd.angular.z = msg.angular.z * self.safe_angular
+
+            self.get_logger().warn(
+                f"Safe mode active: {self.slam_status} | "
+                f"Cmd: {msg.linear.x:.2f} → {safe_cmd.linear.x:.2f} m/s"
+            )
+
+        self.cmd_vel_pub.publish(safe_cmd)
+
+    def watchdog_check(self):
+        """Check if status updates have stopped (sensor failure)"""
+        time_since_status = (self.get_clock().now() - self.last_status_time).nanoseconds / 1e9
+
+        if time_since_status > self.status_timeout and self.slam_status != "LOST":
+            self.get_logger().error(
+                f"❌ No SLAM status for {time_since_status:.1f}s - Assuming LOST"
+            )
+            self.slam_status = "LOST"
+
+def main():
+    rclpy.init()
+    node = SafeVelocityController()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+      `}</pre>
+      <p><strong>Key Design Choices:</strong></p>
+      <ul>
+        <li><strong>Two-topic velocity architecture</strong>: Navigation publishes to /cmd_vel_raw, safe controller processes it and publishes to /cmd_vel (which drives motors). This separation allows safety logic without modifying navigation code.</li>
+        <li><strong>Graceful degradation</strong>: Instead of stopping completely when VSLAM is lost (which could be dangerous), the robot continues at 10% speed. This allows it to potentially recover tracking or reach a safe stop location.</li>
+        <li><strong>Watchdog timer</strong>: If status messages stop arriving (sensor disconnected), the system assumes LOST rather than continuing blindly.</li>
+        <li><strong>IMU fusion enabled</strong>: Helps VSLAM recover faster after temporary loss by providing odometry from IMU during visual failures.</li>
+        <li><strong>Logging levels</strong>: TRACKING uses INFO (with throttling to avoid spam), LOST uses WARN, timeout uses ERROR. This helps operators understand system state.</li>
+      </ul>
+      <p><strong>Testing Procedure:</strong></p>
+      <ol>
+        <li>Launch the system: <code>ros2 launch slam_robot slam_robot.launch.py</code></li>
+        <li>Send test velocities: <code>ros2 topic pub /cmd_vel_raw geometry_msgs/Twist "&#123;&#123;linear: &#123;&#123;x: 0.5&#125;&#125;&#125;&#125;"</code></li>
+        <li>Verify robot moves at full speed when VSLAM is tracking</li>
+        <li>Cover the camera to trigger LOST state</li>
+        <li>Verify robot slows to 10% speed and logs warnings</li>
+        <li>Uncover camera and verify return to normal speed</li>
+      </ol>
+    </div>
+  }
+/>
+
+## Integration with Navigation Stack
+
+Isaac ROS VSLAM provides the **localization** component needed for navigation. In the next chapter, we'll integrate this with **Nav2** (the navigation stack) to enable:
+- **Path planning**: Finding routes from A to B
+- **Obstacle avoidance**: Dynamically avoiding moving obstacles
+- **Behavior coordination**: Complex navigation behaviors
+
+The output from VSLAM (`/visual_slam/tracking/odometry`) becomes an input to Nav2's localization module, completing the perception-to-action pipeline.
+
+## Next Steps
+
+In this chapter, you've learned how to:
+- Deploy Isaac ROS VSLAM on Jetson edge hardware
+- Build real-time 3D maps using visual-inertial odometry
+- Monitor VSLAM status for robust robot operation
+- Integrate perception with safety-critical velocity control
+
+In the next chapter, we'll complete the AI-Robot Brain by adding **Nav2** for autonomous navigation, enabling a humanoid robot to plan paths, avoid obstacles, and navigate to goal positions.

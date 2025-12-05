@@ -1,0 +1,824 @@
+---
+title: "2. Isaac Sim for Photorealistic Simulation and Training"
+sidebar_position: 2
+chapter_type: "tutorial"
+learning_goals:
+  - "Understand the architecture and capabilities of NVIDIA Isaac Sim"
+  - "Learn how to create photorealistic robot simulation environments"
+  - "Master synthetic data generation for training perception models"
+  - "Explore GPU-accelerated physics simulation with PhysX"
+prerequisites:
+  - "NVIDIA RTX GPU (RTX 3060 or higher recommended)"
+  - "Ubuntu 22.04 or Windows 10/11"
+  - "Understanding of 3D coordinate systems"
+  - "Basic Python programming skills"
+key_takeaways:
+  - "Isaac Sim leverages RTX ray tracing for photorealistic rendering that enables accurate sim-to-real transfer"
+  - "USD (Universal Scene Description) provides the foundation for scalable, collaborative 3D content"
+  - "Domain randomization techniques ensure synthetic training data generalizes to real-world variations"
+  - "Isaac Sim integrates directly with ROS 2, allowing robot software to run identically in simulation and reality"
+---
+
+# Isaac Sim for Photorealistic Simulation and Training
+
+## Introduction to NVIDIA Isaac Sim
+
+NVIDIA Isaac Sim is not just another robot simulatorit's a **photorealistic digital twin factory** built on NVIDIA Omniverse. While Gazebo (covered in Module 2) provides functional physics simulation, Isaac Sim takes simulation to the next level with:
+
+- **RTX Ray Tracing**: Physically accurate lighting and shadows
+- **PhysX 5**: GPU-accelerated rigid body and soft body physics
+- **Synthetic Data Generation**: Automated creation of labeled training datasets
+- **ROS 2 Integration**: Seamless connection to robot software stacks
+- **Scalability**: Run hundreds of simulations in parallel on the cloud
+
+Isaac Sim is purpose-built for the age of Physical AI, where robots are trained using deep learning models that require massive amounts of diverse, labeled data.
+
+<LearningGoals>
+- Understand the architecture and capabilities of NVIDIA Isaac Sim
+- Learn how to create photorealistic robot simulation environments
+- Master synthetic data generation for training perception models
+- Explore GPU-accelerated physics simulation with PhysX
+</LearningGoals>
+
+<Prerequisites>
+- NVIDIA RTX GPU (RTX 3060 or higher recommended)
+- Ubuntu 22.04 or Windows 10/11
+- Understanding of 3D coordinate systems
+- Basic Python programming skills
+</Prerequisites>
+
+## Why Isaac Sim? The Photorealism Advantage
+
+### The Sim-to-Real Gap
+
+One of the longstanding challenges in robotics has been the **sim-to-real gap**—the difference between how robots behave in simulation versus reality. Traditional simulators often fail to capture:
+
+- **Realistic lighting**: Shadows, reflections, and ambient occlusion
+- **Material properties**: How light bounces off metal versus fabric
+- **Sensor noise**: Real cameras have lens distortion, motion blur, and low-light artifacts
+- **Physics edge cases**: Friction, deformation, and chaotic interactions
+
+When a perception model is trained on simple, unrealistic synthetic images, it fails when deployed to a real robot because the real-world sensor data looks dramatically different.
+
+**Isaac Sim's Solution**: By using the same rendering technology that powers AAA video games and Hollywood visual effects (RTX ray tracing), Isaac Sim creates images that are **visually indistinguishable** from real camera footage. This dramatically reduces the sim-to-real gap.
+
+### The Numbers: Why Photorealism Matters
+
+Research from NVIDIA and leading robotics labs has shown:
+
+- **90%+ accuracy** retention when transferring models from Isaac Sim to real robots
+- **100x faster** data generation compared to real-world data collection
+- **Zero labeling cost** (simulation provides perfect ground truth)
+
+**Example**: Training a robotic arm to pick random objects:
+- **Traditional approach**: Capture 10,000 real images with a camera rig → manually label each object → train model (weeks of effort)
+- **Isaac Sim approach**: Generate 100,000 labeled images with randomized objects, lighting, and poses (hours of setup, generates overnight)
+
+## Isaac Sim Architecture
+
+Isaac Sim is built on three foundational technologies:
+
+### 1. NVIDIA Omniverse
+
+**Omniverse** is a platform for building and operating 3D applications. It provides:
+
+- **USD (Universal Scene Description)**: A file format originally developed by Pixar for describing complex 3D scenes
+- **Nucleus**: A database for storing and sharing USD assets collaboratively
+- **Connectors**: Integrations with tools like Blender, Unreal Engine, and CAD software
+
+**What this means for robotics**: You can import robot models from CAD tools, environments from game engines, and have teams collaborate on the same simulation in real-time.
+
+### 2. RTX Rendering
+
+**RTX** (Ray Tracing eXtreme) is NVIDIA's GPU architecture for real-time ray tracing. Instead of approximating lighting (like traditional rendering), ray tracing simulates the actual physics of light:
+
+- Light rays bounce off surfaces
+- Shadows are cast accurately
+- Reflections and refractions are physically correct
+- Materials respond to light realistically
+
+**Why this matters**: When you train a vision model on images with accurate lighting, it learns features that generalize to real-world lighting conditions.
+
+### 3. PhysX 5
+
+**PhysX** is NVIDIA's physics engine, now in its 5th generation. Key features:
+
+- **GPU acceleration**: Simulate 100x more objects than CPU physics
+- **Multi-body dynamics**: Accurate simulation of robot joints and linkages
+- **Soft body physics**: Simulate cloth, cables, and deformable objects
+- **Fluid simulation**: Water, granular materials (sand, rice)
+
+**Why this matters**: Accurate physics ensures that robot behaviors (grasping, walking, colliding) in simulation match reality.
+
+## Getting Started with Isaac Sim
+
+### Hardware and Software Requirements
+
+**Minimum Requirements**:
+- **GPU**: NVIDIA RTX 3060 (12GB VRAM)
+- **CPU**: Intel Core i7 or AMD Ryzen 7
+- **RAM**: 32GB
+- **Storage**: 50GB SSD space
+- **OS**: Ubuntu 22.04 LTS or Windows 10/11
+
+**Recommended for Production**:
+- **GPU**: NVIDIA RTX 4080 or RTX 4090 (24GB VRAM)
+- **RAM**: 64GB
+- **Storage**: 500GB NVMe SSD
+
+**Why the GPU requirements?**: Ray tracing and physics simulation are GPU-intensive. Higher VRAM allows for larger scenes and more complex simulations.
+
+### Installation
+
+Isaac Sim can be installed via:
+
+1. **Omniverse Launcher** (Recommended for beginners):
+   ```bash
+   # Download Omniverse Launcher from:
+   # https://www.nvidia.com/en-us/omniverse/download/
+
+   # Install Isaac Sim from the Launcher's "Exchange" tab
+   # Version: Isaac Sim 2023.1.1 or later
+   ```
+
+2. **Docker Container** (Recommended for production/cloud):
+   ```bash
+   docker pull nvcr.io/nvidia/isaac-sim:2023.1.1
+   docker run --gpus all -it nvcr.io/nvidia/isaac-sim:2023.1.1
+   ```
+
+3. **pip install** (For Python-only workflows):
+   ```bash
+   pip install isaacsim
+   ```
+
+### First Launch
+
+When you launch Isaac Sim, you'll see:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  NVIDIA Isaac Sim                                               │
+│                                                                 │
+│  [ Viewport ]                 [ Stage ]      [ Content Browser]│
+│   3D Scene                     Scene         Assets & Models   │
+│   Rendered here                Hierarchy                       │
+│                                                                 │
+│  [ Properties ]               [ Console ]                      │
+│   Selected object              Python output                   │
+│   parameters                                                    │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Key UI elements**:
+- **Viewport**: Where you see the rendered 3D scene
+- **Stage**: Hierarchy of objects (like a file tree)
+- **Content Browser**: Library of pre-built assets
+- **Properties**: Edit selected object properties
+- **Console**: Python scripting and logs
+
+## Building Your First Simulated Environment
+
+Let's create a simple warehouse environment where a humanoid robot will navigate.
+
+### Step 1: Create a New Scene
+
+```python
+# Isaac Sim uses Python for scripting
+# File: warehouse_scene.py
+
+from omni.isaac.kit import SimulationApp
+
+# Initialize Isaac Sim
+simulation_app = SimulationApp({"headless": False})
+
+from omni.isaac.core import World
+from omni.isaac.core.objects import DynamicCuboid
+from omni.isaac.core.utils.stage import add_reference_to_stage
+import numpy as np
+
+# Create a world (this is the simulation container)
+world = World()
+
+# Add a ground plane
+world.scene.add_default_ground_plane()
+
+print("Warehouse scene created!")
+
+# Run the simulation
+world.reset()
+```
+
+**What's happening**:
+1. `SimulationApp` initializes the Isaac Sim engine
+2. `World` is a container for all simulated objects
+3. `add_default_ground_plane()` creates a floor
+
+### Step 2: Add a Robot
+
+Isaac Sim comes with pre-built robot models. Let's add a humanoid:
+
+```python
+# Add a humanoid robot (using a generic biped model)
+from omni.isaac.core.utils.stage import get_current_stage
+from pxr import UsdGeom
+
+# Import a humanoid robot USD file
+robot_usd_path = "/Isaac/Robots/Humanoids/unitree_h1.usd"
+robot_prim_path = "/World/H1_Robot"
+
+add_reference_to_stage(usd_path=robot_usd_path, prim_path=robot_prim_path)
+
+# Position the robot
+robot_prim = get_current_stage().GetPrimAtPath(robot_prim_path)
+xform = UsdGeom.Xformable(robot_prim)
+xform.AddTranslateOp().Set((0.0, 0.0, 1.0))  # X, Y, Z position
+
+print(f"Robot '{robot_prim_path}' added to scene")
+```
+
+**Key Concepts**:
+- **USD Path**: Universal Scene Description uses paths like `/World/H1_Robot` to organize objects
+- **Prim**: Short for "primitive"—a node in the scene graph
+- **XformOp**: Transformation operations (translate, rotate, scale)
+
+### Step 3: Add Obstacles and Objects
+
+```python
+# Add warehouse shelves and boxes
+shelf_positions = [
+    (5.0, 2.0, 0.0),
+    (5.0, -2.0, 0.0),
+    (-5.0, 2.0, 0.0),
+    (-5.0, -2.0, 0.0),
+]
+
+for i, pos in enumerate(shelf_positions):
+    shelf = DynamicCuboid(
+        prim_path=f"/World/Shelf_{i}",
+        name=f"shelf_{i}",
+        position=np.array(pos),
+        scale=np.array([1.0, 0.3, 2.5]),  # Wide, thin, tall
+        color=np.array([0.5, 0.3, 0.1]),  # Brown
+    )
+    world.scene.add(shelf)
+
+# Add boxes to navigate around
+box_positions = [(2.0, 0.0, 0.5), (-2.0, 1.0, 0.5), (0.0, -2.0, 0.5)]
+
+for i, pos in enumerate(box_positions):
+    box = DynamicCuboid(
+        prim_path=f"/World/Box_{i}",
+        name=f"box_{i}",
+        position=np.array(pos),
+        scale=np.array([0.5, 0.5, 0.5]),
+        color=np.array([0.8, 0.6, 0.2]),  # Cardboard color
+    )
+    world.scene.add(box)
+
+print(f"Added {len(shelf_positions)} shelves and {len(box_positions)} boxes")
+```
+
+### Step 4: Add Cameras
+
+For perception training, we need cameras:
+
+```python
+from omni.isaac.core.utils.viewports import set_camera_view
+
+# Add a camera to the scene
+camera_path = "/World/Camera"
+add_reference_to_stage(
+    usd_path="/Isaac/Sensors/Camera/camera.usd",
+    prim_path=camera_path
+)
+
+# Position camera to view the robot
+camera_prim = get_current_stage().GetPrimAtPath(camera_path)
+camera_xform = UsdGeom.Xformable(camera_prim)
+camera_xform.AddTranslateOp().Set((3.0, 3.0, 2.0))  # Angled view
+
+# Look at the robot
+set_camera_view(
+    eye=np.array([3.0, 3.0, 2.0]),
+    target=np.array([0.0, 0.0, 1.0]),
+    camera_prim_path=camera_path
+)
+
+print("Camera added and positioned")
+```
+
+### Step 5: Configure Lighting
+
+Realistic lighting is crucial for photorealism:
+
+```python
+from pxr import UsdLux
+
+# Add a dome light (ambient lighting from all directions)
+dome_light = UsdLux.DomeLight.Define(get_current_stage(), "/World/DomeLight")
+dome_light.CreateIntensityAttr(1000.0)
+
+# Add a directional light (sunlight)
+sun_light = UsdLux.DistantLight.Define(get_current_stage(), "/World/SunLight")
+sun_light.CreateIntensityAttr(5000.0)
+sun_light.CreateAngleAttr(0.53)  # Sun's angular size
+
+# Position the sun
+sun_xform = UsdGeom.Xformable(sun_light)
+sun_xform.AddRotateXYZOp().Set((45.0, 45.0, 0.0))  # Angled sunlight
+
+print("Lighting configured")
+```
+
+**Lighting types**:
+- **Dome Light**: Skylight / ambient illumination
+- **Distant Light**: Parallel rays (sunlight)
+- **Sphere Light**: Point light source (lightbulb)
+- **Rect Light**: Area light (softbox, window)
+
+## Synthetic Data Generation
+
+Now that we have a scene, let's generate training data for object detection.
+
+### Domain Randomization
+
+The key to generalizable synthetic data is **domain randomization**—varying every aspect of the scene:
+
+```python
+import random
+
+def randomize_scene():
+    """Randomize lighting, object positions, and colors"""
+
+    # Randomize dome light intensity
+    dome_intensity = random.uniform(500, 2000)
+    dome_light.CreateIntensityAttr(dome_intensity)
+
+    # Randomize sun angle (time of day)
+    sun_angle_x = random.uniform(0, 90)
+    sun_angle_y = random.uniform(0, 360)
+    sun_xform.AddRotateXYZOp().Set((sun_angle_x, sun_angle_y, 0.0))
+
+    # Randomize box positions
+    for i, box in enumerate(world.scene.get_objects()):
+        if "Box" in box.name:
+            new_pos = np.array([
+                random.uniform(-3, 3),  # X
+                random.uniform(-3, 3),  # Y
+                0.5                      # Z (on the ground)
+            ])
+            box.set_world_pose(position=new_pos)
+
+    # Randomize box colors (simulating different products)
+    for box in world.scene.get_objects():
+        if "Box" in box.name:
+            color = np.array([random.random(), random.random(), random.random()])
+            box.set_color(color)
+
+    print("Scene randomized")
+
+# Generate 1000 variations
+for i in range(1000):
+    randomize_scene()
+    world.step(render=True)  # Render one frame
+    # Capture image and labels here (next section)
+```
+
+### Capturing Annotated Images
+
+Isaac Sim can automatically generate pixel-perfect labels:
+
+```python
+from omni.isaac.synthetic_utils import SyntheticDataHelper
+
+# Initialize synthetic data helper
+sd_helper = SyntheticDataHelper()
+
+# Enable different annotation types
+sd_helper.initialize(
+    sensor_names=["Camera"],
+    viewport_names=["Viewport"],
+)
+
+# Capture annotated data
+for i in range(1000):
+    randomize_scene()
+    world.step(render=True)
+
+    # Get RGB image
+    rgb = sd_helper.get_rgb()
+
+    # Get depth map (distance to each pixel)
+    depth = sd_helper.get_depth()
+
+    # Get semantic segmentation (pixel-wise object labels)
+    segmentation = sd_helper.get_semantic_segmentation()
+
+    # Get 2D bounding boxes
+    bboxes_2d = sd_helper.get_bounding_box_2d()
+
+    # Get 3D bounding boxes (6DOF poses)
+    bboxes_3d = sd_helper.get_bounding_box_3d()
+
+    # Save to disk in standard format (COCO, KITTI, etc.)
+    save_annotations(
+        rgb=rgb,
+        depth=depth,
+        segmentation=segmentation,
+        bboxes_2d=bboxes_2d,
+        bboxes_3d=bboxes_3d,
+        filename=f"data/image_{i:05d}.png"
+    )
+
+    if i % 100 == 0:
+        print(f"Generated {i}/1000 images")
+
+print("Synthetic dataset generation complete!")
+```
+
+**Output format example** (COCO JSON):
+```json
+{
+  "image_id": 1,
+  "file_name": "image_00001.png",
+  "width": 1920,
+  "height": 1080,
+  "annotations": [
+    {
+      "id": 1,
+      "category_id": 2,  # "box"
+      "bbox": [120, 340, 180, 220],  # [x, y, width, height]
+      "area": 39600,
+      "segmentation": [[...]],
+      "pose_3d": {
+        "position": [2.0, 0.0, 0.5],
+        "quaternion": [0, 0, 0, 1]
+      }
+    }
+  ]
+}
+```
+
+## GPU-Accelerated Physics with PhysX
+
+One of Isaac Sim's most powerful features is **GPU physics**, allowing simulation of complex scenarios at scale.
+
+### Rigid Body Dynamics
+
+All objects in Isaac Sim can have physics properties:
+
+```python
+from pxr import UsdPhysics, PhysxSchema
+
+# Make a box physically interactive
+box_prim = get_current_stage().GetPrimAtPath("/World/Box_0")
+
+# Add collision shape
+collision_api = UsdPhysics.CollisionAPI.Apply(box_prim)
+
+# Add rigid body dynamics
+rigid_body = UsdPhysics.RigidBodyAPI.Apply(box_prim)
+rigid_body.CreateVelocityAttr((0.0, 0.0, 0.0))
+
+# Set mass
+mass_api = UsdPhysics.MassAPI.Apply(box_prim)
+mass_api.CreateMassAttr(5.0)  # 5kg
+
+# Set material properties (friction, restitution)
+material = UsdPhysics.MaterialAPI.Apply(box_prim)
+material.CreateStaticFrictionAttr(0.5)
+material.CreateDynamicFrictionAttr(0.4)
+material.CreateRestitutionAttr(0.1)  # Bouncing (0=none, 1=perfect)
+
+print("Physics enabled for box")
+```
+
+Now the box will fall, bounce, and respond to forces realistically.
+
+### Testing Robot Grasping
+
+Let's simulate a robot hand picking up a box:
+
+```python
+# Apply force to simulate a grasp
+def simulate_grasp():
+    box_prim = get_current_stage().GetPrimAtPath("/World/Box_0")
+    rigid_body = UsdPhysics.RigidBodyAPI(box_prim)
+
+    # Apply upward force (simulating hand lifting)
+    force = (0.0, 0.0, 50.0)  # 50 Newtons upward
+    rigid_body.Apply Force(force)
+
+    # Run simulation for 2 seconds
+    for _ in range(120):  # 60 FPS × 2 seconds
+        world.step(render=True)
+
+    # Check if box is airborne
+    box_pos = world.scene.get_object("box_0").get_world_pose()[0]
+    if box_pos[2] > 1.0:
+        print("✓ Successful grasp!")
+        return True
+    else:
+        print("✗ Failed grasp")
+        return False
+
+success = simulate_grasp()
+```
+
+<KeyTakeaways>
+- Isaac Sim leverages RTX ray tracing for photorealistic rendering that enables accurate sim-to-real transfer
+- USD (Universal Scene Description) provides the foundation for scalable, collaborative 3D content
+- Domain randomization techniques ensure synthetic training data generalizes to real-world variations
+- Isaac Sim integrates directly with ROS 2, allowing robot software to run identically in simulation and reality
+</KeyTakeaways>
+
+## Practical Exercise: Warehouse Navigation Dataset
+
+<ExerciseBlock
+  question="Create a synthetic dataset for training a warehouse navigation system. Your dataset should include 500 images with the following variations: (1) Random box positions, (2) Random lighting conditions (day/night), (3) Random camera viewpoints. Each image must include bounding box annotations for 'box' and 'shelf' objects. Provide the Python code to generate this dataset."
+  hints={[
+    {
+      title: "Hint 1: Scene Setup",
+      content: "Start by defining fixed elements (ground, shelves) and variable elements (boxes, camera). Use the scene creation code from this chapter as a starting point."
+    },
+    {
+      title: "Hint 2: Randomization Strategy",
+      content: "Create a randomization function that: 1) Sets random box X,Y positions (avoid overlap), 2) Sets dome light intensity for day/night, 3) Sets random camera position in a hemisphere around the origin."
+    },
+    {
+      title: "Hint 3: Annotation Export",
+      content: "Use SyntheticDataHelper to get bounding boxes. Filter annotations to include only 'box' and 'shelf' categories. Export in COCO format for compatibility with training frameworks."
+    }
+  ]}
+  solution={
+    <div>
+      <p><strong>Solution: Warehouse Navigation Dataset Generator</strong></p>
+      <pre>{`
+from omni.isaac.kit import SimulationApp
+simulation_app = SimulationApp({"headless": False})
+
+from omni.isaac.core import World
+from omni.isaac.core.objects import DynamicCuboid
+from omni.isaac.core.utils.stage import add_reference_to_stage
+from omni.isaac.synthetic_utils import SyntheticDataHelper
+from pxr import UsdLux, UsdGeom
+import numpy as np
+import random
+import json
+import cv2
+
+# Initialize world
+world = World()
+world.scene.add_default_ground_plane()
+
+# Add fixed shelves
+shelf_positions = [(5, 2, 1.25), (5, -2, 1.25), (-5, 2, 1.25), (-5, -2, 1.25)]
+shelves = []
+for i, pos in enumerate(shelf_positions):
+    shelf = DynamicCuboid(
+        prim_path=f"/World/Shelf_{i}",
+        name=f"shelf_{i}",
+        position=np.array(pos),
+        scale=np.array([1.0, 0.3, 2.5]),
+        color=np.array([0.5, 0.3, 0.1])
+    )
+    world.scene.add(shelf)
+    shelves.append(shelf)
+
+# Add dynamic boxes
+num_boxes = 10
+boxes = []
+for i in range(num_boxes):
+    box = DynamicCuboid(
+        prim_path=f"/World/Box_{i}",
+        name=f"box_{i}",
+        scale=np.array([0.5, 0.5, 0.5]),
+        color=np.array([0.8, 0.6, 0.2])
+    )
+    world.scene.add(box)
+    boxes.append(box)
+
+# Add camera
+camera_path = "/World/Camera"
+add_reference_to_stage(
+    usd_path="/Isaac/Sensors/Camera/camera.usd",
+    prim_path=camera_path
+)
+
+# Add lights
+stage = get_current_stage()
+dome_light = UsdLux.DomeLight.Define(stage, "/World/DomeLight")
+sun_light = UsdLux.DistantLight.Define(stage, "/World/SunLight")
+
+# Initialize synthetic data helper
+sd_helper = SyntheticDataHelper()
+sd_helper.initialize(sensor_names=["Camera"])
+
+# Dataset metadata
+dataset = {
+    "images": [],
+    "annotations": [],
+    "categories": [
+        {"id": 1, "name": "shelf"},
+        {"id": 2, "name": "box"}
+    ]
+}
+annotation_id = 1
+
+def randomize_scene(iteration):
+    """Randomize all variable aspects of the scene"""
+
+    # 1. Random box positions (grid to avoid overlap)
+    grid_size = 3
+    grid_step = 2.0
+    occupied = set()
+
+    for box in boxes:
+        while True:
+            grid_x = random.randint(-grid_size, grid_size)
+            grid_y = random.randint(-grid_size, grid_size)
+            if (grid_x, grid_y) not in occupied:
+                occupied.add((grid_x, grid_y))
+                break
+
+        pos = np.array([
+            grid_x * grid_step,
+            grid_y * grid_step,
+            0.25  # Half box height
+        ])
+        box.set_world_pose(position=pos)
+
+    # 2. Random lighting (day vs night)
+    if random.random() > 0.5:  # Day
+        dome_light.CreateIntensityAttr(1500.0)
+        sun_light.CreateIntensityAttr(5000.0)
+    else:  # Night
+        dome_light.CreateIntensityAttr(300.0)
+        sun_light.CreateIntensityAttr(100.0)
+
+    # Random sun angle
+    sun_xform = UsdGeom.Xformable(sun_light)
+    sun_xform.ClearXformOpOrder()
+    sun_xform.AddRotateXYZOp().Set((
+        random.uniform(20, 80),
+        random.uniform(0, 360),
+        0.0
+    ))
+
+    # 3. Random camera viewpoint (hemisphere around origin)
+    radius = random.uniform(8, 12)
+    theta = random.uniform(0, 2 * np.pi)  # Azimuth
+    phi = random.uniform(np.pi/6, np.pi/3)  # Elevation
+
+    cam_x = radius * np.sin(phi) * np.cos(theta)
+    cam_y = radius * np.sin(phi) * np.sin(theta)
+    cam_z = radius * np.cos(phi)
+
+    camera_prim = stage.GetPrimAtPath(camera_path)
+    camera_xform = UsdGeom.Xformable(camera_prim)
+    camera_xform.ClearXformOpOrder()
+    camera_xform.AddTranslateOp().Set((cam_x, cam_y, cam_z))
+
+    # Look at origin
+    set_camera_view(
+        eye=np.array([cam_x, cam_y, cam_z]),
+        target=np.array([0.0, 0.0, 1.0]),
+        camera_prim_path=camera_path
+    )
+
+# Generate dataset
+num_images = 500
+
+for i in range(num_images):
+    randomize_scene(i)
+    world.step(render=True)
+
+    # Capture data
+    rgb = sd_helper.get_rgb()
+    bboxes_2d = sd_helper.get_bounding_box_2d()
+
+    # Save image
+    image_filename = f"image_{i:05d}.png"
+    cv2.imwrite(f"data/{image_filename}", cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR))
+
+    # Add image metadata
+    dataset["images"].append({
+        "id": i,
+        "file_name": image_filename,
+        "width": rgb.shape[1],
+        "height": rgb.shape[0]
+    })
+
+    # Add annotations
+    for bbox in bboxes_2d:
+        obj_name = bbox["semantic_label"]
+
+        # Determine category
+        if "shelf" in obj_name.lower():
+            category_id = 1
+        elif "box" in obj_name.lower():
+            category_id = 2
+        else:
+            continue  # Skip other objects
+
+        x_min, y_min, x_max, y_max = bbox["bbox"]
+        width = x_max - x_min
+        height = y_max - y_min
+
+        dataset["annotations"].append({
+            "id": annotation_id,
+            "image_id": i,
+            "category_id": category_id,
+            "bbox": [float(x_min), float(y_min), float(width), float(height)],
+            "area": float(width * height),
+            "iscrowd": 0
+        })
+        annotation_id += 1
+
+    if (i + 1) % 50 == 0:
+        print(f"Generated {i + 1}/{num_images} images")
+
+# Save COCO-format annotations
+with open("data/annotations.json", "w") as f:
+    json.dump(dataset, f, indent=2)
+
+print(f"✓ Dataset complete! {num_images} images, {annotation_id - 1} annotations")
+simulation_app.close()
+      `}</pre>
+      <p><strong>Key Design Choices:</strong></p>
+      <ul>
+        <li><strong>Grid-based positioning</strong>: Prevents boxes from overlapping by using a discrete grid, ensuring realistic scenes.</li>
+        <li><strong>Day/night split</strong>: 50% of images use bright lighting, 50% use dim lighting, forcing the model to learn lighting-invariant features.</li>
+        <li><strong>Hemispherical camera sampling</strong>: Camera positions are sampled from a hemisphere above the scene, providing diverse viewpoints while keeping objects in frame.</li>
+        <li><strong>COCO format</strong>: Output uses the industry-standard COCO detection format, compatible with PyTorch, TensorFlow, and popular training frameworks.</li>
+        <li><strong>Category filtering</strong>: Only 'shelf' and 'box' annotations are saved, ignoring ground plane and other objects.</li>
+      </ul>
+      <p><strong>Next Steps:</strong></p>
+      <ul>
+        <li>Train a YOLOv8 or EfficientDet model on this dataset</li>
+        <li>Evaluate on held-out synthetic data first</li>
+        <li>Test on real warehouse images to measure sim-to-real gap</li>
+        <li>Fine-tune with a small amount of real data if needed</li>
+      </ul>
+    </div>
+  }
+/>
+
+## Integration with ROS 2
+
+Isaac Sim includes built-in ROS 2 support, allowing you to run your robot's actual software stack in simulation.
+
+### Publishing Sensor Data to ROS 2
+
+```python
+# Enable ROS 2 bridge
+from omni.isaac.core.utils.extensions import enable_extension
+enable_extension("omni.isaac.ros2_bridge")
+
+# Publish camera images
+from omni.isaac.ros2_bridge import Camera
+
+camera_publisher = Camera(
+    prim_path="/World/Camera",
+    topic_name="/camera/image_raw",
+    frame_id="camera_frame"
+)
+
+# Now ROS 2 nodes can subscribe to /camera/image_raw
+# exactly as they would on a real robot!
+```
+
+### Subscribing to ROS 2 Commands
+
+```python
+from omni.isaac.ros2_bridge import Subscriber
+
+def velocity_callback(msg):
+    """Receive velocity commands from Nav2"""
+    linear = msg.linear.x
+    angular = msg.angular.z
+    # Apply to simulated robot
+    robot.set_linear_velocity(linear)
+    robot.set_angular_velocity(angular)
+
+# Subscribe to ROS 2 velocity commands
+velocity_sub = Subscriber(
+    topic_name="/cmd_vel",
+    msg_type="geometry_msgs/Twist",
+    callback=velocity_callback
+)
+```
+
+This means you can develop and test your entire robot software stack in Isaac Sim, then deploy the exact same ROS 2 nodes to the real robot.
+
+## Next Steps
+
+In this chapter, you've learned how to:
+- Set up and navigate Isaac Sim
+- Create photorealistic simulation environments
+- Generate synthetic training datasets with perfect labels
+- Leverage GPU-accelerated physics simulation
+- Integrate Isaac Sim with ROS 2
+
+In the next chapter, we'll deploy these capabilities to edge hardware using **Isaac ROS**, learning how to run GPU-accelerated perception algorithms on NVIDIA Jetson devices for real-time robot operation.
