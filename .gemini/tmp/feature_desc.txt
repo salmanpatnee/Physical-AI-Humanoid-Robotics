@@ -1,0 +1,1 @@
+I want to change "My Site" text to short book name, remove github link from the header, remove Blog link, update /docs/intro link to /docs, in footer Add 4 modules links in place of get started and course content, improve the readability of the Learning Goals section, use the gray theme instead of green
