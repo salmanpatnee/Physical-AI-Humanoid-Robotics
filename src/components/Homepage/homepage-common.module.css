@@ -1,0 +1,198 @@
+/**
+ * Shared CSS variables and utilities for Homepage components
+ * Mobile-first responsive design following Docusaurus theme integration
+ */
+
+/* ============================================================================
+   CSS Variables
+   ============================================================================ */
+
+:root {
+  /* Spacing scale */
+  --homepage-spacing-xs: 0.5rem;
+  --homepage-spacing-sm: 1rem;
+  --homepage-spacing-md: 2rem;
+  --homepage-spacing-lg: 3rem;
+  --homepage-spacing-xl: 4rem;
+
+  /* Breakpoints (matching Docusaurus defaults) */
+  --homepage-breakpoint-mobile: 375px;
+  --homepage-breakpoint-tablet: 768px;
+  --homepage-breakpoint-desktop: 996px;
+  --homepage-breakpoint-wide: 1280px;
+
+  /* Layout */
+  --homepage-max-width: 1200px;
+  --homepage-section-padding-y: var(--homepage-spacing-lg);
+  --homepage-section-padding-x: var(--homepage-spacing-md);
+
+  /* Card dimensions */
+  --homepage-card-gap: var(--homepage-spacing-md);
+  --homepage-card-padding: var(--homepage-spacing-md);
+  --homepage-card-radius: 8px;
+
+  /* Transitions */
+  --homepage-transition-fast: 0.2s ease;
+  --homepage-transition-normal: 0.3s ease;
+}
+
+/* ============================================================================
+   Common Utilities
+   ============================================================================ */
+
+.container {
+  max-width: var(--homepage-max-width);
+  margin: 0 auto;
+  padding: var(--homepage-section-padding-y) var(--homepage-section-padding-x);
+}
+
+.section {
+  padding: var(--homepage-section-padding-y) 0;
+}
+
+.sectionHeading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: var(--homepage-spacing-lg);
+  text-align: center;
+  color: var(--ifm-font-color-base);
+}
+
+/* Card grid layouts */
+.cardGrid {
+  display: grid;
+  gap: var(--homepage-card-gap);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Base card styles */
+.card {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--homepage-card-radius);
+  padding: var(--homepage-card-padding);
+  transition: transform var(--homepage-transition-fast),
+              box-shadow var(--homepage-transition-fast);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cardIcon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--homepage-spacing-sm);
+  color: var(--ifm-color-primary);
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--homepage-spacing-sm);
+  color: var(--ifm-heading-color);
+}
+
+.cardDescription {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ifm-font-color-secondary);
+  margin: 0;
+}
+
+/* ============================================================================
+   Responsive Grid Layouts
+   ============================================================================ */
+
+/* Mobile-first: 1 column */
+.gridCols1 {
+  grid-template-columns: 1fr;
+}
+
+.gridCols2 {
+  grid-template-columns: 1fr;
+}
+
+.gridCols3 {
+  grid-template-columns: 1fr;
+}
+
+.gridCols4 {
+  grid-template-columns: 1fr;
+}
+
+/* Tablet: 768px+ */
+@media (min-width: 768px) {
+  .gridCols2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gridCols3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gridCols4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sectionHeading {
+    font-size: 2.5rem;
+  }
+}
+
+/* Desktop: 996px+ (Docusaurus breakpoint) */
+@media (min-width: 996px) {
+  .gridCols3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .gridCols4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .sectionHeading {
+    font-size: 3rem;
+  }
+}
+
+/* ============================================================================
+   Accessibility
+   ============================================================================ */
+
+/* Skip to main content link */
+.skipLink {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--ifm-color-primary);
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skipLink:focus {
+  top: 0;
+}
+
+/* Focus indicators */
+:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+/* Screen reader only */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

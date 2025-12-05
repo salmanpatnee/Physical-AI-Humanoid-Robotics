@@ -1,0 +1,123 @@
+/**
+ * MaturityLevels Component Styles
+ * Grid layout for 6 maturity level cards with progressive design
+ */
+
+.maturitySection {
+  padding: 4rem 2rem;
+  background: var(--ifm-background-color);
+}
+
+.maturityHeading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--ifm-heading-color);
+}
+
+.maturityGrid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  max-width: 1200px;
+  margin: 0 auto;
+  list-style: none;
+  padding: 0;
+}
+
+.maturityCard {
+  background: var(--ifm-card-background-color);
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: 10px;
+  padding: 2rem;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.maturityCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: var(--ifm-color-primary);
+}
+
+.levelBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--ifm-color-primary);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 50%;
+  margin-bottom: 1.25rem;
+}
+
+.cardTitle {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 0.875rem;
+  color: var(--ifm-heading-color);
+}
+
+.cardDescription {
+  font-size: 0.975rem;
+  line-height: 1.6;
+  color: var(--ifm-font-color-secondary);
+  margin-bottom: 1.25rem;
+}
+
+.characteristicsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.characteristicItem {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.625rem;
+  font-size: 0.9rem;
+  color: var(--ifm-font-color-base);
+}
+
+.characteristicItem::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--ifm-color-success);
+  font-weight: bold;
+}
+
+/* Tablet: 768px+ */
+@media (min-width: 768px) {
+  .maturitySection {
+    padding: 5rem 3rem;
+  }
+
+  .maturityHeading {
+    font-size: 3rem;
+  }
+
+  .maturityGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop: 996px+ */
+@media (min-width: 996px) {
+  .maturitySection {
+    padding: 6rem 3rem;
+  }
+
+  .maturityGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.25rem;
+  }
+
+  .maturityCard {
+    padding: 2.25rem;
+  }
+}

@@ -13,7 +13,9 @@
       "Bash(ls:*)",
       "WebFetch(domain:)",
       "Bash(git fetch:*)",
-      "Bash(Select-String -Pattern '^[0-9]+-ai-native-homepage$')"
+      "Bash(Select-String -Pattern '^[0-9]+-ai-native-homepage$')",
+      "Bash(node --version)",
+      "Bash(npm --version:*)"
     ],
     "deny": [],
     "ask": []

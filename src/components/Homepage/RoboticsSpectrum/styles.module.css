@@ -1,0 +1,104 @@
+/**
+ * RoboticsSpectrum Component Styles
+ * Grid layout for 3 paradigm cards with responsive design
+ */
+
+.spectrumSection {
+  padding: 4rem 2rem;
+  background: var(--ifm-background-color);
+}
+
+.spectrumHeading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--ifm-heading-color);
+}
+
+.spectrumGrid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  max-width: 1200px;
+  margin: 0 auto;
+  list-style: none;
+  padding: 0;
+}
+
+.spectrumCard {
+  background: var(--ifm-card-background-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.spectrumCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  border-color: var(--ifm-color-primary);
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: var(--ifm-color-primary-lightest);
+  border-radius: 50%;
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+  color: var(--ifm-color-primary);
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--ifm-heading-color);
+}
+
+.cardDescription {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ifm-font-color-secondary);
+  margin: 0;
+}
+
+/* Tablet: 768px+ */
+@media (min-width: 768px) {
+  .spectrumSection {
+    padding: 5rem 3rem;
+  }
+
+  .spectrumHeading {
+    font-size: 3rem;
+  }
+
+  .spectrumGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop: 996px+ */
+@media (min-width: 996px) {
+  .spectrumSection {
+    padding: 6rem 3rem;
+  }
+
+  .spectrumGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+
+  .spectrumCard {
+    padding: 2.5rem;
+  }
+}

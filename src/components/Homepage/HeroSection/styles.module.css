@@ -1,0 +1,126 @@
+/**
+ * HeroSection Component Styles
+ * Mobile-first responsive design for hero section
+ */
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, var(--ifm-color-primary-darker) 0%, var(--ifm-color-primary) 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* Background overlay for better text readability */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  text-align: center;
+  color: white;
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.heroTagline {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.heroCta {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--ifm-color-primary);
+  background: white;
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.heroCta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  color: var(--ifm-color-primary-darker);
+}
+
+.heroCta:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+/* Tablet: 768px+ */
+@media (min-width: 768px) {
+  .hero {
+    min-height: 80vh;
+    padding: 6rem 3rem;
+  }
+
+  .heroTitle {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .heroTagline {
+    font-size: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .heroCta {
+    padding: 1.25rem 3rem;
+    font-size: 1.25rem;
+  }
+}
+
+/* Desktop: 996px+ */
+@media (min-width: 996px) {
+  .hero {
+    min-height: 85vh;
+  }
+
+  .heroTitle {
+    font-size: 4rem;
+  }
+
+  .heroTagline {
+    font-size: 1.75rem;
+  }
+}
+
+/* Wide screens: 1280px+ */
+@media (min-width: 1280px) {
+  .heroTitle {
+    font-size: 4.5rem;
+  }
+}
