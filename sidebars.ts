@@ -17,6 +17,7 @@ const sidebars: SidebarsConfig = {
   bookSidebar: [
     'intro',
     'weekly-schedule',
+    'assessments',
     {
       type: 'category',
       label: 'Module 1: The Robotic Nervous System (ROS 2)',

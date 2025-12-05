@@ -17,7 +17,7 @@
 
 **Purpose**: Create the initial file for the new assessments page.
 
-- [ ] T001 Create the new file `docs/assessments.mdx`.
+- [X] T001 Create the new file `docs/assessments.mdx`.
 
 ---
 
@@ -25,8 +25,8 @@
 
 **Purpose**: Add the basic page structure required for content.
 
-- [ ] T002 Add Docusaurus frontmatter (id, title, sidebar_position, description) to `docs/assessments.mdx`.
-- [ ] T003 Add main H1 title and introductory assessment philosophy section to `docs/assessments.mdx`.
+- [X] T002 Add Docusaurus frontmatter (id, title, sidebar_position, description) to `docs/assessments.mdx`.
+- [X] T003 Add main H1 title and introductory assessment philosophy section to `docs/assessments.mdx`.
 
 ---
 
@@ -38,7 +38,7 @@
 
 ### Implementation for User Story 1
 
-- [ ] T004 [US1] Create the Assessment Timeline table showing Week, Assessment, Module Coverage, and Due Date in `docs/assessments.mdx`.
+- [X] T004 [US1] Create the Assessment Timeline table showing Week, Assessment, Module Coverage, and Due Date in `docs/assessments.mdx`.
 
 ---
 
@@ -50,11 +50,11 @@
 
 ### Implementation for User Story 2
 
-- [ ] T005 [US2] Add Assessment 1 section ("ROS 2 Package Development Project") with its H2 title to `docs/assessments.mdx`.
-- [ ] T006 [P] [US2] Add Learning Objectives for Assessment 1 to `docs/assessments.mdx`.
-- [ ] T007 [P] [US2] Add Project Requirements for Assessment 1 to `docs/assessments.mdx`.
-- [ ] T008 [P] [US2] Add Grading Rubric for Assessment 1 (100 points, 4+ criteria) to `docs/assessments.mdx`.
-- [ ] T009 [P] [US2] Add Submission Guidelines for Assessment 1 to `docs/assessments.mdx`.
+- [X] T005 [US2] Add Assessment 1 section ("ROS 2 Package Development Project") with its H2 title to `docs/assessments.mdx`.
+- [X] T006 [P] [US2] Add Learning Objectives for Assessment 1 to `docs/assessments.mdx`.
+- [X] T007 [P] [US2] Add Project Requirements for Assessment 1 to `docs/assessments.mdx`.
+- [X] T008 [P] [US2] Add Grading Rubric for Assessment 1 (100 points, 4+ criteria) to `docs/assessments.mdx`.
+- [X] T009 [P] [US2] Add Submission Guidelines for Assessment 1 to `docs/assessments.mdx`.
 
 ---
 
@@ -66,11 +66,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T010 [US3] Add Assessment 2 section ("Gazebo Simulation Implementation") with its H2 title to `docs/assessments.mdx`.
-- [ ] T011 [P] [US3] Add Learning Objectives for Assessment 2 to `docs/assessments.mdx`.
-- [ ] T012 [P] [US3] Add Project Requirements for Assessment 2 to `docs/assessments.mdx`.
-- [ ] T013 [P] [US3] Add Grading Rubric for Assessment 2 (100 points, 4+ criteria) to `docs/assessments.mdx`.
-- [ ] T014 [P] [US3] Add Submission Guidelines for Assessment 2 to `docs/assessments.mdx`.
+- [X] T010 [US3] Add Assessment 2 section ("Gazebo Simulation Implementation") with its H2 title to `docs/assessments.mdx`.
+- [X] T011 [P] [US3] Add Learning Objectives for Assessment 2 to `docs/assessments.mdx`.
+- [X] T012 [P] [US3] Add Project Requirements for Assessment 2 to `docs/assessments.mdx`.
+- [X] T013 [P] [US3] Add Grading Rubric for Assessment 2 (100 points, 4+ criteria) to `docs/assessments.mdx`.
+- [X] T014 [P] [US3] Add Submission Guidelines for Assessment 2 to `docs/assessments.mdx`.
 
 ---
 
@@ -82,12 +82,12 @@
 
 ### Implementation for User Story 4
 
-- [ ] T015 [US4] Add Assessment 3 section ("Isaac-based Perception Pipeline") with its H2 title to `docs/assessments.mdx`.
-- [ ] T016 [P] [US4] Add Learning Objectives for Assessment 3 to `docs/assessments.mdx`.
-- [ ] T017 [P] [US4] Add Project Requirements for Assessment 3 to `docs/assessments.mdx`.
-- [ ] T018 [P] [US4] Add Grading Rubric for Assessment 3 (100 points, 4+ criteria) to `docs/assessments.mdx`.
-- [ ] T019 [P] [US4] Add Hardware Requirements Note for Assessment 3 to `docs/assessments.mdx`.
-- [ ] T020 [P] [US4] Add Submission Guidelines for Assessment 3 to `docs/assessments.mdx`.
+- [X] T015 [US4] Add Assessment 3 section ("Isaac-based Perception Pipeline") with its H2 title to `docs/assessments.mdx`.
+- [X] T016 [P] [US4] Add Learning Objectives for Assessment 3 to `docs/assessments.mdx`.
+- [X] T017 [P] [US4] Add Project Requirements for Assessment 3 to `docs/assessments.mdx`.
+- [X] T018 [P] [US4] Add Grading Rubric for Assessment 3 (100 points, 4+ criteria) to `docs/assessments.mdx`.
+- [X] T019 [P] [US4] Add Hardware Requirements Note for Assessment 3 to `docs/assessments.mdx`.
+- [X] T020 [P] [US4] Add Submission Guidelines for Assessment 3 to `docs/assessments.mdx`.
 
 ---
 
@@ -99,14 +99,14 @@
 
 ### Implementation for User Story 5
 
-- [ ] T021 [US5] Add Assessment 4 section ("Capstone Project - The Autonomous Humanoid") with its H2 title to `docs/assessments.mdx`.
-- [ ] T022 [P] [US5] Add Learning Objectives for Assessment 4 to `docs/assessments.mdx`.
-- [ ] T023 [P] [US5] Add Project Description for Assessment 4 to `docs/assessments.mdx`.
-- [ ] T024 [P] [US5] Add Implementation Milestones for Assessment 4 (Weeks 11-13) to `docs/assessments.mdx`.
-- [ ] T025 [P] [US5] Add Technical Requirements for Assessment 4 to `docs/assessments.mdx`.
-- [ ] T026 [P] [US5] Add Grading Rubric for Assessment 4 (100 points, 4+ criteria) to `docs/assessments.mdx`.
-- [ ] T027 [P] [US5] Add Submission Guidelines for Assessment 4 to `docs/assessments.mdx`.
-- [ ] T028 [P] [US5] Add Cross-reference link to Module 4 Capstone chapter within Assessment 4 section in `docs/assessments.mdx`.
+- [X] T021 [US5] Add Assessment 4 section ("Capstone Project - The Autonomous Humanoid") with its H2 title to `docs/assessments.mdx`.
+- [X] T022 [P] [US5] Add Learning Objectives for Assessment 4 to `docs/assessments.mdx`.
+- [X] T023 [P] [US5] Add Project Description for Assessment 4 to `docs/assessments.mdx`.
+- [X] T024 [P] [US5] Add Implementation Milestones for Assessment 4 (Weeks 11-13) to `docs/assessments.mdx`.
+- [X] T025 [P] [US5] Add Technical Requirements for Assessment 4 to `docs/assessments.mdx`.
+- [X] T026 [P] [US5] Add Grading Rubric for Assessment 4 (100 points, 4+ criteria) to `docs/assessments.mdx`.
+- [X] T027 [P] [US5] Add Submission Guidelines for Assessment 4 to `docs/assessments.mdx`.
+- [X] T028 [P] [US5] Add Cross-reference link to Module 4 Capstone chapter within Assessment 4 section in `docs/assessments.mdx`.
 
 ---
 
@@ -114,10 +114,10 @@
 
 **Purpose**: Final integration, validation, and documentation.
 
-- [ ] T029 Modify `sidebars.ts` to add a link to "assessments" with `sidebar_position: 3`.
-- [ ] T030 Add a cross-reference link to the Weekly Schedule page in `docs/assessments.mdx`.
-- [ ] T031 Manually validate Docusaurus site builds successfully and all internal links are functional.
-- [ ] T032 Run validation steps from `specs/010-assessments-page/quickstart.md` to ensure page is accessible and appears as expected.
+- [X] T029 Modify `sidebars.ts` to add a link to "assessments" with `sidebar_position: 3`.
+- [X] T030 Add a cross-reference link to the Weekly Schedule page in `docs/assessments.mdx`.
+- [X] T031 Manually validate Docusaurus site builds successfully and all internal links are functional.
+- [X] T032 Run validation steps from `specs/010-assessments-page/quickstart.md` to ensure page is accessible and appears as expected.
 
 ---
 

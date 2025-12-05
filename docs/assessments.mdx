@@ -1,0 +1,176 @@
+---
+id: assessments
+title: Assessments & Projects
+sidebar_position: 3
+description: A comprehensive guide to all course assessments, including detailed requirements, grading rubrics, and submission guidelines.
+---
+
+# Assessments & Projects
+
+This page provides a comprehensive overview of all assessments for the Physical AI & Humanoid Robotics course. Our assessment philosophy is grounded in continuous, project-based evaluation that allows you to build and demonstrate skills incrementally. Each assessment is designed to directly correspond to the learning objectives of a specific module, culminating in a final capstone project that integrates all the concepts you've learned. For a detailed week-by-week breakdown of the course, including how these assessments fit into the overall timeline, please refer to the [Weekly Course Schedule](../weekly-schedule).
+
+## Assessment Timeline
+
+The course includes four major assessments, each aligned with a key phase of your learning journey.
+
+| Week | Assessment | Module Coverage | Due Date |
+|------|------------|-----------------|----------|
+| 5 | ROS 2 Package Development Project | Module 1 | End of Week 5 |
+| 7 | Gazebo Simulation Implementation | Module 2 | End of Week 7 |
+| 10 | Isaac-based Perception Pipeline | Module 3 | End of Week 10 |
+| 13 | Capstone Project: The Autonomous Humanoid | All Modules | End of Week 13 |
+
+---
+
+## Assessment 1: ROS 2 Package Development Project
+
+This project evaluates your mastery of ROS 2 fundamentals, as covered in Module 1. You will create a custom ROS 2 package from scratch, implementing core concepts like nodes, topics, services, and launch files.
+
+### Learning Objectives
+- Demonstrate understanding of ROS 2 nodes and topics.
+- Implement publisher/subscriber communication for a specific task.
+- Create and use custom ROS 2 services.
+- Write a launch file to start and manage your ROS 2 nodes.
+- Understand and use URDF for a simple robot model.
+
+### Project Requirements
+1.  **Create a ROS 2 Package**: Initialize a new ROS 2 package.
+2.  **Publisher Node**: Write a Python node that publishes a custom message to a topic.
+3.  **Subscriber Node**: Write a Python node that subscribes to the topic and processes the incoming messages.
+4.  **Service Server**: Implement a service server that performs a simple calculation or data manipulation task.
+5.  **Service Client**: Create a client node to call the service and get a response.
+6.  **Launch File**: Write a launch file that starts all your nodes (publisher, subscriber, service server).
+
+### Grading Rubric
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| Code Quality & Structure | 30 | Clean, well-organized code following ROS 2 best practices. Clear comments where necessary. |
+| Functionality & Requirements | 40 | All project requirements met. Nodes, topics, and services work as expected. |
+| Documentation | 20 | A clear `README.md` file explaining how to build and run your project. |
+| Presentation/Demo | 10 | A brief video or in-class demonstration of your project working. |
+| **Total** | **100** | |
+
+### Submission Guidelines
+- **Format**: A link to a GitHub repository containing your ROS 2 package.
+- **Deadline**: End of Week 5.
+- **Required Files**: All source code, `package.xml`, `setup.py`, launch file, and a `README.md`.
+
+---
+
+## Assessment 2: Gazebo Simulation Implementation
+
+This assessment evaluates your ability to create and configure a robot simulation in Gazebo, as covered in Module 2. You will build a world, add a robot, and simulate sensors.
+
+### Learning Objectives
+- Understand the principles of physics simulation in Gazebo.
+- Create a custom world file with specific environmental features.
+- Integrate a URDF robot model into a Gazebo world.
+- Simulate sensors like LiDAR, depth cameras, and IMUs.
+- Publish and visualize sensor data in ROS 2.
+
+### Project Requirements
+1.  **Create a World File**: Design a `.world` file in Gazebo that includes ground, lighting, and at least three obstacles.
+2.  **Add Robot Model**: Spawn the URDF robot model from Assessment 1 (or a new one) into your world.
+3.  **Simulate Physics**: Ensure that gravity and collisions are accurately simulated.
+4.  **Simulate Sensors**: Add and configure plugins for a LiDAR scanner and a depth camera on your robot model.
+5.  **Visualize Data**: Launch your simulation and use RViz2 to visualize the robot model and the data from its sensors.
+
+### Grading Rubric
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| Simulation Quality | 30 | The Gazebo world is well-designed, and the simulation runs without errors. |
+| Physics Accuracy | 25 | Gravity and collisions are correctly implemented and demonstrated. |
+| Sensor Integration | 25 | Sensors are correctly added to the robot, and their data is published to ROS 2 topics. |
+| Documentation | 20 | A `README.md` file explains how to launch the simulation and visualize the data. |
+| **Total** | **100** | |
+
+### Submission Guidelines
+- **Format**: A link to a GitHub repository containing your simulation package.
+- **Deadline**: End of Week 7.
+- **Required Files**: All source code, world files, launch files, and a `README.md`.
+
+---
+
+## Assessment 3: Isaac-based Perception Pipeline
+
+This assessment challenges you to build a GPU-accelerated perception pipeline using the NVIDIA Isaac platform, as covered in Module 3. You will work with photorealistic simulation in Isaac Sim and deploy a perception graph using Isaac ROS.
+
+### Learning Objectives
+- Understand the benefits of GPU-accelerated robotics.
+- Generate synthetic data in Isaac Sim for training perception models.
+- Implement a VSLAM or object detection pipeline using Isaac ROS.
+- Integrate Isaac ROS nodes with the ROS 2 ecosystem.
+- Profile and understand the performance of a GPU-accelerated pipeline.
+
+### Project Requirements
+1.  **Isaac Sim Scene**: Create or modify an Isaac Sim scene to generate synthetic data for a perception task (e.g., object detection, segmentation).
+2.  **Perception Pipeline**: Build a ROS 2 pipeline using Isaac ROS gems to perform a perception task, such as VSLAM or object detection.
+3.  **GPU Acceleration**: Ensure that your pipeline is leveraging the GPU for processing, and provide evidence (e.g., profiling data).
+4.  **Integration**: Demonstrate that the output of your perception pipeline can be consumed by other ROS 2 nodes (e.g., visualizing detected objects in RViz2).
+
+### Hardware Requirements Note
+An NVIDIA RTX GPU is required for this assessment. If you do not have a local RTX GPU, you may use a cloud-based GPU instance (e.g., AWS EC2 G-series, Azure NC-series).
+
+### Grading Rubric
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| Perception Accuracy | 30 | The pipeline correctly performs the perception task (e.g., accurate VSLAM-based odometry, high object detection mAP). |
+| Pipeline Performance | 25 | The pipeline runs efficiently, demonstrating effective use of GPU acceleration. |
+| Integration Quality | 25 | The Isaac ROS nodes are correctly integrated into a larger ROS 2 system. |
+| Documentation | 20 | A `README.md` explains your pipeline, how to run it, and the results you achieved. |
+| **Total** | **100** | |
+
+### Submission Guidelines
+- **Format**: A link to a GitHub repository containing your project.
+- **Deadline**: End of Week 10.
+- **Required Files**: All source code, Isaac Sim scene files (if applicable), launch files, a demo video, and a `README.md`.
+
+---
+
+## Assessment 4: Capstone Project - The Autonomous Humanoid
+
+This capstone project is the culmination of the course, where you will integrate concepts from all four modules to create an autonomous humanoid robot in simulation.
+
+### Learning Objectives
+- Demonstrate end-to-end system integration across all modules.
+- Implement a Vision-Language-Action (VLA) pipeline.
+- Use LLMs for cognitive planning and task decomposition.
+- Integrate multi-modal inputs (voice) to trigger robotic actions.
+- Showcase a complete "sense-plan-act" loop in a humanoid robot.
+
+### Project Description
+You will build a simulated humanoid robot that can perform the following sequence:
+1.  Receive a voice command (e.g., "get me the water bottle").
+2.  Use an LLM to decompose the command into a sequence of robotic actions.
+3.  Navigate to a target location using Nav2, avoiding obstacles.
+4.  Identify the target object using computer vision.
+5.  Perform a manipulation task (e.g., grasp the object).
+
+For detailed technical implementation guidance, see the [Capstone: The Autonomous Humanoid](./module4-vision-language-action/04-capstone-the-autonomous-humanoid.mdx) chapter.
+
+### Implementation Milestones
+- **Week 11: Planning & Design**: Define your project scope, architecture, and task sequence.
+- **Week 12: Development & Integration**: Implement the core components (VLA pipeline, navigation, manipulation).
+- **Week 13: Testing & Presentation**: Test your end-to-end system and prepare a final demonstration.
+
+### Technical Requirements
+- **Voice to Action**: Use Whisper or a similar model to transcribe voice commands.
+- **Cognitive Planning**: Use an LLM (e.g., GPT-4) to generate a ROS 2 action plan from the transcribed text.
+- **Perception**: Use Isaac ROS or other computer vision libraries for object detection.
+- **Navigation**: Use Nav2 for path planning and navigation.
+- **Manipulation**: Implement a basic grasping or manipulation sequence.
+
+### Grading Rubric
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| System Integration | 30 | The components of the VLA pipeline are successfully integrated and work together. |
+| Functionality | 30 | The robot successfully completes the sense-plan-act loop for a given command. |
+| Innovation & Complexity | 20 | The project demonstrates innovative use of the technologies or handles a complex task. |
+| Presentation | 10 | A clear and effective demonstration of the project. |
+| Documentation | 10 | A well-documented codebase and a comprehensive `README.md`. |
+| **Total** | **100** | |
+
+### Submission Guidelines
+- **Format**: A link to a GitHub repository and a video demonstration of your final project.
+- **Deadline**: End of Week 13.
+- **Required Files**: All source code, launch files, configuration files, a demo video, and a `README.md`.
