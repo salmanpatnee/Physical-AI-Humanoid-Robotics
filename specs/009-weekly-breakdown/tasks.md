@@ -17,7 +17,7 @@
 
 **Purpose**: Create the initial file for the new schedule page.
 
-- [ ] T001 Create the new file `docs/weekly-schedule.mdx`.
+- [X] T001 Create the new file `docs/weekly-schedule.mdx`.
 
 ---
 
@@ -25,8 +25,8 @@
 
 **Purpose**: Add the basic page structure required by all user stories.
 
-- [ ] T002 Add the Docusaurus frontmatter (id, title, description) to `docs/weekly-schedule.mdx`.
-- [ ] T003 Add the main page H1 title and a brief introductory paragraph to `docs/weekly-schedule.mdx`.
+- [X] T002 Add the Docusaurus frontmatter (id, title, description) to `docs/weekly-schedule.mdx`.
+- [X] T003 Add the main page H1 title and a brief introductory paragraph to `docs/weekly-schedule.mdx`.
 
 ---
 
@@ -40,12 +40,12 @@
 
 > **Content Source Note**: All content for the following tasks (**T004-T009**) must be transcribed directly from the "Weekly Breakdown" section on page 3 of `doc/Hackathon I.pdf`.
 
-- [ ] T004 [US1] Create the parent Markdown table or structure for the 13-week breakdown in `docs/weekly-schedule.mdx`.
-- [ ] T005 [P] [US1] Populate the content for **Weeks 1-2** (Introduction) into the schedule structure in `docs/weekly-schedule.mdx`.
-- [ ] T006 [P] [US1] Populate the content for **Weeks 3-5** (Module 1) into the schedule, ensuring chapter links are clickable and prerequisite notes are included, in `docs/weekly-schedule.mdx`.
-- [ ] T007 [P] [US1] Populate the content for **Weeks 6-7** (Module 2) into the schedule in `docs/weekly-schedule.mdx`.
-- [ ] T008 [P] [US1] Populate the content for **Weeks 8-10** (Module 3) into the schedule in `docs/weekly-schedule.mdx`.
-- [ ] T009 [P] [US1] Populate the content for **Weeks 11-13** (Module 4 & Capstone) into the schedule, including details on progressive capstone development, in `docs/weekly-schedule.mdx`.
+- [X] T004 [US1] Create the parent Markdown table or structure for the 13-week breakdown in `docs/weekly-schedule.mdx`.
+- [X] T005 [P] [US1] Populate the content for **Weeks 1-2** (Introduction) into the schedule structure in `docs/weekly-schedule.mdx`.
+- [X] T006 [P] [US1] Populate the content for **Weeks 3-5** (Module 1) into the schedule, ensuring chapter links are clickable and prerequisite notes are included, in `docs/weekly-schedule.mdx`.
+- [X] T007 [P] [US1] Populate the content for **Weeks 6-7** (Module 2) into the schedule in `docs/weekly-schedule.mdx`.
+- [X] T008 [P] [US1] Populate the content for **Weeks 8-10** (Module 3) into the schedule in `docs/weekly-schedule.mdx`.
+- [X] T009 [P] [US1] Populate the content for **Weeks 11-13** (Module 4 & Capstone) into the schedule, including details on progressive capstone development, in `docs/weekly-schedule.mdx`.
 
 **Checkpoint**: User Story 1 is functional. The page displays the full 13-week text-based schedule.
 
@@ -59,8 +59,8 @@
 
 ### Implementation for User Story 2
 
-- [ ] T010 [US2] Add a new section titled "Course Timeline" at the top of `docs/weekly-schedule.mdx`.
-- [ ] T011 [US2] Implement a Mermaid.js Gantt chart or a Markdown table under the "Course Timeline" section to visualize the module-to-week mapping as defined in `FR-005`. This should be added to `docs/weekly-schedule.mdx`.
+- [X] T010 [US2] Add a new section titled "Course Timeline" at the top of `docs/weekly-schedule.mdx`.
+- [X] T011 [US2] Implement a Mermaid.js Gantt chart or a Markdown table under the "Course Timeline" section to visualize the module-to-week mapping as defined in `FR-005`. This should be added to `docs/weekly-schedule.mdx`.
 
 **Checkpoint**: User Stories 1 and 2 are functional. The page displays the full schedule and the visual timeline.
 
@@ -70,9 +70,9 @@
 
 **Purpose**: Final integration, validation, and documentation.
 
-- [ ] T012 Modify `sidebars.ts` to add a link to the new schedule page, positioned after the "Introduction" and before "Module 1".
-- [ ] T013 Manually validate that the Docusaurus site builds successfully and all links on the `docs/weekly-schedule.mdx` page are functional.
-- [ ] T014 Run validation steps from `specs/009-weekly-breakdown/quickstart.md` to ensure the page is accessible and appears as expected.
+- [X] T012 Modify `sidebars.ts` to add a link to the new schedule page, positioned after the "Introduction" and before "Module 1".
+- [X] T013 Manually validate that the Docusaurus site builds successfully and all links on the `docs/weekly-schedule.mdx` page are functional.
+- [X] T014 Run validation steps from `specs/009-weekly-breakdown/quickstart.md` to ensure the page is accessible and appears as expected.
 
 ---
 

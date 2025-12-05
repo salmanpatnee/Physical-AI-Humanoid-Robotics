@@ -1,0 +1,310 @@
+---
+id: weekly-schedule
+title: Weekly Course Schedule
+sidebar_position: 2
+description: A 13-week breakdown of the Physical AI & Humanoid Robotics course, mapping each week to specific modules, topics, and hands-on activities.
+---
+
+# Weekly Course Schedule
+
+This page provides a comprehensive 13-week schedule for the Physical AI & Humanoid Robotics course. Each week is mapped to specific modules, learning topics, and hands-on activities to guide your learning journey through this capstone quarter.
+
+**Estimated Time Commitment**: ~10 hours per week for readings, labs, and projects.
+
+---
+
+## Course Timeline
+
+The 4 modules are distributed across 13 weeks as follows:
+
+| Weeks | Module | Focus |
+|-------|--------|-------|
+| 1-2 | Introduction | Physical AI Foundations |
+| 3-5 | Module 1 | ROS 2 - The Robotic Nervous System |
+| 6-7 | Module 2 | Digital Twin (Gazebo & Unity) |
+| 8-10 | Module 3 | AI-Robot Brain (NVIDIA Isaac) |
+| 11-13 | Module 4 | Vision-Language-Action & Capstone |
+
+---
+
+## Week-by-Week Breakdown
+
+### Weeks 1-2: Introduction to Physical AI
+
+**Module**: Introduction
+**Topics**:
+- Foundations of Physical AI and embodied intelligence
+- From digital AI to robots that understand physical laws
+- Overview of humanoid robotics landscape
+- Sensor systems: LIDAR, cameras, IMUs, force/torque sensors
+
+**Hands-On Activities**:
+- Survey of current humanoid robot platforms
+- Understanding the Physical AI technology stack
+- Setting up development environment (ROS 2, simulators)
+
+**Time Estimate**: 10 hours/week
+**Prerequisites**: Basic AI/ML knowledge, Python programming
+
+---
+
+### Week 3: ROS 2 Fundamentals - Part 1
+
+**Module**: [Module 1: The Robotic Nervous System (ROS 2)](/docs/module1-robotic-nervous-system)
+**Topics**:
+- ROS 2 architecture and core concepts
+- Nodes, topics, services, and actions
+- Understanding middleware for robot control
+
+**Chapter Readings**:
+- [Focus: Middleware for Robot Control](/docs/module1-robotic-nervous-system/01-focus-middleware-for-robot-control)
+- [ROS 2 Nodes, Topics, and Services](/docs/module1-robotic-nervous-system/02-ros2-nodes-topics-services)
+
+**Hands-On Activities**:
+- Install ROS 2 (Humble/Iron)
+- Create your first ROS 2 nodes
+- Implement publisher-subscriber communication
+
+**Time Estimate**: 10 hours/week
+**Prerequisites**: Weeks 1-2 completed
+
+---
+
+### Week 4: ROS 2 Fundamentals - Part 2
+
+**Module**: [Module 1: The Robotic Nervous System (ROS 2)](/docs/module1-robotic-nervous-system)
+**Topics**:
+- Building ROS 2 packages with Python
+- Launch files and parameter management
+- Bridging Python agents to ROS controllers using rclpy
+
+**Chapter Readings**:
+- [Bridging Python Agents with rclpy](/docs/module1-robotic-nervous-system/03-bridging-python-agents-with-rclpy)
+
+**Hands-On Activities**:
+- Create custom ROS 2 packages
+- Write launch files for multi-node systems
+- Integrate Python scripts with ROS 2
+
+**Time Estimate**: 10 hours/week
+
+---
+
+### Week 5: Robot Modeling with URDF
+
+**Module**: [Module 1: The Robotic Nervous System (ROS 2)](/docs/module1-robotic-nervous-system)
+**Topics**:
+- Understanding URDF (Unified Robot Description Format) for humanoids
+- Robot kinematics and dynamics
+- Managing complex systems with launch files
+
+**Chapter Readings**:
+- [Understanding URDF for Humanoid Robots](/docs/module1-robotic-nervous-system/04-understanding-urdf)
+- [Managing Complex Systems with Launch Files](/docs/module1-robotic-nervous-system/05-managing-complex-systems-with-launch-files)
+
+**Hands-On Activities**:
+- Create URDF models for a simple robot
+- Visualize robots in RViz
+- **Assessment**: ROS 2 package development project
+
+**Time Estimate**: 10 hours/week
+
+---
+
+### Week 6: Robot Simulation with Gazebo - Part 1
+
+**Module**: [Module 2: The Digital Twin (Gazebo & Unity)](/docs/module2-the-digital-twin)
+**Topics**:
+- Gazebo simulation environment setup
+- URDF and SDF robot description formats
+- Physics simulation and sensor simulation
+
+**Chapter Readings**:
+- [Focus: Physics Simulation and World Building](/docs/module2-the-digital-twin/01-focus-physics-simulation-and-world-building)
+- [Simulating Collisions, Gravity, and Sensors in Gazebo](/docs/module2-the-digital-twin/02-simulating-collisions-gravity-and-sensors-in-gazebo)
+
+**Hands-On Activities**:
+- Set up Gazebo Classic or Gazebo Fortress
+- Create simulated worlds with obstacles
+- Simulate physics: gravity, collisions, friction
+
+**Time Estimate**: 10 hours/week
+**Prerequisites**: Module 1 completed (ROS 2 proficiency)
+
+---
+
+### Week 7: High-Fidelity Rendering and Sensors
+
+**Module**: [Module 2: The Digital Twin (Gazebo & Unity)](/docs/module2-the-digital-twin)
+**Topics**:
+- Introduction to Unity for robot visualization
+- High-fidelity rendering and human-robot interaction
+- Simulating sensors: LiDAR, Depth Cameras, and IMUs
+
+**Chapter Readings**:
+- [High-Fidelity Rendering and Interaction Scenes in Unity](/docs/module2-the-digital-twin/03-high-fidelity-rendering-and-interaction-scenes-in-unity)
+- [Sensor Simulation: LiDAR, Depth Cameras, and IMUs](/docs/module2-the-digital-twin/04-sensor-simulation-lidar-depth-cameras-and-imus)
+
+**Hands-On Activities**:
+- Integrate Unity with ROS 2
+- Simulate depth cameras and LiDAR
+- **Assessment**: Gazebo simulation implementation project
+
+**Time Estimate**: 10 hours/week
+
+---
+
+### Week 8: NVIDIA Isaac Platform - Part 1
+
+**Module**: [Module 3: The AI-Robot Brain (NVIDIA Isaac)](/docs/module3-ai-robot-brain)
+**Topics**:
+- NVIDIA Isaac SDK and Isaac Sim
+- Photorealistic simulation and synthetic data generation
+- Advanced perception and training
+
+**Chapter Readings**:
+- [Focus: Advanced Perception and Synthetic Data](/docs/module3-ai-robot-brain/01-focus-advanced-perception-and-synthetic-data)
+- [Isaac Sim for Photorealistic Simulation and Training](/docs/module3-ai-robot-brain/02-isaac-sim-for-photorealistic-simulation-and-training)
+
+**Hands-On Activities**:
+- Install NVIDIA Isaac Sim (requires RTX GPU)
+- Load and manipulate USD robot assets
+- Generate synthetic training data
+
+**Time Estimate**: 10 hours/week
+**Prerequisites**: Module 2 completed (simulation proficiency), RTX GPU access
+
+---
+
+### Week 9: GPU-Accelerated Perception
+
+**Module**: [Module 3: The AI-Robot Brain (NVIDIA Isaac)](/docs/module3-ai-robot-brain)
+**Topics**:
+- AI-powered perception and manipulation
+- Isaac ROS: Hardware-accelerated VSLAM (Visual SLAM) and navigation
+- Reinforcement learning for robot control
+
+**Chapter Readings**:
+- [Isaac ROS for GPU-Accelerated VSLAM and Navigation](/docs/module3-ai-robot-brain/03-isaac-ros-for-gpu-accelerated-vslam-and-navigation)
+
+**Hands-On Activities**:
+- Deploy Isaac ROS perception pipelines
+- Implement visual SLAM with RealSense cameras
+- Test GPU-accelerated object detection
+
+**Time Estimate**: 10 hours/week
+
+---
+
+### Week 10: Navigation and Path Planning
+
+**Module**: [Module 3: The AI-Robot Brain (NVIDIA Isaac)](/docs/module3-ai-robot-brain)
+**Topics**:
+- Sim-to-real transfer techniques
+- Nav2: Path planning for bipedal humanoid movement
+- Humanoid robot kinematics and dynamics
+
+**Chapter Readings**:
+- [Nav2 for Humanoid Path Planning and Locomotion](/docs/module3-ai-robot-brain/04-nav2-for-humanoid-path-planning-and-locomotion)
+
+**Hands-On Activities**:
+- Configure Nav2 for humanoid robots
+- Implement path planning algorithms
+- **Assessment**: Isaac-based perception pipeline project
+
+**Time Estimate**: 10 hours/week
+
+---
+
+### Week 11: Humanoid Robot Development
+
+**Module**: Module 3 Advanced + Module 4 Introduction
+**Topics**:
+- Humanoid robot kinematics and dynamics
+- Bipedal locomotion and balance control
+- Manipulation and grasping with humanoid hands
+- Natural human-robot interaction design
+
+**Hands-On Activities**:
+- Study bipedal locomotion controllers
+- Implement balance control algorithms
+- **Capstone Planning**: Define your autonomous humanoid project
+
+**Time Estimate**: 10 hours/week
+**Prerequisites**: Modules 1-3 completed
+
+---
+
+### Week 12: Conversational Robotics - Part 1
+
+**Module**: [Module 4: Vision-Language-Action (VLA)](/docs/module4-vision-language-action)
+**Topics**:
+- Integrating GPT models for conversational AI in robots
+- Speech recognition and natural language understanding
+- Multi-modal interaction: speech, gesture, vision
+- Voice-to-Action: Using OpenAI Whisper for voice commands
+
+**Chapter Readings**:
+- [Focus: The Convergence of LLMs and Robotics](/docs/module4-vision-language-action/01-focus-the-convergence-of-llms-and-robotics)
+- [Voice-to-Action using Whisper](/docs/module4-vision-language-action/02-voice-to-action-using-whisper)
+
+**Hands-On Activities**:
+- Integrate OpenAI Whisper for speech-to-text
+- Create voice command processing pipeline
+- **Capstone Development**: Implement voice input for your robot
+
+**Time Estimate**: 10 hours/week
+
+---
+
+### Week 13: Capstone Completion & Presentations
+
+**Module**: [Module 4: Vision-Language-Action (VLA)](/docs/module4-vision-language-action)
+**Topics**:
+- Cognitive Planning: Using LLMs to translate natural language into ROS 2 actions
+- End-to-end VLA pipeline integration
+- Capstone project finalization
+
+**Chapter Readings**:
+- [Cognitive Planning using LLMs for ROS 2 Task Decomposition](/docs/module4-vision-language-action/03-cognitive-planning-using-llms-for-ros2-task-decomposition)
+- [Capstone: The Autonomous Humanoid](/docs/module4-vision-language-action/04-capstone-the-autonomous-humanoid)
+
+**Hands-On Activities**:
+- Complete LLM-based cognitive planning implementation
+- Integrate all components: voice, vision, planning, navigation, manipulation
+- **Capstone Assessment**: Simulated humanoid robot with conversational AI
+  - Robot receives voice command
+  - Plans path using LLM
+  - Navigates obstacles
+  - Identifies objects using computer vision
+  - Manipulates objects to complete task
+
+**Time Estimate**: 15 hours/week (final push)
+**Prerequisites**: All modules completed
+
+---
+
+## Notes for Self-Paced Learners
+
+This 13-week schedule represents a **recommended pace** for a structured academic quarter. If you are learning independently:
+
+- **Feel free to adjust the pace** based on your availability and prior experience
+- **Prerequisites are important**: Each module builds on the previous one
+- **Key transition points**:
+  - Before Week 6: Ensure ROS 2 proficiency (Module 1 complete)
+  - Before Week 8: Ensure simulation proficiency (Module 2 complete)
+  - Before Week 11: Ensure perception/navigation proficiency (Module 3 complete)
+- **Hardware requirements vary by week**: See the course introduction for detailed hardware specs
+
+---
+
+## Assessment Overview
+
+Four major assessments are integrated into the schedule:
+
+1. **Week 5**: ROS 2 Package Development Project
+2. **Week 7**: Gazebo Simulation Implementation
+3. **Week 10**: Isaac-Based Perception Pipeline
+4. **Week 13**: Capstone - Autonomous Humanoid with Conversational AI
+
+Each assessment builds on the previous modules and prepares you for the final capstone project.
