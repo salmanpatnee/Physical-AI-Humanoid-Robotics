@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: RAG Chatbot API
+  version: 1.0.0
+  description: API for the RAG chatbot.
+
+paths:
+  /chat:
+    post:
+      summary: Send a message to the chatbot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMessageRequest'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMessageResponse'
+
+components:
+  schemas:
+    ChatMessageRequest:
+      type: object
+      properties:
+        session_id:
+          type: string
+          description: The ID of the chat session.
+        message:
+          type: string
+          description: The user's message.
+        context:
+          type: string
+          description: (Optional) A specific passage of text to constrain the answer to.
+
+    ChatMessageResponse:
+      type: object
+      properties:
+        message_id:
+          type: string
+        role:
+          type: string
+          enum: [assistant]
+        content:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
