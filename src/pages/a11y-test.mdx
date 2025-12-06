@@ -1,0 +1,244 @@
+# Accessibility Test Page
+
+This page tests all standard Docusaurus components and the new theme colors for accessibility compliance.
+
+## Typography
+
+### Headings
+
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+
+### Paragraphs
+
+This is a standard paragraph with **bold text**, *italic text*, and ***bold italic text***. It also includes a [standard link](#) to test link colors and contrast ratios.
+
+Here's another paragraph with some `inline code` to verify code styling meets accessibility standards.
+
+---
+
+## Buttons
+
+import Link from '@docusaurus/Link';
+
+<div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+  <Link className="button button--primary button--lg" to="#">
+    Primary Button
+  </Link>
+  <Link className="button button--secondary button--lg" to="#">
+    Secondary Button
+  </Link>
+  <Link className="button button--outline button--lg" to="#">
+    Outline Button
+  </Link>
+</div>
+
+## Links
+
+- [Primary link color test](#)
+- [Another link for hover testing](#)
+- External link: [Docusaurus](https://docusaurus.io)
+
+## Code Blocks
+
+### Inline Code
+
+Here is some `inline code` in a sentence.
+
+### Code Block
+
+```javascript
+function greet(name) {
+  console.log(`Hello, ${name}!`);
+  return `Welcome to the Physical AI course!`;
+}
+
+greet('Student');
+```
+
+```python
+def calculate_kinematics(joint_angles):
+    """Calculate forward kinematics for robot arm."""
+    # Implementation here
+    return transformation_matrix
+```
+
+---
+
+## Admonitions
+
+:::note
+This is a note admonition to test the info color contrast.
+:::
+
+:::tip
+This is a tip admonition to test the success color contrast.
+:::
+
+:::warning
+This is a warning admonition to test the warning color contrast.
+:::
+
+:::danger
+This is a danger admonition to test the danger/error color contrast.
+:::
+
+:::info
+This is an info admonition with important information about the course.
+:::
+
+---
+
+## Lists
+
+### Unordered List
+
+- First item with regular text
+- Second item with **bold text**
+- Third item with *italic text*
+- Fourth item with a [link](#)
+
+### Ordered List
+
+1. Introduction to Physical AI
+2. ROS2 fundamentals
+3. Isaac Sim simulation
+4. Vision-Language-Action models
+5. Integration and deployment
+
+### Nested Lists
+
+- Parent item 1
+  - Child item 1.1
+  - Child item 1.2
+    - Grandchild item 1.2.1
+- Parent item 2
+  - Child item 2.1
+
+---
+
+## Tables
+
+| Module | Topic | Duration | Difficulty |
+|--------|-------|----------|------------|
+| Module 1 | Foundations | 4 weeks | Beginner |
+| Module 2 | ROS2 Basics | 6 weeks | Intermediate |
+| Module 3 | Simulation | 5 weeks | Intermediate |
+| Module 4 | Perception | 6 weeks | Advanced |
+| Module 5 | VLA & AI | 8 weeks | Advanced |
+| Module 6 | Integration | 4 weeks | Advanced |
+
+---
+
+## Blockquotes
+
+> "The best way to predict the future is to invent it."
+> — Alan Kay
+
+> This is a multi-line blockquote that contains
+> important information about robotics and AI.
+> It should have good contrast in both light and dark modes.
+
+---
+
+## Horizontal Rules
+
+The lines below and above are horizontal rules:
+
+---
+
+***
+
+___
+
+---
+
+## Details/Summary
+
+<details>
+  <summary>Click to expand for more details</summary>
+
+  This is the expanded content that should also meet accessibility standards.
+  It can contain **formatted text**, [links](#), and `code`.
+
+  ```bash
+  ros2 run demo_nodes_cpp talker
+  ```
+</details>
+
+---
+
+## Color Swatches (Visual Reference)
+
+### Primary Colors
+<div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+  <div style={{ backgroundColor: 'var(--ifm-color-primary)', padding: '2rem', borderRadius: '8px', color: 'white', minWidth: '150px' }}>Primary</div>
+  <div style={{ backgroundColor: 'var(--ifm-color-primary-dark)', padding: '2rem', borderRadius: '8px', color: 'white', minWidth: '150px' }}>Primary Dark</div>
+  <div style={{ backgroundColor: 'var(--ifm-color-primary-light)', padding: '2rem', borderRadius: '8px', color: 'white', minWidth: '150px' }}>Primary Light</div>
+</div>
+
+### Secondary Colors
+<div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+  <div style={{ backgroundColor: 'var(--ifm-color-secondary)', padding: '2rem', borderRadius: '8px', color: 'white', minWidth: '150px' }}>Secondary</div>
+  <div style={{ backgroundColor: 'var(--ifm-color-secondary-dark)', padding: '2rem', borderRadius: '8px', color: 'white', minWidth: '150px' }}>Secondary Dark</div>
+  <div style={{ backgroundColor: 'var(--ifm-color-secondary-light)', padding: '2rem', borderRadius: '8px', color: 'white', minWidth: '150px' }}>Secondary Light</div>
+</div>
+
+### Semantic Colors
+<div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+  <div style={{ backgroundColor: 'var(--success-color)', padding: '2rem', borderRadius: '8px', color: 'white', minWidth: '150px' }}>Success</div>
+  <div style={{ backgroundColor: 'var(--warning-color)', padding: '2rem', borderRadius: '8px', color: 'white', minWidth: '150px' }}>Warning</div>
+  <div style={{ backgroundColor: 'var(--danger-color)', padding: '2rem', borderRadius: '8px', color: 'white', minWidth: '150px' }}>Danger</div>
+  <div style={{ backgroundColor: 'var(--info-color)', padding: '2rem', borderRadius: '8px', color: 'white', minWidth: '150px' }}>Info</div>
+</div>
+
+---
+
+## Module Badges
+
+import ModuleBadge from '@site/src/theme/ModuleBadge';
+
+Test the ModuleBadge component with all module colors:
+
+### All Modules
+
+<div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+  <ModuleBadge module="module-1">Module 1 - Foundations</ModuleBadge>
+  <ModuleBadge module="module-2">Module 2 - ROS2 Basics</ModuleBadge>
+  <ModuleBadge module="module-3">Module 3 - Simulation</ModuleBadge>
+  <ModuleBadge module="module-4">Module 4 - Perception</ModuleBadge>
+  <ModuleBadge module="module-5">Module 5 - VLA & AI</ModuleBadge>
+  <ModuleBadge module="module-6">Module 6 - Integration</ModuleBadge>
+</div>
+
+### Different Sizes
+
+<div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap', marginBottom: '2rem' }}>
+  <ModuleBadge module="module-1" size="sm">Small</ModuleBadge>
+  <ModuleBadge module="module-2" size="md">Medium</ModuleBadge>
+  <ModuleBadge module="module-3" size="lg">Large</ModuleBadge>
+</div>
+
+### In Context
+
+This lesson is part of <ModuleBadge module="module-1" size="sm" /> and covers fundamental concepts.
+
+For advanced users, check out <ModuleBadge module="module-5" size="sm" /> to learn about Vision-Language-Action models.
+
+---
+
+## Testing Instructions
+
+To test this page for accessibility:
+
+1. **Visual Review**: Switch between light and dark modes using the theme toggle
+2. **Contrast Check**: Run `npm run test:contrast` to verify WCAG AA compliance
+3. **Screen Reader**: Test with a screen reader (NVDA, JAWS, or VoiceOver)
+4. **Keyboard Navigation**: Navigate the page using only the Tab key
+5. **Zoom Test**: Zoom to 200% and verify readability
+
+All text should be clearly readable in both light and dark modes with sufficient contrast ratios (minimum 4.5:1 for normal text, 3:1 for large text).

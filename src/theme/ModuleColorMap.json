@@ -1,0 +1,8 @@
+{
+  "module-1": "var(--module-1-color)",
+  "module-2": "var(--module-2-color)",
+  "module-3": "var(--module-3-color)",
+  "module-4": "var(--module-4-color)",
+  "module-5": "var(--module-5-color)",
+  "module-6": "var(--module-6-color)"
+}
