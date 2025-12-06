@@ -19,7 +19,8 @@
       "Bash(powershell -Command \"Start-Sleep -Seconds 30\")",
       "Bash(Select-String -Pattern \"(SUCCESS|ERROR|WARNING)\")",
       "Bash(Select-Object -First 10)",
-      "Bash(claude mcp get:*)"
+      "Bash(claude mcp get:*)",
+      "Bash(git merge:*)"
     ],
     "deny": [],
     "ask": []

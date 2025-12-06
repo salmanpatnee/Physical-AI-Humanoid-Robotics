@@ -3,6 +3,19 @@
  * Mobile-first responsive design for hero section
  */
 
+/* Ken Burns animation */
+@keyframes kenBurns {
+  0% {
+    transform: scale(1) translateX(0) translateY(0);
+  }
+  50% {
+    transform: scale(1.1) translateX(-2%) translateY(-2%);
+  }
+  100% {
+    transform: scale(1) translateX(0) translateY(0);
+  }
+}
+
 .hero {
   position: relative;
   display: flex;
@@ -17,7 +30,21 @@
   overflow: hidden;
 }
 
-/* Background overlay for better text readability */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  animation: kenBurns 20s ease-in-out infinite;
+  z-index: 0;
+}
+
+/* Background overlay for better text readability - lighter overlay when image is present */
 .hero::before {
   content: '';
   position: absolute;
@@ -25,7 +52,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
 
@@ -64,13 +91,13 @@
   color: var(--ifm-color-primary);
   background: white;
   border-radius: 8px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 20px rgba(37, 99, 235, 0.4), 0 0 40px rgba(37, 99, 235, 0.2);
 }
 
 .heroCta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3), 0 0 30px rgba(37, 99, 235, 0.6), 0 0 60px rgba(37, 99, 235, 0.3);
   text-decoration: none;
   color: var(--ifm-color-primary-darker);
 }
@@ -78,6 +105,19 @@
 .heroCta:focus-visible {
   outline: 3px solid white;
   outline-offset: 4px;
+}
+
+/* Dark mode styles */
+[data-theme='dark'] .heroCta {
+  background: #1E293B;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 20px rgba(96, 165, 250, 0.3), 0 0 40px rgba(96, 165, 250, 0.15);
+}
+
+[data-theme='dark'] .heroCta:hover {
+  background: #0f172a;
+  color: white;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5), 0 0 30px rgba(96, 165, 250, 0.5), 0 0 60px rgba(96, 165, 250, 0.25);
 }
 
 /* Tablet: 768px+ */

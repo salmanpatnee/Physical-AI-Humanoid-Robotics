@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import type { HeroSectionProps } from '../types';
 import styles from './styles.module.css';
 
@@ -19,8 +20,9 @@ export default function HeroSection({
   backgroundImage,
   className,
 }: HeroSectionProps): JSX.Element {
+  const imageUrl = useBaseUrl(backgroundImage || '');
   const heroStyle: React.CSSProperties = backgroundImage
-    ? { backgroundImage: `url(${backgroundImage})` }
+    ? { backgroundImage: `url(${imageUrl})` }
     : {};
 
   return (
