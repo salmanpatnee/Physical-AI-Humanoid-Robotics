@@ -18,7 +18,8 @@
       "Bash(npm --version:*)",
       "Bash(powershell -Command \"Start-Sleep -Seconds 30\")",
       "Bash(Select-String -Pattern \"(SUCCESS|ERROR|WARNING)\")",
-      "Bash(Select-Object -First 10)"
+      "Bash(Select-Object -First 10)",
+      "Bash(claude mcp get:*)"
     ],
     "deny": [],
     "ask": []
