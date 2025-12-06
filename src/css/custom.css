@@ -246,3 +246,28 @@ code {
   border-color: var(--danger-color);
   background-color: rgba(239, 68, 68, 0.1);
 }
+
+/* Sidebar Navigation Links */
+.theme-doc-sidebar-item-link,
+.menu__link {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.25rem;
+  color: var(--ifm-color-content-secondary) !important;
+  transition: all 0.2s ease;
+}
+
+.theme-doc-sidebar-item-link:hover,
+.menu__link:hover {
+  background-color: var(--ifm-background-surface-color);
+  border-color: var(--ifm-color-emphasis-500);
+  text-decoration: none;
+}
+
+.theme-doc-sidebar-item-link--active,
+.menu__link--active {
+  background-color: var(--ifm-background-surface-color);
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary) !important;
+}

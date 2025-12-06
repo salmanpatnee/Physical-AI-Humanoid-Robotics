@@ -1,6 +1,31 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import sidebars from './sidebars';
+
+function getModuleLinks() {
+  // Hardcoded module links for reliability
+  // These link to the first chapter of each module
+  // Note: Docusaurus strips number prefixes from filenames when generating URLs
+  return [
+    {
+      label: 'The Robotic Nervous System',
+      to: '/docs/module1-robotic-nervous-system/focus-middleware-for-robot-control',
+    },
+    {
+      label: 'The Digital Twin',
+      to: '/docs/module2-the-digital-twin/focus-physics-simulation-and-world-building',
+    },
+    {
+      label: 'The AI-Robot Brain',
+      to: '/docs/module3-ai-robot-brain/focus-advanced-perception-and-synthetic-data',
+    },
+    {
+      label: 'Vision-Language-Action',
+      to: '/docs/module4-vision-language-action/focus-the-convergence-of-llms-and-robotics',
+    },
+  ];
+}
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -82,7 +107,7 @@ const config: Config = {
       title: 'Physical AI Humanoid Robotics',
       logo: {
         alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        src: 'img/logo.png',
       },
       items: [
         {
@@ -105,14 +130,7 @@ const config: Config = {
         {
           title: 'Learn',
           items: [
-            {
-              label: 'Get Started',
-              to: '/docs/intro',
-            },
-            {
-              label: 'Course Content',
-              to: '/docs/intro',
-            },
+            ...getModuleLinks(),
           ],
         },
         {

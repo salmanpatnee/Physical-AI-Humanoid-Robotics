@@ -10,8 +10,8 @@
 
 ### Implementation for User Story 1
 
-- [ ] T001 [US1] [P] Update the `logo.src` property in `docusaurus.config.ts` to `img/logo.png`.
-- [ ] T002 [US1] Identify the Hero section component (likely `src/pages/index.js` or a similar file) and update its styling to use `static/img/humanoid.jpeg` as the background image.
+- [x] T001 [US1] [P] Update the `logo.src` property in `docusaurus.config.ts` to `img/logo.png`.
+- [x] T002 [US1] Identify the Hero section component (likely `src/pages/index.js` or a similar file) and update its styling to use `static/img/humanoid.jpeg` as the background image.
 
 **Checkpoint**: At this point, User Story 1 should be fully functional.
 
@@ -25,8 +25,8 @@
 
 ### Implementation for User Story 2
 
-- [ ] T003 [US2] Update the "Get Started" button in the Hero section component to link to the `/docs` page.
-- [ ] T004 [US2] Modify the Footer component (find the relevant file, likely in `src/theme/Footer/`) to dynamically generate a list of all course modules and link to them.
+- [x] T003 [US2] Update the "Get Started" button in the Hero section component to link to the `/docs` page.
+- [x] T004 [US2] Modify the Footer component (find the relevant file, likely in `src/theme/Footer/`) to dynamically generate a list of all course modules and link to them.
 
 **Checkpoint**: At this point, User Story 2 should be fully functional.
 
@@ -40,8 +40,8 @@
 
 ### Implementation for User Story 3
 
-- [ ] T005 [US3] [P] Apply a distinct blue background color to the copyright bar in the footer. This may involve adding a class in the Footer component and styling it in `src/css/custom.css`.
-- [ ] T006 [US3] Add CSS rules to `src/css/custom.css` to style the sidebar navigation links with a subtle border, a subtle border-radius, and a grayish text color.
+- [x] T005 [US3] [P] Apply a distinct blue background color to the copyright bar in the footer. This may involve adding a class in the Footer component and styling it in `src/css/custom.css`.
+- [x] T006 [US3] Add CSS rules to `src/css/custom.css` to style the sidebar navigation links with a subtle border, a subtle border-radius, and a grayish text color.
 
 **Checkpoint**: At this point, User Story 3 should be fully functional.
 
@@ -51,9 +51,9 @@
 
 **Purpose**: Final validation and cleanup.
 
-- [ ] T007 Visually inspect all changed elements to ensure they render correctly in both light and dark modes.
-- [ ] T008 [P] Verify that the `quickstart.md` documentation is accurate.
-- [ ] T009 Run `npx docusaurus build` to ensure the production build completes without errors.
+- [x] T007 Visually inspect all changed elements to ensure they render correctly in both light and dark modes.
+- [x] T008 [P] Verify that the `quickstart.md` documentation is accurate.
+- [x] T009 Run `npx docusaurus build` to ensure the production build completes without errors.
 
 ---
 
