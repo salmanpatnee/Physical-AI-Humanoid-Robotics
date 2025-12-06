@@ -79,7 +79,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: 'Physical AI Humanoid Robotics',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
@@ -89,9 +89,9 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'bookSidebar',
           position: 'left',
-          label: 'Course',
+          label: 'Book',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        // {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/salmanpatnee/Physical-AI-Humanoid-Robotics',
           label: 'GitHub',
