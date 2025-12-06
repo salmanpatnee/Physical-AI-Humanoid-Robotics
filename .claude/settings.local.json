@@ -20,7 +20,9 @@
       "Bash(Select-String -Pattern \"(SUCCESS|ERROR|WARNING)\")",
       "Bash(Select-Object -First 10)",
       "Bash(claude mcp get:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(Select-String -Pattern 'refs/heads/[0-9]+-simplified-content$')",
+      "Bash(git config:*)"
     ],
     "deny": [],
     "ask": []
