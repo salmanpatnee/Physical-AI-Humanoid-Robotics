@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WhatYouWillLearn Component Props",
+  "description": "Schema for the WhatYouWillLearn component that displays learning objectives at the start of each chapter",
+  "type": "object",
+  "required": ["goals"],
+  "properties": {
+    "goals": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 5,
+      "description": "List of 3-5 learning goals for the chapter",
+      "items": {
+        "type": "object",
+        "required": ["text"],
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 100,
+            "description": "Learning goal in simple, friendly language (e.g., 'Understand how robots talk to each other')"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Optional Lucide icon name (e.g., 'MessageCircle', 'Brain', 'Bot')",
+            "pattern": "^[A-Z][a-zA-Z0-9]*$"
+          },
+          "why_it_matters": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Optional explanation of why this learning goal is important or relevant"
+          }
+        }
+      }
+    },
+    "displayStyle": {
+      "type": "string",
+      "enum": ["bullets", "cards", "numbered"],
+      "default": "bullets",
+      "description": "How to display the learning goals"
+    },
+    "colorTheme": {
+      "type": "string",
+      "enum": ["primary", "success", "info"],
+      "default": "primary",
+      "description": "Color theme for the component"
+    }
+  },
+  "examples": [
+    {
+      "goals": [
+        {
+          "text": "Understand how robots talk to each other",
+          "icon": "MessageCircle",
+          "why_it_matters": "Just like you need to talk to friends to play together, robot parts need to share information!"
+        },
+        {
+          "text": "Learn what ROS2 does (it's like a robot's nervous system)",
+          "icon": "Brain"
+        },
+        {
+          "text": "See how real robots use these ideas",
+          "icon": "Bot"
+        }
+      ],
+      "displayStyle": "cards",
+      "colorTheme": "primary"
+    }
+  ]
+}

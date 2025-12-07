@@ -19,6 +19,33 @@ key_takeaways:
 
 # Understanding URDF for Humanoid Robots
 
+<WhatYouWillLearn
+  goals={[
+    {
+      text: "Understand the Unified Robot Description Format (URDF)",
+      icon: "Target",
+      why_it_matters: "This is important for building real robots!"
+    },
+    {
+      text: "Learn how to model humanoid robot structure and kinematics",
+      icon: "Lightbulb",
+      why_it_matters: "This is important for building real robots!"
+    },
+    {
+      text: "Define links, joints, and kinematic chains",
+      icon: "Rocket",
+      why_it_matters: "This is important for building real robots!"
+    },
+    {
+      text: "Visualize robot models in RViz and simulation",
+      icon: "CheckCircle2",
+      why_it_matters: "This is important for building real robots!"
+    }
+  ]}
+  displayStyle="cards"
+/>
+
+
 ## Introduction: Describing Physical Structure
 
 To simulate, visualize, or control a humanoid robot, ROS 2 needs a precise description of its physical structure. The **Unified Robot Description Format (URDF)** provides this description using XML.
@@ -173,7 +200,7 @@ Let's model a humanoid arm with shoulder, elbow, and wrist:
     <origin xyz="0 0.2 0.5" rpy="0 0 0"/>
     <!-- Origin: torso center + 20cm to side + 50cm up -->
     <axis xyz="0 1 0"/>  <!-- Pitch axis (Y) -->
-    <limit lower="-1.57" upper="3.14"  <!-- -90° to 180° -->
+    <limit lower="-1.57" upper="3.14"  <!-- -90ï¿½ to 180ï¿½ -->
            effort="50.0" velocity="2.0"/>
   </joint>
 
@@ -203,7 +230,7 @@ Let's model a humanoid arm with shoulder, elbow, and wrist:
     <origin xyz="0 0 -0.3" rpy="0 0 0"/>
     <!-- At bottom of upper arm -->
     <axis xyz="0 1 0"/>
-    <limit lower="0" upper="2.44"  <!-- 0° to 140° (elbow bends one way) -->
+    <limit lower="0" upper="2.44"  <!-- 0ï¿½ to 140ï¿½ (elbow bends one way) -->
            effort="30.0" velocity="2.0"/>
   </joint>
 
@@ -229,7 +256,7 @@ Let's model a humanoid arm with shoulder, elbow, and wrist:
     <child link="hand"/>
     <origin xyz="0 0 -0.25" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit lower="-1.57" upper="1.57"  <!-- -90° to 90° -->
+    <limit lower="-1.57" upper="1.57"  <!-- -90ï¿½ to 90ï¿½ -->
            effort="10.0" velocity="2.0"/>
   </joint>
 
@@ -315,14 +342,14 @@ Accurate mass and inertia are crucial for realistic simulation:
   <mass value="4.5"/>  <!-- kg -->
   <inertia ixx="0.01" ixy="0.0" ixz="0.0"
            iyy="0.01" iyz="0.0"
-           izz="0.008"/>  <!-- kg·m² -->
+           izz="0.008"/>  <!-- kgï¿½mï¿½ -->
 </inertial>
 ```
 
 For a box with dimensions (x, y, z) and mass m:
-- `ixx = (m/12) * (y² + z²)`
-- `iyy = (m/12) * (x² + z²)`
-- `izz = (m/12) * (x² + y²)`
+- `ixx = (m/12) * (yï¿½ + zï¿½)`
+- `iyy = (m/12) * (xï¿½ + zï¿½)`
+- `izz = (m/12) * (xï¿½ + yï¿½)`
 
 ## Complete Humanoid Structure
 
@@ -332,15 +359,15 @@ A full humanoid URDF includes:
 - Torso
 - Neck (1-2 DOF)
 - Head (pan/tilt)
-- 2 × Shoulder (3 DOF each)
-- 2 × Elbow (1 DOF)
-- 2 × Wrist (2-3 DOF)
-- 2 × Hand (5-20+ DOF for fingers)
+- 2 ï¿½ Shoulder (3 DOF each)
+- 2 ï¿½ Elbow (1 DOF)
+- 2 ï¿½ Wrist (2-3 DOF)
+- 2 ï¿½ Hand (5-20+ DOF for fingers)
 
 **Lower Body:**
-- Hip (3 DOF × 2)
-- Knee (1 DOF × 2)
-- Ankle (2 DOF × 2)
+- Hip (3 DOF ï¿½ 2)
+- Knee (1 DOF ï¿½ 2)
+- Ankle (2 DOF ï¿½ 2)
 - Foot (fixed or articulated)
 
 **Total DOF**: 30-50+ for a complete humanoid
@@ -454,6 +481,50 @@ ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_descrip
       <p><strong>Total DOF: 3</strong> (hip pitch + knee + ankle pitch). A complete leg would add hip roll, hip yaw, and ankle roll for 6 DOF total.</p>
     </div>
   }
+/>
+
+
+## Technical Terms Glossary
+
+<GrownUpWords
+  terms={[
+    {
+      simple_term: "Robot's language",
+      technical_term: "ROS 2",
+      context_example: "This chapter discusses ROS 2 in detail."
+    },
+    {
+      simple_term: "Robot blueprint",
+      technical_term: "URDF",
+      context_example: "This chapter discusses URDF in detail."
+    },
+    {
+      simple_term: "Robot practice world",
+      technical_term: "Gazebo",
+      context_example: "This chapter discusses Gazebo in detail."
+    },
+    {
+      simple_term: "NVIDIA robot training world",
+      technical_term: "Isaac Sim",
+      context_example: "This chapter discusses Isaac Sim in detail."
+    },
+    {
+      simple_term: "Practice environment",
+      technical_term: "Simulation",
+      context_example: "This chapter discusses Simulation in detail."
+    },
+    {
+      simple_term: "Robot's senses",
+      technical_term: "Sensor",
+      context_example: "This chapter discusses Sensor in detail."
+    },
+    {
+      simple_term: "Laser distance measurer",
+      technical_term: "LiDAR",
+      context_example: "This chapter discusses LiDAR in detail."
+    }
+  ]}
+  displayStyle="table"
 />
 
 ## Next Steps

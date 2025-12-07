@@ -1,0 +1,126 @@
+---
+title: Test Simplified Components
+description: Test page for WhatYouWillLearn, DoubtfulQA, and GrownUpWords components
+---
+
+# Test Page: Simplified Content Components
+
+This page tests all three new simplification components.
+
+## WhatYouWillLearn Component Test
+
+<WhatYouWillLearn
+  goals={[
+    {
+      text: "Understand how robots talk to each other",
+      icon: "MessageCircle",
+      why_it_matters: "Just like you use your phone to talk to friends, robots need to share information to work together!"
+    },
+    {
+      text: "Learn what a robot's brain does",
+      icon: "Brain",
+      why_it_matters: "The robot brain decides what to do next, like when you decide to kick a ball or catch it"
+    },
+    {
+      text: "See how robots practice in computer games",
+      icon: "Gamepad2",
+      why_it_matters: "Before a robot does something real, it can practice safely in a pretend world"
+    }
+  ]}
+  displayStyle="cards"
+/>
+
+## Main Content
+
+When you want to build a robot, you need to think about how it will understand the world around it. Robots use special sensors to see and feel things. These sensors are like your eyes and hands.
+
+A robot needs a brain to think about what it sees. The robot brain is called a processor. It takes information from the sensors and decides what to do next.
+
+## DoubtfulQA Component Test
+
+<DoubtfulQA
+  questions={[
+    {
+      id: "q1",
+      question: "Why can't I just tell the robot what to do with my voice?",
+      answer: "Great question! You actually CAN talk to robots, but they need special training to understand human language. Most robots use a simpler language that computers understand better, called 'code'. Think of it like this: you can teach your dog commands, but you use simple words like 'sit' instead of long sentences. Robots are similar - they work better with clear, simple instructions in their own language.",
+      category: "why-vs-how",
+      misconception_addressed: "Students think robots should naturally understand human language like people do",
+      follow_up_questions: [
+        "Can robots learn to understand any language?",
+        "How do voice assistants like Siri understand me?"
+      ]
+    },
+    {
+      id: "q2",
+      question: "What's the difference between a robot and a computer?",
+      answer: "A computer is like a brain that can think and calculate. A robot is a computer PLUS a body with parts that can move! Your laptop is a computer - it can think but it can't walk around. A robot vacuum is a robot - it has a computer brain AND wheels that let it move around your house.",
+      category: "scope",
+      misconception_addressed: "Students confuse computers with robots, thinking they're the same thing"
+    },
+    {
+      id: "q3",
+      question: "Do robots need to practice like I practice soccer?",
+      answer: "Yes! Robots practice a LOT before they do real tasks. But instead of going to a field, robots practice in a computer simulation - like a video game for robots. This way, if the robot makes a mistake during practice, nothing gets broken in the real world. Once the robot gets good at the game, then it's ready to try the real task!",
+      category: "sim-vs-real",
+      misconception_addressed: "Students think robots work perfectly the first time without any practice"
+    },
+    {
+      id: "q4",
+      question: "What does ROS2 mean? It sounds complicated.",
+      answer: "ROS2 is just a short name for 'Robot Operating System 2'. It's like the rules and tools that help different robot parts work together. Think of it like the rules of a team sport - everyone needs to follow the same rules so they can play together smoothly. ROS2 is the rulebook that robot parts use to work as a team!",
+      category: "terminology",
+      misconception_addressed: "Technical acronyms intimidate students"
+    },
+    {
+      id: "q5",
+      question: "Can I build a real robot after this chapter?",
+      answer: "This chapter teaches you the IDEAS behind how robots work - like understanding the rules of soccer. To build a real robot, you'd also need physical parts (like motors and sensors) and practice putting them together. But yes, understanding these ideas is the important FIRST STEP! It's like learning to swim - first you learn how swimming works, then you practice in the water.",
+      category: "scope",
+      misconception_addressed: "Students expect immediate hands-on robot building without understanding fundamentals"
+    }
+  ]}
+  expandable={true}
+/>
+
+## GrownUpWords Component Test
+
+<GrownUpWords
+  terms={[
+    {
+      simple_term: "Robot's language",
+      technical_term: "ROS2",
+      context_example: "When different robot parts need to share information, they use ROS2 to communicate with each other."
+    },
+    {
+      simple_term: "Robot part or worker",
+      technical_term: "Node",
+      context_example: "Each Node is like a team member - one might control the wheels, another might watch the camera, and they all work together."
+    },
+    {
+      simple_term: "Announcement channel",
+      technical_term: "Topic",
+      context_example: "When the camera sees something, it announces the information on a Topic, and other parts can listen to that announcement."
+    },
+    {
+      simple_term: "Robot practice world",
+      technical_term: "Gazebo",
+      context_example: "Before we test our robot in the real world, we let it practice in Gazebo, which is like a video game for robots."
+    },
+    {
+      simple_term: "Robot blueprint",
+      technical_term: "URDF",
+      context_example: "The URDF file tells the computer exactly how the robot is built - where the wheels are, how the arms move, and what sensors it has."
+    },
+    {
+      simple_term: "Robot's brain",
+      technical_term: "Processor",
+      context_example: "The Processor takes information from sensors and decides what the robot should do next, just like your brain decides what you should do."
+    }
+  ]}
+  displayStyle="table"
+/>
+
+## Conclusion
+
+Now you understand the basic parts of how robots work! Remember, every big robot is made up of smaller parts that work together like a team.

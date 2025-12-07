@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DoubtfulQA Component Props",
+  "description": "Schema for the DoubtfulQA component that displays common confusion points as questions with clear answers",
+  "type": "object",
+  "required": ["questions"],
+  "properties": {
+    "questions": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 8,
+      "description": "List of 5-8 confusion points per lesson section, phrased as questions with answers",
+      "items": {
+        "type": "object",
+        "required": ["id", "question", "answer", "category", "misconception_addressed"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Unique identifier for the question (e.g., 'middleware-vs-direct', 'ros-vs-os')"
+          },
+          "question": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 200,
+            "description": "Question as a student would phrase it (e.g., 'Why can't robot parts just talk directly?')"
+          },
+          "answer": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 500,
+            "description": "Clear, simple answer with analogy if helpful"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["terminology", "why-vs-how", "scope", "sim-vs-real", "abstract"],
+            "description": "Type of confusion this question addresses"
+          },
+          "misconception_addressed": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 150,
+            "description": "What wrong belief or misunderstanding does this question reveal?"
+          },
+          "follow_up_questions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional list of related follow-up questions for deeper exploration"
+          },
+          "visual_aid": {
+            "type": "string",
+            "format": "uri-reference",
+            "description": "Optional path to diagram or image that helps explain the answer"
+          }
+        }
+      }
+    },
+    "allowExpand": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to make questions collapsible (accordion style)"
+    },
+    "showCategory": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to display the confusion category label"
+    }
+  },
+  "examples": [
+    {
+      "questions": [
+        {
+          "id": "middleware-vs-direct",
+          "question": "Why can't robot parts just talk directly to each other instead of using middleware?",
+          "answer": "Great question! Imagine if every student in your school had to remember the phone number of every other student to share homework. That would be really hard! Middleware is like having a class announcement system - you just say your message once, and everyone who wants to hear it can listen. It's much easier than calling everyone separately!",
+          "category": "why-vs-how",
+          "misconception_addressed": "Middleware is unnecessary overhead",
+          "visual_aid": "/img/middleware-analogy.svg"
+        },
+        {
+          "id": "ros-vs-operating-system",
+          "question": "Is ROS2 an operating system like Windows?",
+          "answer": "Nope! Even though it's called 'Robot Operating System,' ROS2 is actually more like a set of tools that runs ON TOP of an operating system (like Windows or Linux). Think of it this way: If Linux is like the foundation and walls of a house, ROS2 is like the furniture and appliances inside that make the house useful. You need both!",
+          "category": "terminology",
+          "misconception_addressed": "ROS2 is an OS replacement"
+        }
+      ],
+      "allowExpand": true,
+      "showCategory": false
+    }
+  ]
+}

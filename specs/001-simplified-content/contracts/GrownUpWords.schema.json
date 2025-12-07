@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GrownUpWords Component Props",
+  "description": "Schema for the GrownUpWords component that maps simplified terms to technical terminology",
+  "type": "object",
+  "required": ["terms"],
+  "properties": {
+    "terms": {
+      "type": "array",
+      "minItems": 5,
+      "description": "List of technical term mappings (minimum 5 per chapter)",
+      "items": {
+        "type": "object",
+        "required": ["simple_term", "technical_term", "context_example"],
+        "properties": {
+          "simple_term": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50,
+            "description": "Child-friendly phrase (e.g., 'Robot's language', 'Robot's brain')"
+          },
+          "technical_term": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 50,
+            "description": "Actual technical term (e.g., 'ROS2', 'Processor (CPU)')"
+          },
+          "context_example": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 200,
+            "description": "Sentence showing the technical term used in real context"
+          },
+          "why_technical_term_exists": {
+            "type": "string",
+            "maxLength": 150,
+            "description": "Optional explanation of why the technical term exists or what it stands for"
+          }
+        }
+      }
+    },
+    "displayStyle": {
+      "type": "string",
+      "enum": ["table", "cards", "inline"],
+      "default": "table",
+      "description": "How to display the glossary"
+    },
+    "expandable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to make the glossary collapsible"
+    }
+  },
+  "examples": [
+    {
+      "terms": [
+        {
+          "simple_term": "Robot's language",
+          "technical_term": "ROS2",
+          "context_example": "The engineer said: 'We use ROS2 to coordinate the robot's movements.'",
+          "why_technical_term_exists": "ROS2 stands for Robot Operating System 2 - it's a shorter way to say 'the system that helps robot parts communicate.'"
+        },
+        {
+          "simple_term": "Robot's brain",
+          "technical_term": "Processor (CPU)",
+          "context_example": "The humanoid robot has a powerful Jetson processor to run AI models."
+        },
+        {
+          "simple_term": "Announcement channel",
+          "technical_term": "Topic",
+          "context_example": "The camera publishes images to the /camera/image topic."
+        }
+      ],
+      "displayStyle": "table",
+      "expandable": false
+    }
+  ]
+}

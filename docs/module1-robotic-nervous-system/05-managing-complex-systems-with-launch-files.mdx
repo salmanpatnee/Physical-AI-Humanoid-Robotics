@@ -19,6 +19,33 @@ key_takeaways:
 
 # Managing Complex Systems with Launch Files
 
+<WhatYouWillLearn
+  goals={[
+    {
+      text: "Understand the purpose and benefits of ROS 2 launch files",
+      icon: "Target",
+      why_it_matters: "This is important for building real robots!"
+    },
+    {
+      text: "Learn to write Python-based launch files",
+      icon: "Lightbulb",
+      why_it_matters: "This is important for building real robots!"
+    },
+    {
+      text: "Configure multiple nodes with parameters and remapping",
+      icon: "Rocket",
+      why_it_matters: "This is important for building real robots!"
+    },
+    {
+      text: "Manage humanoid robot system startup and configuration",
+      icon: "CheckCircle2",
+      why_it_matters: "This is important for building real robots!"
+    }
+  ]}
+  displayStyle="cards"
+/>
+
+
 ## The Challenge of Complex Robot Systems
 
 A humanoid robot isn't a single programit's an ecosystem of dozens of processes (nodes) working together:
@@ -54,7 +81,7 @@ A humanoid robot isn't a single programit's an ecosystem of dozens of processes
 A **launch file** is a script that:
 1. **Starts multiple nodes** with a single command
 2. **Sets parameters** for each node
-3. **Configures topic remapping** (e.g., `/left_camera/image` ’ `/camera/left/image`)
+3. **Configures topic remapping** (e.g., `/left_camera/image` ï¿½ `/camera/left/image`)
 4. **Manages node lifecycle** (startup order, dependencies)
 5. **Includes other launch files** (modular composition)
 
@@ -594,6 +621,55 @@ Congratulations! You've completed Module 1: The Robotic Nervous System. You now 
 5. **Launch files** for managing complex robot systems
 
 In Module 2, you'll learn about simulation environments (Gazebo and Unity) where you'll deploy these concepts to create digital twins of humanoid robots.
+
+
+## Technical Terms Glossary
+
+<GrownUpWords
+  terms={[
+    {
+      simple_term: "Robot's language",
+      technical_term: "ROS2",
+      context_example: "This chapter discusses ROS2 in detail."
+    },
+    {
+      simple_term: "Robot's language",
+      technical_term: "ROS 2",
+      context_example: "This chapter discusses ROS 2 in detail."
+    },
+    {
+      simple_term: "Robot part or worker",
+      technical_term: "Node",
+      context_example: "This chapter discusses Node in detail."
+    },
+    {
+      simple_term: "Announcement channel",
+      technical_term: "Topic",
+      context_example: "This chapter discusses Topic in detail."
+    },
+    {
+      simple_term: "Connection system",
+      technical_term: "Middleware",
+      context_example: "This chapter discusses Middleware in detail."
+    },
+    {
+      simple_term: "Robot blueprint",
+      technical_term: "URDF",
+      context_example: "This chapter discusses URDF in detail."
+    },
+    {
+      simple_term: "Robot practice world",
+      technical_term: "Gazebo",
+      context_example: "This chapter discusses Gazebo in detail."
+    },
+    {
+      simple_term: "Practice environment",
+      technical_term: "Simulation",
+      context_example: "This chapter discusses Simulation in detail."
+    }
+  ]}
+  displayStyle="table"
+/>
 
 ## Next Steps
 

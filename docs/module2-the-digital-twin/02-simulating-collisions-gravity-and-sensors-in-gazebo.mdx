@@ -20,6 +20,33 @@ key_takeaways:
 
 # Simulating Collisions, Gravity, and Sensors in Gazebo
 
+<WhatYouWillLearn
+  goals={[
+    {
+      text: "Configure collision properties for realistic object interactions",
+      icon: "Target",
+      why_it_matters: "This is important for building real robots!"
+    },
+    {
+      text: "Understand and modify gravity settings for different environments",
+      icon: "Lightbulb",
+      why_it_matters: "This is important for building real robots!"
+    },
+    {
+      text: "Add and configure sensors in Gazebo robot models",
+      icon: "Rocket",
+      why_it_matters: "This is important for building real robots!"
+    },
+    {
+      text: "Visualize sensor data in real-time",
+      icon: "CheckCircle2",
+      why_it_matters: "This is important for building real robots!"
+    }
+  ]}
+  displayStyle="cards"
+/>
+
+
 ## Collision Modeling
 
 Accurate collision detection is critical for realistic simulation. When a humanoid robot walks, its feet must collide realistically with the ground. When it picks up an object, the gripper must interact properly with the object's surface.
@@ -409,6 +436,55 @@ Publishes `gazebo_msgs/ContactsState` with:
 - Gazebo sensors publish data to ROS 2 topics for processing
 - Camera, IMU, and contact sensors are essential for humanoid robots
 </KeyTakeaways>
+
+
+## Technical Terms Glossary
+
+<GrownUpWords
+  terms={[
+    {
+      simple_term: "Robot's language",
+      technical_term: "ROS2",
+      context_example: "This chapter discusses ROS2 in detail."
+    },
+    {
+      simple_term: "Robot's language",
+      technical_term: "ROS 2",
+      context_example: "This chapter discusses ROS 2 in detail."
+    },
+    {
+      simple_term: "Announcement channel",
+      technical_term: "Topic",
+      context_example: "This chapter discusses Topic in detail."
+    },
+    {
+      simple_term: "Robot blueprint",
+      technical_term: "URDF",
+      context_example: "This chapter discusses URDF in detail."
+    },
+    {
+      simple_term: "Robot practice world",
+      technical_term: "Gazebo",
+      context_example: "This chapter discusses Gazebo in detail."
+    },
+    {
+      simple_term: "Practice environment",
+      technical_term: "Simulation",
+      context_example: "This chapter discusses Simulation in detail."
+    },
+    {
+      simple_term: "Robot's senses",
+      technical_term: "Sensor",
+      context_example: "This chapter discusses Sensor in detail."
+    },
+    {
+      simple_term: "Laser distance measurer",
+      technical_term: "LiDAR",
+      context_example: "This chapter discusses LiDAR in detail."
+    }
+  ]}
+  displayStyle="table"
+/>
 
 ## Next Steps
 

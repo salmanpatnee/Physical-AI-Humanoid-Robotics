@@ -20,6 +20,33 @@ key_takeaways:
 
 # Sensor Simulation: LiDAR, Depth Cameras, and IMUs
 
+<WhatYouWillLearn
+  goals={[
+    {
+      text: "Understand the principles of LiDAR and depth camera operation",
+      icon: "Target",
+      why_it_matters: "This is important for building real robots!"
+    },
+    {
+      text: "Configure advanced sensors in Gazebo and Unity",
+      icon: "Lightbulb",
+      why_it_matters: "This is important for building real robots!"
+    },
+    {
+      text: "Model realistic sensor noise for sim-to-real transfer",
+      icon: "Rocket",
+      why_it_matters: "This is important for building real robots!"
+    },
+    {
+      text: "Generate synthetic sensor data for training perception models",
+      icon: "CheckCircle2",
+      why_it_matters: "This is important for building real robots!"
+    }
+  ]}
+  displayStyle="cards"
+/>
+
+
 ## Introduction to Advanced Sensors
 
 For humanoid robots to navigate and manipulate objects in the real world, they need sophisticated perception capabilities. In this chapter, we'll explore three critical sensor types: **LiDAR** for long-range 3D mapping, **Depth Cameras** for close-range perception, and **IMUs** for state estimation.
@@ -556,6 +583,55 @@ if __name__ == '__main__':
 - Simulated sensors can generate large-scale synthetic datasets for training perception models
 - Multi-sensor fusion (LiDAR + cameras + IMU) provides robust perception
 </KeyTakeaways>
+
+
+## Technical Terms Glossary
+
+<GrownUpWords
+  terms={[
+    {
+      simple_term: "Robot's language",
+      technical_term: "ROS 2",
+      context_example: "This chapter discusses ROS 2 in detail."
+    },
+    {
+      simple_term: "Robot part or worker",
+      technical_term: "Node",
+      context_example: "This chapter discusses Node in detail."
+    },
+    {
+      simple_term: "Robot blueprint",
+      technical_term: "URDF",
+      context_example: "This chapter discusses URDF in detail."
+    },
+    {
+      simple_term: "Robot practice world",
+      technical_term: "Gazebo",
+      context_example: "This chapter discusses Gazebo in detail."
+    },
+    {
+      simple_term: "Practice environment",
+      technical_term: "Simulation",
+      context_example: "This chapter discusses Simulation in detail."
+    },
+    {
+      simple_term: "Robot's senses",
+      technical_term: "Sensor",
+      context_example: "This chapter discusses Sensor in detail."
+    },
+    {
+      simple_term: "Laser distance measurer",
+      technical_term: "LiDAR",
+      context_example: "This chapter discusses LiDAR in detail."
+    },
+    {
+      simple_term: "Robot's eyes",
+      technical_term: "Camera",
+      context_example: "This chapter discusses Camera in detail."
+    }
+  ]}
+  displayStyle="table"
+/>
 
 ## Next Steps
 
