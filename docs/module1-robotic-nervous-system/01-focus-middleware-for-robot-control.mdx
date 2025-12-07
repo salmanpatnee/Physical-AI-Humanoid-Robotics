@@ -19,31 +19,7 @@ key_takeaways:
 
 # How Robots Connect Their Parts Together
 
-<WhatYouWillLearn
-  goals={[
-    {
-      text: "Know how robots connect all their parts",
-      icon: "Link",
-      why_it_matters: "Your body needs nerves. Nerves connect your brain to your hands and feet. Robots need a connection system too!"
-    },
-    {
-      text: "Learn what ROS 2 does for robots",
-      icon: "Bot",
-      why_it_matters: "ROS 2 is like the robot's nervous system. It helps all the parts talk. The robot can walk, see, and grab things!"
-    },
-    {
-      text: "See how robot parts share information",
-      icon: "Radio",
-      why_it_matters: "The robot's camera sees something. It needs to tell the robot's legs to move. ROS 2 makes this happen!"
-    },
-    {
-      text: "Know what Physical AI means",
-      icon: "Sparkles",
-      why_it_matters: "Physical AI lives in robots. It works in the real world. Not just on a computer screen."
-    }
-  ]}
-  displayStyle="cards"
-/>
+
 
 ## What is Physical AI?
 
@@ -275,104 +251,7 @@ Draw a picture of your robot. Show how ROS 2 connects all the parts. Show the "i
 
 ## Common Questions
 
-<DoubtfulQA
-  questions={[
-    {
-      id: "q1",
-      question: "Why can't robots just use WiFi or Bluetooth to communicate?",
-      answer: "Great question! Robots CAN use WiFi, but ROS 2 adds special features that WiFi alone doesn't have. WiFi is like a highway - it moves data from place to place. But ROS 2 is like having traffic lights, road signs, GPS, and rules all together. ROS 2 handles timing (making sure messages arrive at the exact right moment), automatic discovery (parts find each other without you telling them addresses), and quality of service (important messages get priority). For a robot balancing on two legs, even a tiny delay from WiFi could make it fall!",
-      category: "why-vs-how",
-      misconception_addressed: "Students think standard networking protocols are sufficient for robotics"
-    },
-    {
-      id: "q2",
-      question: "What's the difference between ROS 2 topics and regular chat apps?",
-      answer: "Think about group chats on your phone. In a group chat, everyone sees every message. ROS 2 topics work similarly BUT with one big difference: you can have MANY different topic 'channels' running at the same time, and parts only listen to the channels they care about. It's like having 100 different group chats running simultaneously - your camera posts to #vision_data, your motors listen to #movement_commands, and your AI brain subscribes to everything. Plus, topics can handle THOUSANDS of messages per second, way faster than any chat app!",
-      category: "terminology",
-      misconception_addressed: "Students conflate ROS topics with familiar messaging apps"
-    },
-    {
-      id: "q3",
-      question: "Does ROS 2 only work with humanoid robots?",
-      answer: "No! ROS 2 works with ALL kinds of robots - cars, drones, robot arms, underwater robots, and even robots in space! We focus on humanoid robots in this course because they're complex and exciting, but the same ROS 2 code works on any robot. A drone uses ROS 2 topics for GPS data, a robot arm uses it for joint positions, and a self-driving car uses it for sensor fusion. Once you learn ROS 2, you can program ANY robot!",
-      category: "scope",
-      misconception_addressed: "Students think ROS 2 is only for humanoid robots"
-    },
-    {
-      id: "q4",
-      question: "If simulation and real robots use the same code, why do we need both?",
-      answer: "Imagine learning to ride a bike. You COULD just get on a real bike and try, but you might crash and get hurt! Simulation is like having training wheels - it's a safe place to learn and make mistakes. In simulation, if your code makes the robot fall, nothing breaks. You can test your robot walking off a cliff, crashing into walls, or handling sensor failures - all without damaging expensive hardware. Once your code works perfectly in simulation, THEN you run it on the real robot with confidence.",
-      category: "sim-vs-real",
-      misconception_addressed: "Students don't understand the value of simulation for safe testing"
-    },
-    {
-      id: "q5",
-      question: "What happens if one part of the robot crashes or stops working?",
-      answer: "This is where ROS 2 really shines! Unlike older systems where one broken part could stop the whole robot, ROS 2 uses 'loose coupling'. This means parts don't directly depend on each other - they just publish and subscribe to topics. If the camera crashes, the other parts keep working, and when the camera restarts, it automatically reconnects! It's like if one player leaves your game - the game doesn't stop for everyone else, and that player can rejoin later. This makes robots much more reliable and easier to debug.",
-      category: "abstract",
-      misconception_addressed: "Students expect single component failures to crash the entire system"
-    }
-  ]}
-  allowExpand={true}
-/>
 
-## Technical Terms Glossary
-
-<GrownUpWords
-  terms={[
-    {
-      simple_term: "Connection system",
-      technical_term: "Middleware",
-      context_example: "Middleware connects different software parts in complex robot systems, just like your nervous system connects your brain to your muscles."
-    },
-    {
-      simple_term: "Robot's language",
-      technical_term: "ROS 2 (Robot Operating System 2)",
-      context_example: "ROS 2 is the industry-standard framework that helps all robot parts communicate and work together."
-    },
-    {
-      simple_term: "Announcement channel",
-      technical_term: "Topic",
-      context_example: "A camera publishes images to a topic, and multiple parts can subscribe to receive those images automatically."
-    },
-    {
-      simple_term: "Robot worker",
-      technical_term: "Node",
-      context_example: "Each node in ROS 2 is like a worker with a specific job - one might control motors while another processes camera data."
-    },
-    {
-      simple_term: "Announcer",
-      technical_term: "Publisher",
-      context_example: "A sensor acts as a publisher, broadcasting its measurements to anyone who wants to listen."
-    },
-    {
-      simple_term: "Listener",
-      technical_term: "Subscriber",
-      context_example: "Motor controllers are subscribers that listen for movement commands from the AI brain."
-    },
-    {
-      simple_term: "Question-answer system",
-      technical_term: "Service",
-      context_example: "When you need to ask the path planner for a route, you use a service and wait for the answer."
-    },
-    {
-      simple_term: "Long task with updates",
-      technical_term: "Action",
-      context_example: "Walking to a location is an action - it takes time and the robot gives you progress updates along the way."
-    },
-    {
-      simple_term: "Practice world",
-      technical_term: "Simulation",
-      context_example: "Robots practice in simulation environments like Gazebo or Isaac Sim before attempting tasks in the real world."
-    },
-    {
-      simple_term: "Same code, practice and real",
-      technical_term: "Sim-to-Real Transfer",
-      context_example: "The exact same ROS 2 code that works in simulation will work on the physical robot without changes."
-    }
-  ]}
-  displayStyle="table"
-/>
 
 ## Remember These Key Ideas
 

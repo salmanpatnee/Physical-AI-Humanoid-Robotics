@@ -15,16 +15,18 @@
 }
 
 .content {
-  color: var(--ifm-font-color-base);
+  color: #1e293b !important;
 }
 
 .content ul {
   margin-bottom: 0;
   padding-left: 1.5rem;
+  color: #1e293b !important;
 }
 
 .content li {
   margin-bottom: 0.5rem;
+  color: #1e293b !important;
 }
 
 .content li:last-child {
