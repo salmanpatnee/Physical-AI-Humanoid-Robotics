@@ -1,0 +1,78 @@
+# Ingestion API Contract
+
+## Overview
+API contracts for the vector database ingestion system. The system is primarily a batch processing tool, but for completeness, here are the key operations that could be exposed.
+
+## Endpoints
+
+### POST /ingest-book
+**Description**: Initiates the ingestion process for an entire book
+
+**Request**:
+- Headers: 
+  - `Authorization: Bearer {api_key}` (for potential authentication)
+- Body:
+  ```json
+  {
+    "book_url": "https://salmanpatnee.github.io/Physical-AI-Humanoid-Robotics/",
+    "collection_name": "physical-ai-book-content",
+    "chunk_size": 512,
+    "overlap_size": 50
+  }
+  ```
+
+**Response**:
+- 202: Ingestion started
+- 400: Invalid parameters
+- 401: Unauthorized
+- 500: Server error during ingestion
+
+### GET /ingestion-status/{job_id}
+**Description**: Gets the status of an ongoing ingestion job
+
+**Request**:
+- Path: `job_id` (string)
+
+**Response**:
+- 200: Job status
+  ```json
+  {
+    "job_id": "uuid",
+    "status": "running|completed|failed",
+    "total_pages": 100,
+    "processed_pages": 45,
+    "completed_chunks": 320,
+    "started_at": "timestamp",
+    "completed_at": "timestamp|NULL",
+    "error_message": "string|NULL"
+  }
+  ```
+
+### POST /search
+**Description**: Semantic search in the ingested content
+
+**Request**:
+```json
+{
+  "query": "What is ROS 2?",
+  "collection_name": "physical-ai-book-content",
+  "limit": 5
+}
+```
+
+**Response**:
+- 200: Search results
+```json
+{
+  "query": "What is ROS 2?",
+  "results": [
+    {
+      "id": "chunk-uuid",
+      "content": "ROS 2 (Robot Operating System 2) is a flexible framework for writing robot applications...",
+      "url": "https://salmanpatnee.github.io/Physical-AI-Humanoid-Robotics/docs/module1-robotic-nervous-system",
+      "section_title": "Focus: Middleware for Robot Control",
+      "score": 0.89
+    }
+  ]
+}
+```

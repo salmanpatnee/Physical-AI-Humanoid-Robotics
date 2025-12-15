@@ -1,4 +1,4 @@
-# Qwen Code Rules - Physical AI & Humanoid Robotics Project
+﻿# Qwen Code Rules - Physical AI & Humanoid Robotics Project
 
 This file is generated during init for the selected agent working on the Physical AI & Humanoid Robotics project.
 
