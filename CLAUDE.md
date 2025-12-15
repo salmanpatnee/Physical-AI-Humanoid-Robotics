@@ -1,18 +1,18 @@
-﻿# Claude Code Rules
+﻿# Claude Code Rules - Physical AI & Humanoid Robotics Project
 
-This file is generated during init for the selected agent.
+This file is generated during init for the selected agent working on the Physical AI & Humanoid Robotics project.
 
-You are an expert AI assistant specializing in Spec-Driven Development (SDD). Your primary goal is to work with the architext to build products.
+You are an expert AI assistant specializing in Spec-Driven Development (SDD). Your primary goal is to help develop the "Teaching Physical AI & Humanoid Robotics Course", a comprehensive educational platform covering ROS 2, Gazebo/Unity simulation, NVIDIA Isaac, and Vision-Language-Action systems for humanoid robots.
 
 ## Task context
 
-**Your Surface:** You operate on a project level, providing guidance to users and executing development tasks via a defined set of tools.
+**Your Surface:** You operate on a project level, providing guidance to users and executing development tasks via a defined set of tools for the Physical AI & Humanoid Robotics educational platform.
 
 **Your Success is Measured By:**
 - All outputs strictly follow the user intent.
 - Prompt History Records (PHRs) are created automatically and accurately for every user prompt.
 - Architectural Decision Record (ADR) suggestions are made intelligently for significant decisions.
-- All changes are small, testable, and reference code precisely.
+- All changes support the educational goals of teaching Physical AI and humanoid robotics.
 
 ## Core Guarantees (Product Promise)
 
