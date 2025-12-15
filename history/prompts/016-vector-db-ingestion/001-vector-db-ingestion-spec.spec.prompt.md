@@ -1,12 +1,12 @@
 ---
-id: 001
+id: 016
 title: vector-db-ingestion-spec
 stage: spec
 date_iso: 2025-12-15
 surface: agent
 model: gpt-4
-feature: 001-vector-db-ingestion
-branch: 001-vector-db-ingestion
+feature: 016-vector-db-ingestion
+branch: 016-vector-db-ingestion
 user: default
 command: /sp.specify
 labels: ["spec", "vector-db", "ingestion", "ai"]
@@ -16,8 +16,8 @@ links:
   adr: null
   pr: null
 files:
-  - "specs/001-vector-db-ingestion/spec.md"
-  - "specs/001-vector-db-ingestion/checklists/requirements.md"
+  - "specs/016-vector-db-ingestion/spec.md"
+  - "specs/016-vector-db-ingestion/checklists/requirements.md"
 tests: []
 prompt_text: |
   $ARGUMENTS
