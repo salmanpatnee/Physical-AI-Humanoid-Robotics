@@ -7,7 +7,7 @@
 
 ## Summary
 
-Implementation of a vector database ingestion system that crawls the Docusaurus book URLs, extracts clean readable text, chunks the content, generates embeddings using Cohere, and stores the embeddings with metadata in Qdrant Cloud. The system will be implemented in a single Python file (main.py) with UV for dependency management.
+Implementation of a vector database ingestion system that crawls the Docusaurus book URLs (using sitemap at https://salmanpatnee.github.io/Physical-AI-Humanoid-Robotics/sitemap.xml), extracts clean readable text, chunks the content, generates embeddings using Cohere, and stores the embeddings with metadata in Qdrant Cloud. The system will be implemented in a single Python file (main.py) with UV for dependency management. API keys for Cohere and Qdrant should be configured in the .env file located in the root directory.
 
 ## Technical Context
 

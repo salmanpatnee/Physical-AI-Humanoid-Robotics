@@ -33,9 +33,9 @@ uv sync --dev
 ```
 
 ### 4. Set Up Environment Variables
-Create a `.env` file with your API keys:
+Create a `.env` file in the root directory with your API keys:
 ```bash
-# .env
+# .env (in root directory)
 COHERE_API_KEY=your_cohere_api_key_here
 QDRANT_API_KEY=your_qdrant_api_key_here
 QDRANT_URL=your_qdrant_cluster_url_here
