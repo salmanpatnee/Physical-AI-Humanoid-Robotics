@@ -1,17 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "vector-db-ingestion"
+name = "book-agent-sdk"
 version = "0.1.0"
-description = "Vector database ingestion system for Docusaurus book content"
+description = "A backend agent that accepts user questions, retrieves relevant book content, and generates grounded answers"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "beautifulsoup4>=4.12.0",
-    "requests>=2.31.0",
-    "cohere>=4.0.0",
+    "fastapi>=0.104.1",
+    "openai>=1.3.7",
     "qdrant-client>=1.8.0",
     "python-dotenv>=1.0.0",
-    "tenacity>=8.2.0",
-    "fastapi>=0.104.0",
+    "pydantic>=2.5.0",
     "uvicorn>=0.24.0",
-    "fastembed>=0.7.4",
+    "pytest>=7.4.3"
 ]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "mypy",
+    "flake8"
+]
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+python_files = ["test_*.py"]
