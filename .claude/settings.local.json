@@ -24,7 +24,12 @@
       "Bash(Select-String -Pattern 'refs/heads/[0-9]+-simplified-content$')",
       "Bash(git config:*)",
       "Bash(node scripts/simplify-content/analyze-readability.js:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(uv sync:*)",
+      "Bash(uv run:*)",
+      "Bash(PYTHONPATH=src uv run python:*)",
+      "Bash(powershell -Command \"(Get-Content run_us3_validation.py -Raw) -replace ''✓'',''[OK]'' -replace ''✗'',''[FAIL]'' | Set-Content run_us3_validation.py\")",
+      "Bash(uv add:*)"
     ],
     "deny": [],
     "ask": []
