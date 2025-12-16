@@ -1,0 +1,88 @@
+openapi: 3.0.1
+info:
+  title: Chatbot API
+  description: API for chatbot functionality in the Physical AI & Humanoid Robotics book
+  version: 1.0.0
+paths:
+  /api/chat/query:
+    post:
+      summary: Submit a query to the chatbot
+      description: Allows users to ask questions and optionally provide selected text as context
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserQuery'
+      responses:
+        '200':
+          description: Successful response from the chatbot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+        '400':
+          description: Bad request - invalid input
+        '500':
+          description: Internal server error
+      security:
+        - apiKey: []
+components:
+  schemas:
+    UserQuery:
+      type: object
+      required:
+        - question
+      properties:
+        question:
+          type: string
+          description: The question from the user
+          example: "What are the main components of a humanoid robot?"
+        selectedText:
+          type: string
+          description: Optional selected text to provide context
+          example: "A humanoid robot is a robot that resembles the human body in shape."
+    ChatResponse:
+      type: object
+      required:
+        - answer
+        - sources
+      properties:
+        answer:
+          type: string
+          description: The answer from the chatbot
+          example: "The main components of a humanoid robot include actuators, sensors, control systems, and a power supply."
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/SourceReference'
+    SourceReference:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          description: Title of the source
+          example: "Introduction to Humanoid Robotics"
+        url:
+          type: string
+          format: uri
+          description: URL to the source material
+          example: "https://example.com/book/chapter1"
+        contentPreview:
+          type: string
+          description: Brief preview of the relevant content
+          example: "Humanoid robots are robots that resemble the human body in shape..."
+        confidence:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Confidence level in the relevance of this source
+          example: 0.95
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
