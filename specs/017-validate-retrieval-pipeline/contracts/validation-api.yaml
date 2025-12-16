@@ -1,0 +1,133 @@
+# Validation Service API Contract
+
+## Overview
+The Validation Service provides endpoints to validate the retrieval pipeline by querying the Qdrant vector database with sample questions and verifying the relevance of returned results.
+
+## Endpoints
+
+### POST /validate/query
+Submit a query to validate the retrieval pipeline
+
+#### Request
+```json
+{
+  "question": "What are the core principles of humanoid robotics?",
+  "expected_sources": ["book1", "module2"],
+  "module_context": "module1-ros2"
+}
+```
+
+#### Response
+```json
+{
+  "validation_id": "val_12345",
+  "question": "What are the core principles of humanoid robotics?",
+  "retrieved_chunks": [
+    {
+      "id": "chunk_67890",
+      "content": "The core principles of humanoid robotics include...",
+      "source_reference": {
+        "book_title": "Humanoid Robotics Fundamentals",
+        "chapter": "Chapter 3",
+        "page_number": 45,
+        "section": "Core Principles",
+        "url": "https://example.com/book1/chapter3"
+      },
+      "similarity_score": 0.85,
+      "position_in_result": 1
+    }
+  ],
+  "relevance_score": 0.92,
+  "source_mapping_accuracy": 1.0,
+  "latency_ms": 42.5,
+  "is_valid": true,
+  "feedback": "Highly relevant results returned with correct source attribution"
+}
+```
+
+#### Errors
+- 400: Invalid request format
+- 500: Internal server error or Qdrant connection issue
+
+### GET /validate/results/{validation_id}
+Retrieve detailed results for a specific validation request
+
+#### Response
+```json
+{
+  "validation_id": "val_12345",
+  "status": "completed",
+  "timestamp": "2025-12-16T10:30:00Z",
+  "metrics": {
+    "relevance_score": 0.92,
+    "source_mapping_accuracy": 1.0,
+    "latency_ms": 42.5
+  },
+  "retrieved_chunks": [ /* same format as above */ ],
+  "raw_qdrant_response": { /* original Qdrant response */ }
+}
+```
+
+### GET /validate/summary
+Get a summary of recent validation results
+
+#### Response
+```json
+{
+  "summary": {
+    "total_validations": 150,
+    "avg_relevance_score": 0.87,
+    "avg_source_mapping_accuracy": 0.98,
+    "avg_latency_ms": 65.2,
+    "accuracy_by_module": {
+      "module1-ros2": 0.91,
+      "module2-digital-twin": 0.85,
+      "module3-ai-robot-brain": 0.89
+    }
+  },
+  "recent_validations": [ /* list of recent validation IDs */ ]
+}
+```
+
+### POST /validate/batch
+Submit multiple queries for validation in a batch operation
+
+#### Request
+```json
+{
+  "queries": [
+    {
+      "question": "What are the core principles of humanoid robotics?",
+      "module_context": "module1-ros2"
+    },
+    {
+      "question": "How does computer vision work in robotics?",
+      "module_context": "module4-vla"
+    }
+  ],
+  "output_file": "batch_results.csv"
+}
+```
+
+#### Response
+```json
+{
+  "batch_id": "batch_12345",
+  "total_queries": 2,
+  "status": "processing",
+  "estimated_completion": "2025-12-16T10:35:00Z"
+}
+```
+
+## Error Responses
+
+All error responses follow this format:
+```json
+{
+  "error": {
+    "code": "ERROR_CODE",
+    "message": "Human-readable error message",
+    "details": "Additional error details if applicable"
+  }
+}
+```
