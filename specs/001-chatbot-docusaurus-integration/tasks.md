@@ -8,14 +8,14 @@
 - **Input**: Implementation plan and feature specification
 
 ## Implementation Strategy
-This implementation follows a user story-driven approach to deliver the chatbot integration in priority order. We'll start with the core functionality (user story 1 - the chat widget) to create an MVP, then add the ability to ask questions with selected text context (user story 2), and finally enable response display with sources (user story 3).
+This implementation follows a user story-driven approach to deliver the chatbot integration in priority order. The backend infrastructure already exists, so we'll focus on integrating with it. We'll start with the core frontend functionality (user story 1 - the chat widget) to create an MVP, then add the ability to ask questions with selected text context (user story 2), and finally enable response display with sources (user story 3).
 
 The MVP scope is defined by User Story 1, which will deliver a functional chat widget that appears in the book UI, allowing for early user feedback and validation.
 
 ## Dependencies
 - User Story 1 (Access Chat Widget) must be completed before User Stories 2 and 3 can be fully tested
 - Foundational tasks (models, services, API schemas) must be completed before user story tasks
-- Backend API must be available before frontend implementation is complete
+- Backend API infrastructure exists and is available before frontend implementation is complete
 
 ## Parallel Execution Examples
 - Model creation tasks (T005-T007) can run in parallel
@@ -28,22 +28,22 @@ The MVP scope is defined by User Story 1, which will deliver a functional chat w
 
 **Goal**: Set up project structure and foundational elements
 
-- [ ] T001 Create backend directory structure (backend/src/models, backend/src/services, backend/src/api)
+- [ ] T001 Verify existing backend directory structure (backend/src/models, backend/src/services, backend/src/api)
 - [ ] T002 Create frontend directory structure (frontend/src/components, frontend/src/services)
-- [ ] T003 Set up FastAPI project with proper dependencies in backend directory
+- [ ] T003 Verify existing FastAPI project with proper dependencies in backend directory
 - [ ] T004 Set up environment configuration for backend API
 
 ---
 
 ## Phase 2: Foundational Tasks
 
-**Goal**: Create core models, services and APIs that will be used by all user stories
+**Goal**: Create or update core models, services and APIs that will be used by all user stories
 
-- [ ] T005 [P] Create UserQuery model in backend/src/models/user_query.py based on API contract
-- [ ] T006 [P] Create ChatResponse model in backend/src/models/chat_response.py based on API contract
-- [ ] T007 [P] Create SourceReference model in backend/src/models/source_reference.py based on API contract
-- [ ] T008 Create API endpoint schema in backend/src/api/schemas.py
-- [ ] T009 [P] Create ChatService interface in backend/src/services/chat_service.py
+- [ ] T005 [P] Create or update UserQuery model in backend/src/models/user_query.py based on API contract
+- [ ] T006 [P] Create or update ChatResponse model in backend/src/models/chat_response.py based on API contract
+- [ ] T007 [P] Create or update SourceReference model in backend/src/models/source_reference.py based on API contract
+- [ ] T008 Create or update API endpoint schema in backend/src/api/schemas.py
+- [ ] T009 [P] Create or update ChatService interface in backend/src/services/chat_service.py
 - [ ] T010 Create frontend service for API communication in frontend/src/services/chatAPI.js
 
 ---
@@ -71,7 +71,7 @@ The MVP scope is defined by User Story 1, which will deliver a functional chat w
 
 **Goal**: Enable users to ask questions and optionally provide selected text for context
 
-**Independent Test Criteria**: 
+**Independent Test Criteria**:
 - User can select text on a page
 - When asking a question, selected text is passed along with the question to the backend API
 - If no text is selected, only the question is sent
@@ -79,8 +79,8 @@ The MVP scope is defined by User Story 1, which will deliver a functional chat w
 **User Story**: As an end user reading the book, I want to ask questions about the content and optionally specify selected text that the answers should be restricted to, so I can get more relevant responses.
 
 - [ ] T016 [P] [US2] Implement text selection capture functionality in ChatWidget component
-- [ ] T017 [US2] Create API endpoint for chat queries in backend/src/api/chat_endpoint.py
-- [ ] T018 [US2] Implement query processing service in backend/src/services/query_service.py
+- [ ] T017 [US2] Create or update API endpoint for chat queries in backend/src/api/chat_endpoint.py
+- [ ] T018 [US2] Implement or update query processing service in backend/src/services/query_service.py
 - [ ] T019 [US2] Update ChatWidget to send selected text with queries
 - [ ] T020 [US2] Test that selected text is passed along with user questions to backend
 
