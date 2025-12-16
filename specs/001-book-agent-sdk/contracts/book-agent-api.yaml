@@ -1,0 +1,107 @@
+# Book Agent API Contract
+
+## Base URL
+`/api/v1`
+
+## Endpoints
+
+### POST /ask
+Ask a question about book content and receive a grounded answer with source references.
+
+#### Request
+**Content-Type**: `application/json`
+
+**Body**:
+```json
+{
+  "question": "What are the main principles of robotics?",
+  "book_id": "optional-book-identifier",
+  "selected_text": "optional selected text that provides context"
+}
+```
+
+**Fields**:
+- `question` (string, required): The question about book content
+- `book_id` (string, optional): Identifier for a specific book if multiple books are available
+- `selected_text` (string, optional): Additional context from selected text in the book
+
+#### Response
+**Success Response (200 OK)**:
+```json
+{
+  "answer": "The main principles of robotics include sensing, processing, and acting...",
+  "sources": [
+    {
+      "content_snippet": "The three fundamental principles of robotics are sensing, processing, and acting...",
+      "source_location": "Chapter 2, Page 45, Introduction to Robotics",
+      "relevance_score": 0.92
+    },
+    {
+      "content_snippet": "Robotic systems must be able to perceive their environment...",
+      "source_location": "Chapter 3, Page 72, Introduction to Robotics",
+      "relevance_score": 0.85
+    }
+  ],
+  "confidence_score": 0.89,
+  "timestamp": "2025-12-16T10:30:00Z"
+}
+```
+
+**Error Responses**:
+- `400 Bad Request`: Invalid request parameters
+- `422 Unprocessable Entity`: Question is too ambiguous or cannot be answered with available data
+- `500 Internal Server Error`: Server error during processing
+
+#### Example Request
+```http
+POST /api/v1/ask
+Content-Type: application/json
+
+{
+  "question": "Explain the three laws of robotics",
+  "book_id": "robotics-principles-101"
+}
+```
+
+#### Example Response
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "answer": "The three laws of robotics, as defined by Isaac Asimov, are: 1) A robot may not injure a human being or, through inaction, allow a human being to come to harm. 2) A robot must obey the orders given to it by human beings, except where such orders would conflict with the First Law. 3) A robot must protect its own existence as long as such protection does not conflict with the First or Second Laws.",
+  "sources": [
+    {
+      "content_snippet": "The first law states that a robot may not injure a human being...",
+      "source_location": "Chapter 1, Page 15, Robotics Ethics",
+      "relevance_score": 0.92
+    },
+    {
+      "content_snippet": "Asimov later added a zeroth law that supersedes the others...",
+      "source_location": "Chapter 1, Page 18, Robotics Ethics",
+      "relevance_score": 0.75
+    }
+  ],
+  "confidence_score": 0.91,
+  "timestamp": "2025-12-16T10:30:00Z"
+}
+```
+
+### GET /health
+Check the health status of the service.
+
+#### Response
+**Success Response (200 OK)**:
+```json
+{
+  "status": "healthy",
+  "timestamp": "2025-12-16T10:30:00Z",
+  "dependencies": {
+    "openai_api": "connected",
+    "vector_database": "connected"
+  }
+}
+```
+
+### GET /api-docs
+Redirects to the OpenAPI documentation page (Swagger UI).
