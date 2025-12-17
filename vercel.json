@@ -1,0 +1,42 @@
+{
+  "version": 2,
+  "name": "physical-ai-humanoid-robotics",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    },
+    {
+      "src": "api/**/*.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxDuration": 30
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "NODE_VERSION": "20"
+  },
+  "functions": {
+    "api/**/*.py": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  }
+}
