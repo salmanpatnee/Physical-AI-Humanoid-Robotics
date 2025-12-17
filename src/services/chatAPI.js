@@ -1,7 +1,13 @@
 // src/services/chatAPI.js
 
-const API_BASE_URL = process.env.REACT_APP_CHATBOT_API_URL || process.env.BACKEND_API_URL || 'http://localhost:8000';
-const API_KEY = process.env.REACT_APP_API_KEY || '';
+// Get API configuration from environment variables or use defaults
+// For Docusaurus (browser environment), use window globals or hardcoded defaults
+const API_BASE_URL = typeof window !== 'undefined'
+  ? (window.CHATBOT_API_URL || 'http://localhost:8000')
+  : 'http://localhost:8000';
+const API_KEY = typeof window !== 'undefined'
+  ? (window.CHATBOT_API_KEY || '')
+  : '';
 
 /**
  * Service for communicating with the chatbot backend API

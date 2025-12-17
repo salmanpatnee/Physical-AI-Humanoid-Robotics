@@ -95,6 +95,7 @@ const config: Config = {
 
   plugins: [
     './src/plugins/chapter-validation',
+    './src/plugins/chatbot-config',
   ],
 
   themeConfig: {
