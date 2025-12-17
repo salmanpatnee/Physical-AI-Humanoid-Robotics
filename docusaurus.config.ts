@@ -40,11 +40,20 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  // Use Vercel URL in production, localhost for development
-  url: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000',
+  // Determine environment and set URL accordingly
+  url: (() => {
+    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+    if (process.env.NODE_ENV === 'production') return 'https://salmanpatnee.github.io';
+    return 'http://localhost:3000';
+  })(),
+
   // Set the /<baseUrl>/ pathname under which your site is served
-  // Root path for Vercel, subdirectory for GitHub Pages if needed
-  baseUrl: process.env.VERCEL ? '/' : '/',
+  // Vercel uses root path, GitHub Pages uses project subdirectory
+  baseUrl: (() => {
+    if (process.env.VERCEL) return '/';
+    if (process.env.NODE_ENV === 'production') return '/Physical-AI-Humanoid-Robotics/';
+    return '/';
+  })(),
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
